@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>rviz_3d_object_visualizer</name>
+  <version>0.0.0</version>
+  <description>The rviz_3d_object_visualizer package</description>
+
+  <license>BSD3</license>
+
+  <author email="sushant.chavan@inf.h-brs.de">Sushant Vijay Chavan</author>
+  <author email="ahmed.abdelrahman@inf.h-brs.de">Ahmed Faisal Abdelrahman</author>
+
+  <maintainer email="sushant.chavan@inf.h-brs.de">Sushant Vijay Chavan</maintainer>
+  <maintainer email="ahmed.abdelrahman@inf.h-brs.de">Ahmed Faisal Abdelrahman</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rviz</build_depend>
+
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>rviz</build_export_depend>
+
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rviz</exec_depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+  <rviz plugin="${prefix}/plugin_description.xml"/>
+  </export>
+</package>
