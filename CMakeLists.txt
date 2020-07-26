@@ -64,3 +64,19 @@ install(TARGETS ${PROJECT_NAME}
 
 # install the plugin description file to the catkin workspace so that RViz can is aware of it.
 install(FILES plugin_description.xml DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
+
+#######################
+# Compile Data Provider
+#######################
+include_directories(include)
+
+# List down all required cpp files to compile the data_provider library
+set(DATA_PROVIDER_SRC_FILES
+    src/data_provider/model_loader.cpp
+)
+
+# Build the RViz plugin as a library
+set(DATA_PROVIDER_EXECUTABLE_NAME data_provider)
+add_library(${DATA_PROVIDER_EXECUTABLE_NAME} ${DATA_PROVIDER_SRC_FILES})
+
