@@ -35,22 +35,32 @@ endif()
 
 add_definitions(-DQT_NO_KEYWORDS)
 
-set(SRC_FILES
+#########################
+# Compile the RViz plugin
+#########################
+
+# List down all required cpp files to compile the plugin
+set(PLUGIN_SRC_FILES
     src/rviz_plugin/object_visualization_manager.cpp
 )
 
-set(HEADER_FILES
+# List down all required header files to compile the plugin
+set(PLUGIN_HEADER_FILES
     include/rviz_plugin/object_visualization_manager.h
 )
 
-add_library(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
+# Build the RViz plugin as a library
+add_library(${PROJECT_NAME} ${PLUGIN_SRC_FILES} ${PLUGIN_HEADER_FILES})
 
+# List down all the dependencies ( i.e. libraries) of the plugin
 target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} ${catkin_LIBRARIES} ${SDL2_LIBRARY} ${GLEW_LIBRARIES})
 
+# Define the paths where the build artifacts should be installed
 install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
 
+# install the plugin description file to the catkin workspace so that RViz can is aware of it.
 install(FILES plugin_description.xml DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
