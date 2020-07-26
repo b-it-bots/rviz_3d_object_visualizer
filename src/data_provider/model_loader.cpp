@@ -1,5 +1,8 @@
-#include "data_provider/model_loader.h"
 #include <iostream>
+
+#include "data_provider/model_loader.h"
+
+using namespace RVizDataLoader;
 
 ModelLoader::ModelLoader()
 {

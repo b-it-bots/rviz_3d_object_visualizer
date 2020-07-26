@@ -1,11 +1,22 @@
 #ifndef DATA_PROVIDER
 #define DATA_PROVIDER
 
-class ModelLoader
+#include<string>
+#include <memory>
+
+#include "data_provider/model_data.h"
+
+namespace RVizDataLoader
 {
-public:
-    ModelLoader();
-    virtual ~ModelLoader(){}
+    class ModelLoader
+    {
+    public:
+        ModelLoader();
+        virtual ~ModelLoader(){}
+
+        // TODO: Make this function pure virtual
+        virtual std::unique_ptr<ModelData> loadModel(const std::string& model_file_path){}
+    };
 };
 
 #endif // DATA_PROVIDER

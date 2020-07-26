@@ -74,6 +74,7 @@ include_directories(include)
 # List down all required cpp files to compile the data_provider library
 set(DATA_PROVIDER_SRC_FILES
     src/data_provider/model_loader.cpp
+    src/data_provider/model_data.cpp
 )
 
 # Build the RViz plugin as a library

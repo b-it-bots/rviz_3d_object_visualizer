@@ -3,6 +3,6 @@
 
 int main()
 {
-    ModelLoader model_loader = ModelLoader();
+    RVizDataLoader::ModelLoader model_loader = RVizDataLoader::ModelLoader();
     std::cout << "Exiting..." << std::endl;
 }
