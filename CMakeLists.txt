@@ -80,3 +80,11 @@ set(DATA_PROVIDER_SRC_FILES
 set(DATA_PROVIDER_EXECUTABLE_NAME data_provider)
 add_library(${DATA_PROVIDER_EXECUTABLE_NAME} ${DATA_PROVIDER_SRC_FILES})
 
+
+###########################
+# Create a dummy executable
+###########################
+include_directories(include)
+add_executable(data_loader_test src/main.cpp)
+
+target_link_libraries(data_loader_test ${DATA_PROVIDER_EXECUTABLE_NAME})
