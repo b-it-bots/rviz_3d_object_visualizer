@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "data_loader/model_data.h"
+#include "dataloader/model_data.h"
 
 using namespace RVizDataLoader;
 
