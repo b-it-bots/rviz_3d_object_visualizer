@@ -67,19 +67,19 @@ install(FILES plugin_description.xml DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINAT
 
 
 #######################
-# Compile Data Provider
+# Compile Data Loader
 #######################
 include_directories(include)
 
-# List down all required cpp files to compile the data_provider library
-set(DATA_PROVIDER_SRC_FILES
-    src/data_provider/model_loader.cpp
-    src/data_provider/model_data.cpp
+# List down all required cpp files to compile the data_loader library
+set(DATA_LOADER_SRC_FILES
+    src/data_loader/model_loader.cpp
+    src/data_loader/model_data.cpp
 )
 
 # Build the RViz plugin as a library
-set(DATA_PROVIDER_EXECUTABLE_NAME data_provider)
-add_library(${DATA_PROVIDER_EXECUTABLE_NAME} ${DATA_PROVIDER_SRC_FILES})
+set(DATA_LOADER_EXECUTABLE_NAME data_loader)
+add_library(${DATA_LOADER_EXECUTABLE_NAME} ${DATA_LOADER_SRC_FILES})
 
 
 ###########################
@@ -88,4 +88,4 @@ add_library(${DATA_PROVIDER_EXECUTABLE_NAME} ${DATA_PROVIDER_SRC_FILES})
 include_directories(include)
 add_executable(data_loader_test src/main.cpp)
 
-target_link_libraries(data_loader_test ${DATA_PROVIDER_EXECUTABLE_NAME})
+target_link_libraries(data_loader_test ${DATA_LOADER_EXECUTABLE_NAME})

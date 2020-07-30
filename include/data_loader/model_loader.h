@@ -1,10 +1,10 @@
-#ifndef DATA_PROVIDER
-#define DATA_PROVIDER
+#ifndef DATA_LOADER
+#define DATA_LOADER
 
 #include<string>
 #include <memory>
 
-#include "data_provider/model_data.h"
+#include "data_loader/model_data.h"
 
 namespace RVizDataLoader
 {
@@ -19,4 +19,4 @@ namespace RVizDataLoader
     };
 };
 
-#endif // DATA_PROVIDER
+#endif // DATA_LOADER
