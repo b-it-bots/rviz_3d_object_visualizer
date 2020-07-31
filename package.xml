@@ -15,9 +15,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>rviz</build_depend>
-
-  <build_export_depend>roscpp</build_export_depend>
-  <build_export_depend>rviz</build_export_depend>
+  <build_depend>mongodb_store</build_depend>
 
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rviz</exec_depend>

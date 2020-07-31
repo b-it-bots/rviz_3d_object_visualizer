@@ -85,4 +85,4 @@ add_library(${DATALOADER_EXECUTABLE_NAME} ${DATALOADER_SRC_FILES})
 ###########################
 add_executable(dataloader_test src/main.cpp)
 
-target_link_libraries(dataloader_test ${DATALOADER_EXECUTABLE_NAME})
+target_link_libraries(dataloader_test ${DATALOADER_EXECUTABLE_NAME} ${catkin_LIBRARIES})
