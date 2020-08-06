@@ -17,12 +17,15 @@ namespace RVizDataLoader
     class MongoDBDataloader
     {
         public:
-            MongoDBDataloader();
-            virtual ~MongoDBDataloader();
+            MongoDBDataloader() : message_proxy_(nh_) {};
+            virtual ~MongoDBDataloader(){};
+
+            virtual void queryDatabase() = 0;
+            virtual void runDataUpdateLoop() = 0;
     
-        private:
-            ros::NodeHandle nh_;
+        protected:
             mongodb_store::MessageStoreProxy message_proxy_;
+            ros::NodeHandle nh_;
     };
 }
 

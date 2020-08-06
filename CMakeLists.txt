@@ -11,6 +11,13 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rviz
   mongodb_store
+  geometry_msgs
+  mas_perception_msgs 
+)
+
+generate_messages(
+  DEPENDENCIES
+    mas_perception_msgs
 )
 
 catkin_package(
@@ -72,7 +79,7 @@ install(FILES plugin_description.xml DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINAT
 set(DATALOADER_SRC_FILES
     src/dataloader/model_loader.cpp
     src/dataloader/model_data.cpp
-    src/dataloader/mongodb_dataloader.cpp
+    src/dataloader/mdr_dataloader.cpp
 )
 
 # Build the RViz plugin as a library
@@ -84,5 +91,7 @@ add_library(${DATALOADER_EXECUTABLE_NAME} ${DATALOADER_SRC_FILES})
 # Create a dummy executable
 ###########################
 add_executable(dataloader_test src/main.cpp)
+add_executable(mongodb_client_test src/mongodb_client_node.cpp)
 
 target_link_libraries(dataloader_test ${DATALOADER_EXECUTABLE_NAME} ${catkin_LIBRARIES})
+target_link_libraries(mongodb_client_test ${DATALOADER_EXECUTABLE_NAME} ${catkin_LIBRARIES})

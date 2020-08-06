@@ -16,9 +16,12 @@
   <build_depend>roscpp</build_depend>
   <build_depend>rviz</build_depend>
   <build_depend>mongodb_store</build_depend>
+  <build_depend>mas_perception_msgs</build_depend>
 
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rviz</exec_depend>
+  <exec_depend>mongodb_store</exec_depend>
+  <exec_depend>mas_perception_msgs</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
