@@ -20,7 +20,6 @@ namespace RVizDataLoader
         void setYamlFilePath(const std::string& filepath);
 
     protected:
-        void initializeModelIdMap();
         ModelData extractModelConfig(YAML::Node node);
         void loadYamlFile();
 

@@ -45,16 +45,10 @@ ModelData YamlLoader::extractModelConfig(YAML::Node node)
 {
     ModelData model_data;
 
-    std::vector<double> position = node["Position"].as<std::vector<double>>();
-    std::vector<double> orientation = node["Orientation"].as<std::vector<double>>();
-    std::vector<double> scale = node["Scale"].as<std::vector<double>>();
-    std::vector<int> color = node["Color"].as<std::vector<int>>();
-
-    // model_data.pose_.update(position[0], position[1], position[2],
-    //                         orientation[0], orientation[1], orientation[2]);
-    model_data.pose_.update(position, orientation);
-    model_data.scale_.update(scale);
-    model_data.color_.update(color);
+    model_data.pose_.update(node["Position"].as<std::vector<double>>(),
+                            node["Orientation"].as<std::vector<double>>());
+    model_data.scale_.update(node["Scale"].as<std::vector<double>>());
+    model_data.color_.update(node["Color"].as<std::vector<int>>());
     model_data.mesh_resource_ = node["ResourceFile"].as<std::string>();
     model_data.use_color_from_mesh_ = node["UseColorFromMesh"].as<bool>();
 

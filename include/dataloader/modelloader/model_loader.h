@@ -22,7 +22,6 @@ namespace RVizDataLoader
                        -> std::unique_ptr<visualization_msgs::Marker>;
 
     protected:
-        // TODO: Make this function pure virtual
         virtual auto loadModel(Model::Types model_type)
                               -> std::unique_ptr<visualization_msgs::Marker>;
 
