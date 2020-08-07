@@ -1,5 +1,5 @@
-#ifndef MODEL_LOADER
-#define MODEL_LOADER
+#ifndef DATALOADER_MODEL_LOADER
+#define DATALOADER_MODEL_LOADER
 
 #include<string>
 #include<memory>
@@ -30,4 +30,4 @@ namespace RVizDataLoader
     };
 };
 
-#endif // MODEL_LOADER
+#endif // DATALOADER_MODEL_LOADER

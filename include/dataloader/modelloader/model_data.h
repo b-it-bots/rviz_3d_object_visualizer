@@ -1,5 +1,5 @@
-#ifndef MODEL_DATA
-#define MODEL_DATA
+#ifndef DATALOADER_MODEL_DATA
+#define DATALOADER_MODEL_DATA
 
 #include <iostream>
 #include <string>
@@ -29,4 +29,4 @@ namespace RVizDataLoader
     };
 };
 
-#endif // MODEL_DATA
+#endif // DATALOADER_MODEL_DATA

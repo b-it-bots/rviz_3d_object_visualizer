@@ -1,5 +1,5 @@
-#ifndef YAML_LOADER
-#define YAML_LOADER
+#ifndef DATALOADER_YAML_LOADER
+#define DATALOADER_YAML_LOADER
 
 #include <map>
 #include <memory>
@@ -30,4 +30,4 @@ namespace RVizDataLoader
     };
 };
 
-#endif //YAML_LOADER
+#endif //DATALOADER_YAML_LOADER
