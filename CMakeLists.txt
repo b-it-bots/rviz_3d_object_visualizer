@@ -83,8 +83,8 @@ set(DATALOADER_SRC_FILES
 )
 
 # Build the RViz plugin as a library
-set(DATALOADER_EXECUTABLE_NAME dataloader)
-add_library(${DATALOADER_EXECUTABLE_NAME} ${DATALOADER_SRC_FILES})
+set(DATALOADER_LIB_NAME dataloader)
+add_library(${DATALOADER_LIB_NAME} ${DATALOADER_SRC_FILES})
 
 
 ###########################
@@ -92,6 +92,8 @@ add_library(${DATALOADER_EXECUTABLE_NAME} ${DATALOADER_SRC_FILES})
 ###########################
 add_executable(dataloader_test src/main.cpp)
 add_executable(mongodb_client_test src/mongodb_client_node.cpp)
+add_executable(dataloader_node src/dataloader_node.cpp)
 
-target_link_libraries(dataloader_test ${DATALOADER_EXECUTABLE_NAME} ${catkin_LIBRARIES})
-target_link_libraries(mongodb_client_test ${DATALOADER_EXECUTABLE_NAME} ${catkin_LIBRARIES})
+target_link_libraries(dataloader_test ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
+target_link_libraries(mongodb_client_test ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
+target_link_libraries(dataloader_node ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})

@@ -17,7 +17,8 @@ namespace RVizDataLoader
     class MongoDBDataloader
     {
         public:
-            MongoDBDataloader() : message_proxy_(nh_) {};
+            // Constructor with nh arg required to avoid std::length_error:
+            MongoDBDataloader(ros::NodeHandle nh) : message_proxy_(nh) {};
             virtual ~MongoDBDataloader(){};
 
             virtual void queryDatabase() = 0;
@@ -25,7 +26,6 @@ namespace RVizDataLoader
     
         protected:
             mongodb_store::MessageStoreProxy message_proxy_;
-            ros::NodeHandle nh_;
     };
 }
 

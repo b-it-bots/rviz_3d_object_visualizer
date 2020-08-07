@@ -5,6 +5,5 @@
 int main()
 {
     RVizDataLoader::ModelLoader model_loader = RVizDataLoader::ModelLoader();
-    RVizDataLoader::MDRDataloader mongodb_dataloader = RVizDataLoader::MDRDataloader();
     std::cout << "Exiting..." << std::endl;
 }
