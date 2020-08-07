@@ -4,10 +4,20 @@ project(rviz_3d_object_visualizer)
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
 
+# Disable mongodb_store deprecated warnings:
+add_definitions(-Wno-deprecated-declarations)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rviz
+  mongodb_store
+  geometry_msgs
+  mas_perception_msgs 
+)
+
+generate_messages(
+  DEPENDENCIES
+    mas_perception_msgs
 )
 
 catkin_package(
@@ -15,7 +25,8 @@ catkin_package(
 
 find_package(yaml-cpp REQUIRED)
 
-include_directories(${catkin_INCLUDE_DIRS})
+# Adding include dir here necessary to find header files:
+include_directories(${catkin_INCLUDE_DIRS} include/)
 link_directories(${catkin_LIBRARY_DIRS})
 
 ## This setting causes Qt's "MOC" generation to happen automatically.
@@ -46,13 +57,8 @@ set(PLUGIN_SRC_FILES
     src/rviz_plugin/object_visualization_manager.cpp
 )
 
-# List down all required header files to compile the plugin
-set(PLUGIN_HEADER_FILES
-    include/rviz_plugin/object_visualization_manager.h
-)
-
 # Build the RViz plugin as a library
-add_library(${PROJECT_NAME} ${PLUGIN_SRC_FILES} ${PLUGIN_HEADER_FILES})
+add_library(${PROJECT_NAME} ${PLUGIN_SRC_FILES}) 
 
 # List down all the dependencies ( i.e. libraries) of the plugin
 target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} ${catkin_LIBRARIES} ${SDL2_LIBRARY} ${GLEW_LIBRARIES})
@@ -71,13 +77,12 @@ install(FILES plugin_description.xml DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINAT
 #######################
 # Compile Data Loader
 #######################
-include_directories(include)
-
 # List down all required cpp files to compile the dataloader library
 set(DATALOADER_SRC_FILES
     src/dataloader/modelloader/model_loader.cpp
     src/dataloader/modelloader/yaml_loader.cpp
     src/dataloader/modelloader/model.cpp
+    src/dataloader/mdr_dataloader.cpp
 )
 
 # Build the dataloader as a library
@@ -89,7 +94,10 @@ target_link_libraries(${DATALOADER_LIB_NAME} ${YAML_CPP_LIBRARIES})
 ###########################
 # Create a dummy executable
 ###########################
-include_directories(include)
 add_executable(dataloader_test src/main.cpp)
+#add_executable(mongodb_client_test src/mongodb_client_node.cpp)
+add_executable(dataloader_node src/dataloader_node.cpp)
 
 target_link_libraries(dataloader_test ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
+#target_link_libraries(mongodb_client_test ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
+target_link_libraries(dataloader_node ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
