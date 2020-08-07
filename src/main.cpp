@@ -8,13 +8,13 @@
 int main(int argc, char** argv)
 {
     RVizDataLoader::ModelLoader model_loader = RVizDataLoader::ModelLoader("/home/suvich15/catkin/domestic_robotics/src/extras/rviz_3d_object_visualizer/config/model_params.yaml");
-    auto bottle_marker = model_loader.getMarker(1, RVizDataLoader::Model::Types::BOTTLE, "base_link", "");
-    bottle_marker->pose.position.z += 0.91;
+    auto bottle_marker = model_loader.getMarker(1, RVizDataLoader::Model::Types::BOTTLE, "base_link", "", 
+                                                RVizDataLoader::Utils::Pose<double>(0, 0, 0.91, 0, 0, 0));
     auto table_marker = model_loader.getMarker(2, RVizDataLoader::Model::Types::TABLE, "base_link", "");
-    auto chair_marker = model_loader.getMarker(3, RVizDataLoader::Model::Types::CHAIR, "base_link", "");
-    chair_marker->pose.position.x -= 0.25;
-    auto person_marker = model_loader.getMarker(4, RVizDataLoader::Model::Types::PERSON, "base_link", "");
-    person_marker->pose.position.x += 1.0;
+    auto chair_marker = model_loader.getMarker(3, RVizDataLoader::Model::Types::CHAIR, "base_link", "", 
+                                                RVizDataLoader::Utils::Pose<double>(-0.25, 0, 0, 0, 0, 0));
+    auto person_marker = model_loader.getMarker(4, RVizDataLoader::Model::Types::PERSON, "base_link", "", 
+                                                RVizDataLoader::Utils::Pose<double>(1.0, 0, 0, 0, 0, 3.14));
 
     ros::init(argc, argv, "basic_shapes");
     ros::NodeHandle n;

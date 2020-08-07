@@ -18,7 +18,8 @@ namespace RVizDataLoader
         auto getMarker(int id,
                        Model::Types type, 
                        const std::string& frame_id, 
-                       const std::string& ns)
+                       const std::string& ns,
+                       const Utils::Pose<double>& pose = Utils::Pose<double>())
                        -> std::unique_ptr<visualization_msgs::Marker>;
 
     protected:

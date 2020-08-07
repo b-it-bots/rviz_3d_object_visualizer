@@ -50,7 +50,6 @@ namespace Utils
         T x_val;
         T y_val;
         T z_val;
-
     };
 
     template<typename T>

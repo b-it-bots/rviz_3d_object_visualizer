@@ -31,8 +31,6 @@ void YamlLoader::loadYamlFile()
     }
 
     YAML::Node root_node = YAML::LoadFile(yaml_file_path_);
-    std::cout << "Loaded YAML file" << std::endl;
-
     for (const auto& node: root_node)
     {
         Model::Types type = Model::getType(node.first.as<std::string>());

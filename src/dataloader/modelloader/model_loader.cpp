@@ -58,14 +58,33 @@ auto ModelLoader::loadModel(Model::Types model_type)
     return std::move(marker);
 }
 
-auto ModelLoader::getMarker(int id, Model::Types type, const std::string& frame_id, const std::string& ns)
-               -> std::unique_ptr<visualization_msgs::Marker>
+auto ModelLoader::getMarker(int id, Model::Types type, 
+                            const std::string& frame_id, 
+                            const std::string& ns,
+                            const Utils::Pose<double>& pose)
+                            -> std::unique_ptr<visualization_msgs::Marker>
 {
     std::unique_ptr<visualization_msgs::Marker> marker = loadModel(type);
     marker->header.frame_id = frame_id;
     marker->header.stamp = ros::Time();
     marker->ns = ns;
     marker->id = id;
+
+    // Update the position of the model
+    marker->pose.position.x += pose.position.x();
+    marker->pose.position.y += pose.position.y();
+    marker->pose.position.z += pose.position.z();
+
+    // Update the orientation of the model
+    tf2::Quaternion quat_new, quat_model;
+    quat_new.setRPY(pose.orientation.roll(), 
+                    pose.orientation.pitch(), 
+                    pose.orientation.yaw());
+    quat_new.normalize();
+    tf2::fromMsg(marker->pose.orientation, quat_model);
+    tf2::Quaternion quat_updated = quat_new * quat_model;
+    quat_updated.normalize();
+    marker->pose.orientation = tf2::toMsg(quat_updated);
 
     return std::move(marker);
 }
