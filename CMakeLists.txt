@@ -13,6 +13,8 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 )
 
+find_package(yaml-cpp REQUIRED)
+
 include_directories(${catkin_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
@@ -74,12 +76,14 @@ include_directories(include)
 # List down all required cpp files to compile the dataloader library
 set(DATALOADER_SRC_FILES
     src/dataloader/model_loader.cpp
-    src/dataloader/model_data.cpp
+    src/dataloader/yaml_loader.cpp
+    src/dataloader/model.cpp
 )
 
-# Build the RViz plugin as a library
-set(DATALOADER_EXECUTABLE_NAME dataloader)
-add_library(${DATALOADER_EXECUTABLE_NAME} ${DATALOADER_SRC_FILES})
+# Build the dataloader as a library
+set(DATALOADER_LIB_NAME dataloader)
+add_library(${DATALOADER_LIB_NAME} ${DATALOADER_SRC_FILES})
+target_link_libraries(${DATALOADER_LIB_NAME} ${YAML_CPP_LIBRARIES})
 
 
 ###########################
@@ -88,4 +92,4 @@ add_library(${DATALOADER_EXECUTABLE_NAME} ${DATALOADER_SRC_FILES})
 include_directories(include)
 add_executable(dataloader_test src/main.cpp)
 
-target_link_libraries(dataloader_test ${DATALOADER_EXECUTABLE_NAME})
+target_link_libraries(dataloader_test ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
