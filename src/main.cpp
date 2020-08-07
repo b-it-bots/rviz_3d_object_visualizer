@@ -2,6 +2,7 @@
 
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
+#include <visualization_msgs/MarkerArray.h>
 
 #include "dataloader/modelloader/model_loader.h"
 
@@ -30,19 +31,17 @@ int main(int argc, char** argv)
     auto person_marker = model_loader.getMarker(4, Model::Types::PERSON, "base_link", "", 
                                                 Utils::Pose<double>(1.0, 0, 0, 0, 0, 3.14));
 
-    ros::Publisher bottle_pub = n.advertise< visualization_msgs::Marker >("visualization_marker/bottle", 1);
-    ros::Publisher table_pub = n.advertise< visualization_msgs::Marker >("visualization_marker/table", 1);
-    ros::Publisher chair_pub = n.advertise< visualization_msgs::Marker >("visualization_marker/chair", 1);
-    ros::Publisher person_pub = n.advertise< visualization_msgs::Marker >("visualization_marker/person", 1);
+    ros::Publisher pub = n.advertise< visualization_msgs::MarkerArray >("/3D_markers_visualization/markers", 1);
+    visualization_msgs::MarkerArray msg;
+    msg.markers.push_back(*bottle_marker);
+    msg.markers.push_back(*table_marker);
+    msg.markers.push_back(*chair_marker);
+    msg.markers.push_back(*person_marker);
 
     while (ros::ok()) 
     {
-        // Publish the marker
-        bottle_pub.publish(*bottle_marker);
-        table_pub.publish(*table_marker);
-        chair_pub.publish(*chair_marker);
-        person_pub.publish(*person_marker);
-
+        // Publish the markers
+        pub.publish(msg);
         r.sleep();
     }
 }
