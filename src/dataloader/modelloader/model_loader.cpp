@@ -4,7 +4,7 @@
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
-#include "dataloader/model_loader.h"
+#include "dataloader/modelloader/model_loader.h"
 
 using namespace RVizDataLoader;
 

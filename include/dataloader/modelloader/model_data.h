@@ -8,8 +8,8 @@
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
 
-#include "dataloader/utils.h"
-#include "dataloader/model.h"
+#include "dataloader/modelloader/utils.h"
+#include "dataloader/modelloader/model.h"
 
 namespace RVizDataLoader 
 {

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "dataloader/yaml_loader.h"
+#include "dataloader/modelloader/yaml_loader.h"
 
 using namespace RVizDataLoader;
 

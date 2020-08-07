@@ -6,7 +6,7 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "dataloader/model_data.h"
+#include "dataloader/modelloader/model_data.h"
 
 namespace RVizDataLoader 
 {

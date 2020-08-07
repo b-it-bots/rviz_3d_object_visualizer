@@ -75,9 +75,9 @@ include_directories(include)
 
 # List down all required cpp files to compile the dataloader library
 set(DATALOADER_SRC_FILES
-    src/dataloader/model_loader.cpp
-    src/dataloader/yaml_loader.cpp
-    src/dataloader/model.cpp
+    src/dataloader/modelloader/model_loader.cpp
+    src/dataloader/modelloader/yaml_loader.cpp
+    src/dataloader/modelloader/model.cpp
 )
 
 # Build the dataloader as a library
