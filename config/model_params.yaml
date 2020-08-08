@@ -1,0 +1,28 @@
+BOTTLE:
+    Position: [0.0, 0.0, 0.12]
+    Orientation: [0.0, 0.0, 0.0]
+    Scale: [0.001, 0.001, 0.001]
+    Color: [255, 0, 0]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/cola/cola_bottle.dae"
+    UseColorFromMesh: False
+TABLE:
+    Position: [0.0, 0.0, 0.52]
+    Orientation: [1.570796327, 0.0, 0.0]
+    Scale: [0.0075, 0.0075, 0.0075]
+    Color: [0, 255, 0]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/table/table.dae"
+    UseColorFromMesh: True
+CHAIR:
+    Position: [0.0, 0.0, 0.0]
+    Orientation: [0.0, 0.0, 3.141592654]
+    Scale: [0.375, 0.375, 0.375]
+    Color: [0, 0, 255]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/chair/chair.dae"
+    UseColorFromMesh: False
+PERSON:
+    Position: [0.0, 0.0, 0.0]
+    Orientation: [1.570796327, 0.0, 1.919862177]
+    Scale: [0.01, 0.01, 0.01]
+    Color: [203, 132, 66]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/person/female.dae"
+    UseColorFromMesh: False

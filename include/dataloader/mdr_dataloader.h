@@ -10,7 +10,7 @@
 #define MDR_DATALOADER_H
 
 #include "dataloader/mongodb_dataloader.h"
-#include "dataloader/model_data.h"
+#include "dataloader/modelloader/model_data.h"
 
 namespace RVizDataLoader 
 {

@@ -23,6 +23,8 @@ generate_messages(
 catkin_package(
 )
 
+find_package(yaml-cpp REQUIRED)
+
 # Adding include dir here necessary to find header files:
 include_directories(${catkin_INCLUDE_DIRS} include/)
 link_directories(${catkin_LIBRARY_DIRS})
@@ -77,23 +79,25 @@ install(FILES plugin_description.xml DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINAT
 #######################
 # List down all required cpp files to compile the dataloader library
 set(DATALOADER_SRC_FILES
-    src/dataloader/model_loader.cpp
-    src/dataloader/model_data.cpp
+    src/dataloader/modelloader/model_loader.cpp
+    src/dataloader/modelloader/yaml_loader.cpp
+    src/dataloader/modelloader/model.cpp
     src/dataloader/mdr_dataloader.cpp
 )
 
-# Build the RViz plugin as a library
+# Build the dataloader as a library
 set(DATALOADER_LIB_NAME dataloader)
 add_library(${DATALOADER_LIB_NAME} ${DATALOADER_SRC_FILES})
+target_link_libraries(${DATALOADER_LIB_NAME} ${YAML_CPP_LIBRARIES})
 
 
 ###########################
 # Create a dummy executable
 ###########################
 add_executable(dataloader_test src/main.cpp)
-add_executable(mongodb_client_test src/mongodb_client_node.cpp)
+#add_executable(mongodb_client_test src/mongodb_client_node.cpp)
 add_executable(dataloader_node src/dataloader_node.cpp)
 
 target_link_libraries(dataloader_test ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
-target_link_libraries(mongodb_client_test ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
+#target_link_libraries(mongodb_client_test ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
 target_link_libraries(dataloader_node ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
