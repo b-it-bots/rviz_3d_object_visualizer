@@ -31,7 +31,8 @@ namespace Utils
 
         friend std::ostream& operator<<(std::ostream& os, const Vec3<T>& data)
         {
-            std::cout << "(" << data.x << ", " << data.y << ", " << data.z << ")";
+            os << "(" << data.x() << ", " << data.y() << ", " << data.z() << ")";
+            return os;
         }
 
         T x() const { return x_val; };
@@ -113,7 +114,8 @@ namespace Utils
 
         friend std::ostream& operator<<(std::ostream& os, const Pose<T>& pose)
         {
-            std::cout << "Position" << pose.position << "; Orientation" << pose.orientation;
+            os << "Position" << pose.position << "; Orientation" << pose.orientation;
+            return os;
         }
 
         Vec3<T> position;
