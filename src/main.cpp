@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <ros/ros.h>
+#include <ros/package.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 
@@ -13,14 +14,9 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "basic_shapes");
     ros::NodeHandle n;
     ros::Rate r(1);
-    std::string model_config_file;
-    n.param<std::string>("/dataloader/model_config", model_config_file, 
-                         "/home/suvich15/catkin/domestic_robotics/src/extras/rviz_3d_object_visualizer/config/model_params.yaml");
-    if (model_config_file == "")
-    {
-        std::cout << "No model config path set! Please set the path in the rosparam \"/dataloader/model_config\"" << std::endl;
-        return 1;
-    }
+
+    std::string model_config_file = ros::package::getPath("rviz_3d_object_visualizer") + "/config/model_params.yaml";
+    n.param<std::string>("/dataloader/model_config", model_config_file, model_config_file);
 
     ModelLoader model_loader = ModelLoader(model_config_file);
     auto bottle_marker = model_loader.getMarker(1, Model::Types::BOTTLE, "base_link", "", 
@@ -31,7 +27,7 @@ int main(int argc, char** argv)
     auto person_marker = model_loader.getMarker(4, Model::Types::PERSON, "base_link", "", 
                                                 Utils::Pose<double>(1.0, 0, 0, 0, 0, 3.14));
 
-    ros::Publisher pub = n.advertise< visualization_msgs::MarkerArray >("/3D_markers_visualization/markers", 1);
+    ros::Publisher pub = n.advertise<visualization_msgs::MarkerArray>("/3D_markers_visualization/markers", 1);
     visualization_msgs::MarkerArray msg;
     msg.markers.push_back(*bottle_marker);
     msg.markers.push_back(*table_marker);
