@@ -6,17 +6,22 @@
      @version 1.0
  */
 
-#include <geometry_msgs/Pose.h>
-#include <mas_perception_msgs/Object.h>
-#include <mas_perception_msgs/Person.h>
-#include <mas_perception_msgs/Plane.h>
 
 #include "dataloader/mdr_dataloader.h"
+#include <ros/package.h>
+#include <visualization_msgs/Marker.h>
+#include <visualization_msgs/MarkerArray.h>
 
 using namespace RVizDataLoader;
 
-MDRDataloader::MDRDataloader(ros::NodeHandle nh) : MongoDBDataloader(nh)
+MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh) 
 {
+    update_loop_rate = 10;
+    object_data_pub= nh.advertise<visualization_msgs::MarkerArray>("/3D_markers_visualization/markers", 1);
+
+    std::string model_config_file = ros::package::getPath("rviz_3d_object_visualizer") + "/config/model_params.yaml";
+    nh.param<std::string>("/dataloader/model_config", model_config_file, model_config_file);
+    model_loader = new ModelLoader(model_config_file);
 }
 
 MDRDataloader::~MDRDataloader()
@@ -26,31 +31,57 @@ MDRDataloader::~MDRDataloader()
 void MDRDataloader::queryDatabase()
 {
     // Adding new entries:
-    geometry_msgs::Pose pose_msg;
-    mas_perception_msgs::Object object_msg;
-    mas_perception_msgs::Person person_msg;
-    mas_perception_msgs::Plane plane_msg;
+    /* mas_perception_msgs::Object object_msg; */
+    /* mas_perception_msgs::Person person_msg; */
+    /* mas_perception_msgs::Plane plane_msg; */
+    /* message_proxy_.insertNamed("Object_msg", object_msg); */
+    /* message_proxy_.insertNamed("Person_msg", person_msg); */
+    /* message_proxy_.insertNamed("Plane_msg", plane_msg); */
 
-    std::string id = message_proxy_.insertNamed("test_pose_data", pose_msg);
-    message_proxy_.insertNamed("test_object_data", object_msg);
-    message_proxy_.insertNamed("test_person_data", person_msg);
-    message_proxy_.insertNamed("test_plane_data", plane_msg);
+    std::cout << "\nDetails of new objects in database:" << std::endl;
 
-    // Updating an entry:
-    pose_msg.position.x = 999;
-    message_proxy_.updateID(id, pose_msg);
-    assert(message_proxy_.queryID<geometry_msgs::Pose>(id).first->position.x == 999);
+    /* updateObjectData<mas_perception_msgs::Person>(); */
+    updateObjectData<mas_perception_msgs::Object>();
+    updateObjectData<mas_perception_msgs::Plane>();
+    // TODO: remove objects from map if not database
 
-    // Reading existing entries:
-    std::vector< boost::shared_ptr<geometry_msgs::Pose>> queried_poses;
-    std::vector< boost::shared_ptr<mas_perception_msgs::Person>> queried_people;
-    message_proxy_.queryNamed<geometry_msgs::Pose>("test_pose_data", queried_poses, false);
-    std::cout << "Found " << queried_poses.size() << " poses in database" << std::endl;
-    std::cout << queried_poses[0]->position.x << std::endl;
-    message_proxy_.queryNamed<mas_perception_msgs::Person>("test_person_data", queried_people, false);
-    std::cout << "Found " << queried_people.size() << " people in database" << std::endl;
+    std::cout << "\nDetails of currently stored objects:" << std::endl;
+    printStoredObjectData();
 }
 
 void MDRDataloader::runDataUpdateLoop()
 {
+    ROS_INFO("[mdr_dataloader] Starting data update loop...");
+    ros::Rate rate(update_loop_rate);
+
+    while (ros::ok())
+    {
+        queryDatabase();
+        publishObjectData();
+
+        ros::spinOnce();
+        rate.sleep();
+    }
+}
+
+void MDRDataloader::printStoredObjectData()
+{
+    int entry_counter{0};
+    for (auto it = object_data.begin(); it != object_data.end(); it++)
+    {
+        std::cout << "Entry " << entry_counter++ << ":" << std::endl;
+        std::cout << "ID: " << it->first << std::endl;
+    }
+}
+
+void MDRDataloader::publishObjectData()
+{
+    // TODO:
+    // object_data_pub.publish(data);
+ 
+    for (auto &object : object_data)
+    {
+        auto marker = model_loader->getMarker(item_id++, object.second.type_, "base_link", "", 
+                                             object.second.pose_);
+    }
 }
