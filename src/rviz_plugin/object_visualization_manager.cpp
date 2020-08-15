@@ -40,6 +40,8 @@ using namespace RVizVisualization;
 ObjectVisualizationManager::ObjectVisualizationManager(QWidget* parent)
 : rviz::Panel(parent)
 {
+    ros::NodeHandle nh;
+    marker_array_sub_ = nh.subscribe<visualization_msgs::MarkerArray> ("/ObjectVisualizationManager/MarkerArray", 10, &ObjectVisualizationManager::markerArrayCb, this);
 }
 
 void ObjectVisualizationManager::onInitialize()
@@ -48,6 +50,11 @@ void ObjectVisualizationManager::onInitialize()
 
 ObjectVisualizationManager::~ObjectVisualizationManager()
 {
+}
+
+void ObjectVisualizationManager::markerArrayCb(const visualization_msgs::MarkerArray::ConstPtr& markers)
+{
+    std::cout << "Received Marker array!" << std::endl;
 }
 
 #include <pluginlib/class_list_macros.h>
