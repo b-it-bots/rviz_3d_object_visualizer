@@ -55,6 +55,8 @@ add_definitions(-DQT_NO_KEYWORDS)
 # List down all required cpp files to compile the plugin
 set(PLUGIN_SRC_FILES
     src/rviz_plugin/object_visualization_manager.cpp
+    # For some reason, including the header file is necessary. Otherwise the plugin fails to load!
+    include/rviz_plugin/object_visualization_manager.h
 )
 
 # Build the RViz plugin as a library
