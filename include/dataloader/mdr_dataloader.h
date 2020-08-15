@@ -87,60 +87,6 @@ namespace RVizDataLoader
                     }
                 }
             }
- 
-            // Set Solution:
-            /* template <typename T> */
-            /* void updateObjectData() */
-            /* { */
-            /*     bool object_in_queried_list; */
-            /*     std::vector<boost::shared_ptr<T>> queried_objects; */
-
-            /*     message_proxy_.query<T>(queried_objects); */
-
-            /*     for (int i = 0; i < queried_objects.size(); i++) */
-            /*     { */
-            /*         std::string object_name = queried_objects[i]->name; */
-            /*         object_name = typeid(T).name(); */
-            /*         ModelData model_data = ModelData(); */
-
-            /*         /1* model_data.pose = Utils::Pose<double>(queried_objects[i]->pose.pose.position, queried_objects[i]->pose.pose.orientation); *1/ */
-
-            /*         if (object_data.find(object_name) == object_data.end()) */
-            /*         { */
-            /*             // object not found; insert it in map: */
-            /*             model_data.unique_id_ = item_id++; */
-            /*             object_data.insert(std::pair<std::string, ModelData>(object_name, model_data)); */
-            /*             std::cout << "New object inserted in map" << std::endl; */
-            /*         } */
-            /*         else */
-            /*         { */
-            /*             // object found in map; update its data: */
-            /*             object_data[object_name] = model_data; */
-            /*             std::cout << "Old object data updated in map" << std::endl; */
-            /*         } */
-            /*     } */
-
-            /*     for (auto &object_in_map : object_data) */
-            /*     { */
-            /*         object_in_queried_list = false; */
-            /*         for (auto &object_in_query : queried_objects) */
-            /*         { */
-            /*             if (object_in_map.first == object_in_query->name) */
-            /*             { */
-            /*                 object_in_queried_list = true; */
-            /*                 break; */
-            /*             } */
-            /*         } */
-
-            /*         if (!object_in_queried_list) */
-            /*         { */
-            /*             // object not found in queried list; add to delete list, and erase from map */
-            /*             /1* delete_list_.push_back(object_in_map.second.unique_id_); *1/ */
-            /*             /1* object_data.erase(object_in_map.first); *1/ */
-            /*             std::cout << "Object in map not found in queried_list. Removing..." << std::endl; */
-            /*         } */
-            /*     } */
-            /* } */
 
         private:
             int update_loop_rate;
