@@ -43,7 +43,14 @@ void MDRDataloader::queryDatabase()
     /* updateObjectData<mas_perception_msgs::Person>(); */
     updateObjectData<mas_perception_msgs::Object>();
     updateObjectData<mas_perception_msgs::Plane>();
-    // TODO: remove objects from map if not database
+
+    // Remove objects from map if not database
+    std::cout << "Items to be deleted:" << std::endl;
+    for (auto &item_to_delete_name : item_delete_list_)
+    {
+        std::cout << item_to_delete_name << std::endl;
+        object_data.erase(item_to_delete_name);
+    }
 
     std::cout << "\nDetails of currently stored objects:" << std::endl;
     printStoredObjectData();
@@ -77,11 +84,15 @@ void MDRDataloader::printStoredObjectData()
 void MDRDataloader::publishObjectData()
 {
     // TODO:
-    // object_data_pub.publish(data);
  
+    visualization_msgs::MarkerArray msg;
+
     for (auto &object : object_data)
     {
-        auto marker = model_loader->getMarker(item_id++, object.second.type_, "base_link", "", 
-                                             object.second.pose_);
+        auto marker = model_loader->getMarker(object.second.unique_id_, object.second.type_, "base_link", "", 
+                                              object.second.pose_);
+        msg.markers.push_back(*marker);
     }
+
+    object_data_pub.publish(msg);
 }
