@@ -26,6 +26,7 @@ namespace RVizDataLoader
         bool use_color_from_mesh_;
 
         Model::Types type_;
+        int unique_id_;
     };
 };
 
