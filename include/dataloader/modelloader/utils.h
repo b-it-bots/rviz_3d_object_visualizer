@@ -3,6 +3,8 @@
 
 #include<iostream>
 #include<vector>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
 
 namespace RVizDataLoader 
 {
@@ -14,15 +16,16 @@ namespace Utils
     {
     public:
         Vec3(): x_val(T{}), y_val(T{}), z_val(T{}) {}
+        Vec3(T x, T y, T z): x_val(x), y_val(y), z_val(z) {}
 
-        void update(T x, T y, T z)
+        virtual void update(T x, T y, T z)
         {
             x_val = x;
             y_val = y;
             z_val = z;
         }
 
-        void update(std::vector<T> vec)
+        virtual void update(std::vector<T> vec)
         {
             x_val = vec[0];
             y_val = vec[1];
@@ -51,6 +54,42 @@ namespace Utils
         T x_val;
         T y_val;
         T z_val;
+    };
+
+    template<typename T>
+    class Vec4 : public Vec3<T>
+    {
+    public:
+        Vec4(): Vec3<T>(), w_val(T{}) {}
+        Vec4(T x, T y, T z, T w): Vec3<T>(x, y, z), w_val(w) {}
+
+        void update(T x, T y, T z, T w)
+        {
+            Vec3<T>::x_val = x;
+            Vec3<T>::y_val = y;
+            Vec3<T>::z_val = z;
+            w_val = w;
+        }
+
+        virtual void update(std::vector<T> vec)
+        {
+            Vec3<T>::x_val = vec[0];
+            Vec3<T>::y_val = vec[1];
+            Vec3<T>::z_val = vec[2];
+            w_val = vec[3];
+        }
+
+        friend std::ostream& operator<<(std::ostream& os, const Vec4<T>& data)
+        {
+            os << "(" << data.x() << ", " << data.y() << ", " << data.z() << ", " << data.w() << ")";
+            return os;
+        }
+
+        T w() const { return w_val; };
+        T a() const { return w(); }
+
+    protected:
+        T w_val;
     };
 
     template<typename T>
@@ -121,6 +160,32 @@ namespace Utils
         Vec3<T> position;
         Vec3<T> orientation;
     };
+
+    static tf2::Quaternion toTf2Quaternion(Vec3<double> orientationRPY)
+    {
+        tf2::Quaternion quat;
+        quat.setRPY(orientationRPY.roll(), orientationRPY.pitch(), orientationRPY.yaw());
+        quat.normalize();
+
+        return quat;
+    }
+
+    static Vec4<double> toQuaternion(Vec3<double> orientationRPY)
+    {
+        tf2::Quaternion quat = toTf2Quaternion(orientationRPY);
+        return Vec4<double>(quat.getX(), quat.getY(), quat.getZ(), quat.getW());
+    }
+
+    static Vec3<double> toRPY(Vec4<double> orientationQuat)
+    {
+        tf2::Quaternion quat(orientationQuat.x(), orientationQuat.y(), 
+                             orientationQuat.z(), orientationQuat.w());
+        tf2::Matrix3x3 mat(quat);
+        double roll, pitch, yaw;
+        mat.getRPY(roll, pitch, yaw);
+
+        return Vec3<double>(roll, pitch, yaw);
+    }
 }
 
 }

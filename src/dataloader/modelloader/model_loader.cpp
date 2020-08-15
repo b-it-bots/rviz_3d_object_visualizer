@@ -24,13 +24,7 @@ auto ModelLoader::loadModel(Model::Types model_type)
     marker->pose.position.x = model_data.pose_.position.x();
     marker->pose.position.y = model_data.pose_.position.y();
     marker->pose.position.z = model_data.pose_.position.z();
-
-    tf2::Quaternion quat;
-    quat.setRPY(model_data.pose_.orientation.roll(), 
-                model_data.pose_.orientation.pitch(), 
-                model_data.pose_.orientation.yaw());
-    quat.normalize();
-    marker->pose.orientation = tf2::toMsg(quat);
+    marker->pose.orientation = tf2::toMsg(Utils::toTf2Quaternion(model_data.pose_.orientation));
 
     marker->scale.x = model_data.scale_.x();
     marker->scale.y = model_data.scale_.y();
@@ -70,21 +64,17 @@ auto ModelLoader::getMarker(int id, Model::Types type,
     marker->ns = ns;
     marker->id = id;
 
-    // Update the position of the model
+    // Translate the model in world space
     marker->pose.position.x += pose.position.x();
     marker->pose.position.y += pose.position.y();
     marker->pose.position.z += pose.position.z();
 
-    // Update the orientation of the model
-    tf2::Quaternion quat_new, quat_model;
-    quat_new.setRPY(pose.orientation.roll(), 
-                    pose.orientation.pitch(), 
-                    pose.orientation.yaw());
-    quat_new.normalize();
-    tf2::fromMsg(marker->pose.orientation, quat_model);
-    tf2::Quaternion quat_updated = quat_new * quat_model;
-    quat_updated.normalize();
-    marker->pose.orientation = tf2::toMsg(quat_updated);
+    // Orient the model in world space
+    tf2::Quaternion quat_model_space;
+    tf2::fromMsg(marker->pose.orientation, quat_model_space);
+    tf2::Quaternion quat_world_space = Utils::toTf2Quaternion(pose.orientation) * quat_model_space;
+    quat_world_space.normalize();
+    marker->pose.orientation = tf2::toMsg(quat_world_space);
 
     return std::move(marker);
 }
