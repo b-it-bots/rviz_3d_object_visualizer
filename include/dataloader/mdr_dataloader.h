@@ -47,16 +47,19 @@ namespace RVizDataLoader
                 for (int i = 0; i < queried_objects.size(); i++)
                 {
                     std::string object_name = queried_objects[i]->name;
-                    object_name = typeid(T).name();
+                    /* object_name = typeid(T).name(); */
                     ModelData model_data = ModelData();
-                    /* model_data.pose = Utils::Pose<double>(queried_objects[i]->pose.pose.position, queried_objects[i]->pose.pose.orientation); */
+                    auto position = queried_objects[i]->pose.pose.position;
+                    auto orientation = queried_objects[i]->pose.pose.orientation;
+                    Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
+                    model_data.pose_ = Utils::Pose<double>(position.x, position.y, position.z, rpy_vector.x(), rpy_vector.y(), rpy_vector.z());
 
                     if (object_data_.find(object_name) == object_data_.end())
                     {
                         // object not found; insert it in map:
                         model_data.unique_id_ = item_id_++;
                         object_data_.insert(std::pair<std::string, ModelData>(object_name, model_data));
-                        std::cout << "New object inserted in map" << std::endl;
+                        std::cout << *queried_objects[i] << std::endl;
                     }
                     else
                     {
@@ -87,6 +90,8 @@ namespace RVizDataLoader
                     }
                 }
             }
+
+            //TODO: Implement set solution, and compare:
 
         private:
             int update_loop_rate_;

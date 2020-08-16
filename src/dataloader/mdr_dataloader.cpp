@@ -40,9 +40,9 @@ void MDRDataloader::queryDatabase()
 
     std::cout << "\nDetails of new objects in database:" << std::endl;
 
-    /* updateObjectData<mas_perception_msgs::Person>(); */
+    /* updateObjectData<mas_perception_msgs::Person>(); */              // has no name field
     updateObjectData<mas_perception_msgs::Object>();
-    updateObjectData<mas_perception_msgs::Plane>();
+    /* updateObjectData<mas_perception_msgs::Plane>(); */               // has no pose field (only position in plane_point)
 
     // Remove objects from map if not database
     std::cout << "Items to be deleted:" << std::endl;
