@@ -23,9 +23,11 @@ namespace RVizDataLoader
 
             virtual void queryDatabase() = 0;
             virtual void runDataUpdateLoop() = 0;
+            virtual void publishObjectData() = 0;
     
         protected:
             mongodb_store::MessageStoreProxy message_proxy_;
+            ros::Publisher data_pub_;
     };
 }
 

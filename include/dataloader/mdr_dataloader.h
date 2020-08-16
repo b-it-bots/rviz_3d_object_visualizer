@@ -28,8 +28,8 @@ namespace RVizDataLoader
 
             virtual void queryDatabase();
             virtual void runDataUpdateLoop();
+            virtual void publishObjectData();
             void printStoredObjectData();
-            void publishObjectData();
 
             friend std::ostream& operator<<(std::ostream &out, mas_perception_msgs::Person const& data); 
             friend std::ostream& operator<<(std::ostream &out, mas_perception_msgs::Object const& data); 
@@ -93,12 +93,10 @@ namespace RVizDataLoader
             int item_id_;
             std::vector<int> marker_delete_list_;
             std::vector<std::string> item_delete_list_;
-            ros::Publisher object_data_pub_;
             std::map<std::string, ModelData> object_data_;
             ModelLoader* model_loader_;
     };
 
-    // TODO: transfer to and get working in cpp:
     std::ostream& operator<< (std::ostream &out, mas_perception_msgs::Person const& data) 
     {
         out << "Type: Person" << std::endl;

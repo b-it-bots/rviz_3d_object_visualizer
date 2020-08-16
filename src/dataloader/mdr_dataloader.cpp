@@ -17,7 +17,7 @@ using namespace RVizDataLoader;
 MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh) 
 {
     update_loop_rate_ = 10;
-    object_data_pub_ = nh.advertise<visualization_msgs::MarkerArray>("/3D_markers_visualization/markers", 1);
+    data_pub_ = nh.advertise<visualization_msgs::MarkerArray>("/3D_markers_visualization/markers", 1);
 
     std::string model_config_file = ros::package::getPath("rviz_3d_object_visualizer") + "/config/model_params.yaml";
     nh.param<std::string>("/dataloader/model_config", model_config_file, model_config_file);
@@ -83,16 +83,22 @@ void MDRDataloader::printStoredObjectData()
 
 void MDRDataloader::publishObjectData()
 {
-    // TODO:
- 
-    visualization_msgs::MarkerArray msg;
+    visualization_msgs::MarkerArray marker_array_msg;
 
     for (auto &object : object_data_)
     {
         auto marker = model_loader_->getMarker(object.second.unique_id_, object.second.type_, "base_link", "", 
                                               object.second.pose_);
-        msg.markers.push_back(*marker);
+        marker_array_msg.markers.push_back(*marker);
     }
 
-    object_data_pub_.publish(msg);
+    for (auto &marker_id : marker_delete_list_)
+    {
+        visualization_msgs::Marker delete_marker;
+        delete_marker.header.frame_id = "base_link";
+        delete_marker.id = marker_id;
+        marker_array_msg.markers.push_back(delete_marker);
+    }
+
+    data_pub_.publish(marker_array_msg);
 }
