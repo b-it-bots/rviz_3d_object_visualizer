@@ -16,12 +16,12 @@ using namespace RVizDataLoader;
 
 MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh) 
 {
-    update_loop_rate = 10;
-    object_data_pub= nh.advertise<visualization_msgs::MarkerArray>("/3D_markers_visualization/markers", 1);
+    update_loop_rate_ = 10;
+    object_data_pub_ = nh.advertise<visualization_msgs::MarkerArray>("/3D_markers_visualization/markers", 1);
 
     std::string model_config_file = ros::package::getPath("rviz_3d_object_visualizer") + "/config/model_params.yaml";
     nh.param<std::string>("/dataloader/model_config", model_config_file, model_config_file);
-    model_loader = new ModelLoader(model_config_file);
+    model_loader_ = new ModelLoader(model_config_file);
 }
 
 MDRDataloader::~MDRDataloader()
@@ -49,7 +49,7 @@ void MDRDataloader::queryDatabase()
     for (auto &item_to_delete_name : item_delete_list_)
     {
         std::cout << item_to_delete_name << std::endl;
-        object_data.erase(item_to_delete_name);
+        object_data_.erase(item_to_delete_name);
     }
 
     std::cout << "\nDetails of currently stored objects:" << std::endl;
@@ -59,7 +59,7 @@ void MDRDataloader::queryDatabase()
 void MDRDataloader::runDataUpdateLoop()
 {
     ROS_INFO("[mdr_dataloader] Starting data update loop...");
-    ros::Rate rate(update_loop_rate);
+    ros::Rate rate(update_loop_rate_);
 
     while (ros::ok())
     {
@@ -74,7 +74,7 @@ void MDRDataloader::runDataUpdateLoop()
 void MDRDataloader::printStoredObjectData()
 {
     int entry_counter{0};
-    for (auto it = object_data.begin(); it != object_data.end(); it++)
+    for (auto it = object_data_.begin(); it != object_data_.end(); it++)
     {
         std::cout << "Entry " << entry_counter++ << ":" << std::endl;
         std::cout << "ID: " << it->first << std::endl;
@@ -87,12 +87,12 @@ void MDRDataloader::publishObjectData()
  
     visualization_msgs::MarkerArray msg;
 
-    for (auto &object : object_data)
+    for (auto &object : object_data_)
     {
-        auto marker = model_loader->getMarker(object.second.unique_id_, object.second.type_, "base_link", "", 
+        auto marker = model_loader_->getMarker(object.second.unique_id_, object.second.type_, "base_link", "", 
                                               object.second.pose_);
         msg.markers.push_back(*marker);
     }
 
-    object_data_pub.publish(msg);
+    object_data_pub_.publish(msg);
 }

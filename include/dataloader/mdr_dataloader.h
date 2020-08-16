@@ -51,22 +51,22 @@ namespace RVizDataLoader
                     ModelData model_data = ModelData();
                     /* model_data.pose = Utils::Pose<double>(queried_objects[i]->pose.pose.position, queried_objects[i]->pose.pose.orientation); */
 
-                    if (object_data.find(object_name) == object_data.end())
+                    if (object_data_.find(object_name) == object_data_.end())
                     {
                         // object not found; insert it in map:
-                        model_data.unique_id_ = item_id++;
-                        object_data.insert(std::pair<std::string, ModelData>(object_name, model_data));
+                        model_data.unique_id_ = item_id_++;
+                        object_data_.insert(std::pair<std::string, ModelData>(object_name, model_data));
                         std::cout << "New object inserted in map" << std::endl;
                     }
                     else
                     {
                         // object found in map; update its data:
-                        object_data[object_name] = model_data;
+                        object_data_[object_name] = model_data;
                         std::cout << "Old object data updated in map" << std::endl;
                     }
                 }
 
-                for (auto &object_in_map : object_data)
+                for (auto &object_in_map : object_data_)
                 {
                     object_in_queried_list = false;
                     for (auto &object_in_query : queried_objects)
@@ -89,13 +89,13 @@ namespace RVizDataLoader
             }
 
         private:
-            int update_loop_rate;
-            int item_id;
+            int update_loop_rate_;
+            int item_id_;
             std::vector<int> marker_delete_list_;
             std::vector<std::string> item_delete_list_;
-            ros::Publisher object_data_pub;
-            std::map<std::string, ModelData> object_data;
-            ModelLoader* model_loader;
+            ros::Publisher object_data_pub_;
+            std::map<std::string, ModelData> object_data_;
+            ModelLoader* model_loader_;
     };
 
     // TODO: transfer to and get working in cpp:
