@@ -17,6 +17,13 @@ namespace Utils
     public:
         Vec3(): x_val(T{}), y_val(T{}), z_val(T{}) {}
         Vec3(T x, T y, T z): x_val(x), y_val(y), z_val(z) {}
+        Vec3(std::vector<T> vec3)
+        {
+            assert(vec3.size() == 3);
+            Vec3<T>::x_val = vec3[0];
+            Vec3<T>::y_val = vec3[1];
+            Vec3<T>::z_val = vec3[2];
+        }
 
         virtual void update(T x, T y, T z)
         {
@@ -62,6 +69,14 @@ namespace Utils
     public:
         Vec4(): Vec3<T>(), w_val(T{}) {}
         Vec4(T x, T y, T z, T w): Vec3<T>(x, y, z), w_val(w) {}
+        Vec4(std::vector<T> vec4)
+        {
+            assert(vec4.size() == 4);
+            Vec3<T>::x_val = vec4[0];
+            Vec3<T>::y_val = vec4[1];
+            Vec3<T>::z_val = vec4[2];
+            w_val = vec4[3];
+        }
 
         void update(T x, T y, T z, T w)
         {
