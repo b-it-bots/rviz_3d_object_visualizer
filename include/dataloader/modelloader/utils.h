@@ -161,6 +161,15 @@ namespace Utils
         Vec3<T> orientation;
     };
 
+    template<typename T>
+    using Vec3Array = std::vector<Vec3<T>>;
+
+    template<typename T>
+    using Vec4Array = std::vector<Vec4<T>>;
+
+    template<typename T>
+    using PoseArray = std::vector<Pose<T>>;
+
     static tf2::Quaternion toTf2Quaternion(Vec3<double> orientationRPY)
     {
         tf2::Quaternion quat;
