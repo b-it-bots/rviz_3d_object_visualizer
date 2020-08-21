@@ -16,15 +16,15 @@ namespace RVizDataLoader
         YamlLoader(const std::string& yaml_file);
         virtual ~YamlLoader(){}
 
-        ModelData getModelConfig(Model::Types type);
+        MeshData getMeshConfig(Mesh::Types type);
         void setYamlFilePath(const std::string& filepath);
 
     protected:
-        ModelData extractModelConfig(YAML::Node node);
+        MeshData extractMeshConfig(YAML::Node node);
         void loadYamlFile();
 
         std::string yaml_file_path_;
-        std::map<Model::Types, ModelData> model_data_map_;
+        std::map<Mesh::Types, MeshData> mesh_data_map_;
 
     };
 };

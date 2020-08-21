@@ -81,7 +81,7 @@ install(FILES plugin_description.xml DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINAT
 set(DATALOADER_SRC_FILES
     src/dataloader/modelloader/model_loader.cpp
     src/dataloader/modelloader/yaml_loader.cpp
-    src/dataloader/modelloader/model.cpp
+    src/dataloader/modelloader/mesh.cpp
     src/dataloader/mdr_dataloader.cpp
 )
 

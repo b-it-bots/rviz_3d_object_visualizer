@@ -13,24 +13,24 @@ ModelLoader::ModelLoader(const std::string& model_config_path)
 {
 }
 
-auto ModelLoader::loadModel(Model::Types model_type) 
+auto ModelLoader::loadModel(Mesh::Types mesh_type) 
                             -> std::unique_ptr<visualization_msgs::Marker>
 {
     std::unique_ptr<visualization_msgs::Marker> marker = std::unique_ptr<visualization_msgs::Marker>(new visualization_msgs::Marker);
 
-    ModelData model_data = yaml_loader_.getModelConfig(model_type);
+    MeshData mesh_data = yaml_loader_.getMeshConfig(mesh_type);
 
     marker->type = visualization_msgs::Marker::MESH_RESOURCE;
-    marker->pose.position.x = model_data.pose_.position.x();
-    marker->pose.position.y = model_data.pose_.position.y();
-    marker->pose.position.z = model_data.pose_.position.z();
-    marker->pose.orientation = tf2::toMsg(Utils::toTf2Quaternion(model_data.pose_.orientation));
+    marker->pose.position.x = mesh_data.pose_.position.x();
+    marker->pose.position.y = mesh_data.pose_.position.y();
+    marker->pose.position.z = mesh_data.pose_.position.z();
+    marker->pose.orientation = tf2::toMsg(Utils::toTf2Quaternion(mesh_data.pose_.orientation));
 
-    marker->scale.x = model_data.scale_.x();
-    marker->scale.y = model_data.scale_.y();
-    marker->scale.z = model_data.scale_.z();
+    marker->scale.x = mesh_data.scale_.x();
+    marker->scale.y = mesh_data.scale_.y();
+    marker->scale.z = mesh_data.scale_.z();
 
-    if (model_data.use_color_from_mesh_)
+    if (mesh_data.use_color_from_mesh_)
     {
         marker->color.r = 0.0;
         marker->color.g = 0.0;
@@ -40,19 +40,19 @@ auto ModelLoader::loadModel(Model::Types model_type)
     }
     else
     {
-        marker->color.r = model_data.color_.r() / 255.0;
-        marker->color.g = model_data.color_.g() / 255.0;
-        marker->color.b = model_data.color_.b() / 255.0;
+        marker->color.r = mesh_data.color_.r() / 255.0;
+        marker->color.g = mesh_data.color_.g() / 255.0;
+        marker->color.b = mesh_data.color_.b() / 255.0;
         marker->color.a = 1.0;
         marker->mesh_use_embedded_materials = false;
     }
 
-    marker->mesh_resource = model_data.mesh_resource_;
+    marker->mesh_resource = mesh_data.mesh_resource_;
 
     return std::move(marker);
 }
 
-auto ModelLoader::getMarker(int id, Model::Types type, 
+auto ModelLoader::getMarker(int id, Mesh::Types type, 
                             const std::string& frame_id, 
                             const std::string& ns,
                             const Utils::Pose<double>& pose)
