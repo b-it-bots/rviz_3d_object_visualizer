@@ -33,8 +33,17 @@
   @version 1.0 15/08/20
 */
 
+#include <OgreSceneManager.h>
+#include <typeinfo>
+
+#include <rviz/visualization_manager.h>
+#include <rviz/ogre_helpers/arrow.h>
+#include <rviz/ogre_helpers/mesh_shape.h>
+#include <rviz/default_plugin/markers/mesh_resource_marker.h>
+#include <geometry_msgs/Pose.h>
 #include "rviz_plugin/object_visualization_manager.h"
 
+using namespace rviz;
 using namespace RVizVisualization;
 
 ObjectVisualizationManager::ObjectVisualizationManager(QWidget* parent)
@@ -44,17 +53,36 @@ ObjectVisualizationManager::ObjectVisualizationManager(QWidget* parent)
     marker_array_sub_ = nh.subscribe<visualization_msgs::MarkerArray> ("/ObjectVisualizationManager/MarkerArray", 10, &ObjectVisualizationManager::markerArrayCb, this);
 }
 
-void ObjectVisualizationManager::onInitialize()
-{
-}
-
 ObjectVisualizationManager::~ObjectVisualizationManager()
 {
 }
 
-void ObjectVisualizationManager::markerArrayCb(const visualization_msgs::MarkerArray::ConstPtr& markers)
+void ObjectVisualizationManager::onInitialize()
 {
-    std::cout << "Received Marker array!" << std::endl;
+}
+
+void ObjectVisualizationManager::save( rviz::Config config ) const
+{
+    rviz::Panel::save(config);
+}
+
+void ObjectVisualizationManager::load(const rviz::Config& config)
+{
+    rviz::Panel::load(config);
+}
+
+void ObjectVisualizationManager::markerArrayCb(const visualization_msgs::MarkerArray::ConstPtr& msg)
+{
+    for(const auto& marker : msg->markers)
+    {
+        addMarker(marker);
+    }
+}
+
+void ObjectVisualizationManager::addMarker(const visualization_msgs::Marker& msg)
+{
+    MeshResourceMarker* mesh = new MeshResourceMarker(&marker_display_, vis_manager_, vis_manager_->getSceneManager()->getRootSceneNode());
+    mesh->setMessage(msg);
 }
 
 #include <pluginlib/class_list_macros.h>

@@ -38,6 +38,7 @@
 
 #include <ros/ros.h>
 #include <rviz/panel.h>
+#include <rviz/default_plugin/marker_display.h>
 #include <visualization_msgs/MarkerArray.h>
 
 namespace RVizVisualization
@@ -52,10 +53,16 @@ public:
 
     virtual void onInitialize();
 
+    virtual void load( const rviz::Config& config );
+    virtual void save( rviz::Config config ) const;
+
 protected:
-    void markerArrayCb(const visualization_msgs::MarkerArray::ConstPtr& markers);
+    void markerArrayCb(const visualization_msgs::MarkerArray::ConstPtr& msg);
+
+    void addMarker(const visualization_msgs::Marker& msg);
 
     ros::Subscriber marker_array_sub_;
+    rviz::MarkerDisplay marker_display_;
 };
 
 } // end namespace RVizVisualization
