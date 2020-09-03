@@ -9,24 +9,39 @@
 #include <visualization_msgs/Marker.h>
 
 #include "dataloader/modelloader/utils.h"
-#include "dataloader/modelloader/model.h"
+#include "dataloader/modelloader/mesh.h"
 
 namespace RVizDataLoader 
 {
-    class ModelData 
+    struct ModelData
     {
-    public:
         ModelData(){}
         virtual ~ModelData(){}
 
-        Utils::Pose<double> pose_;
         Utils::Vec3<double> scale_;
         Utils::Vec3<int> color_;
+        int unique_id_;
+    };
+
+    struct PlaneData : public ModelData
+    {
+        PlaneData(){}
+        virtual ~PlaneData(){}
+
+        Utils::Vec3<double> center_;
+        Utils::Vec3Array<double> convex_hull_;
+    };
+
+    struct MeshData : public ModelData
+    {
+        MeshData(){}
+        virtual ~MeshData(){}
+
+        Utils::Pose<double> pose_;
         std::string mesh_resource_;
         bool use_color_from_mesh_;
 
-        Model::Types type_;
-        int unique_id_;
+        Mesh::Types type_;
     };
 };
 

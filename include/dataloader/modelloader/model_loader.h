@@ -16,14 +16,14 @@ namespace RVizDataLoader
         virtual ~ModelLoader(){}
 
         auto getMarker(int id,
-                       Model::Types type, 
+                       Mesh::Types type, 
                        const std::string& frame_id, 
                        const std::string& ns,
                        const Utils::Pose<double>& pose = Utils::Pose<double>())
                        -> std::unique_ptr<visualization_msgs::Marker>;
 
     protected:
-        virtual auto loadModel(Model::Types model_type)
+        virtual auto loadModel(Mesh::Types model_type)
                               -> std::unique_ptr<visualization_msgs::Marker>;
 
         YamlLoader yaml_loader_;
