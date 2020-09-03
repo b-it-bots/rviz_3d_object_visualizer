@@ -27,8 +27,8 @@ namespace RVizDataLoader
         PlaneData(){}
         virtual ~PlaneData(){}
 
-        Utils::Pose<double> center_;
-        Utils::PoseArray<double> convex_hull_;
+        Utils::Vec3<double> center_;
+        Utils::Vec3Array<double> convex_hull_;
     };
 
     struct MeshData : public ModelData
