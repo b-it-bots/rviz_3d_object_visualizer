@@ -32,6 +32,12 @@ namespace Utils
             z_val = vec[2];
         }
 
+        virtual std::vector<T> asVector()
+        {
+            std::vector<T> vec{ x_val, y_val, z_val };
+            return vec;
+        }
+
         friend std::ostream& operator<<(std::ostream& os, const Vec3<T>& data)
         {
             os << "(" << data.x() << ", " << data.y() << ", " << data.z() << ")";
@@ -77,6 +83,12 @@ namespace Utils
             Vec3<T>::y_val = vec[1];
             Vec3<T>::z_val = vec[2];
             w_val = vec[3];
+        }
+
+        virtual std::vector<T> asVector()
+        {
+            std::vector<T> vec{ Vec3<T>::x_val, Vec3<T>::y_val, Vec3<T>::z_val, w_val };
+            return vec;
         }
 
         friend std::ostream& operator<<(std::ostream& os, const Vec4<T>& data)
