@@ -3,6 +3,9 @@
 
 #include<string>
 #include<memory>
+#include<vector>
+
+#include <geometry_msgs/Point.h>
 
 #include "dataloader/modelloader/yaml_loader.h"
 #include "dataloader/modelloader/model_data.h"
@@ -15,16 +18,31 @@ namespace RVizDataLoader
         ModelLoader(const std::string& model_config_path);
         virtual ~ModelLoader(){}
 
-        auto getMarker(int id,
-                       Mesh::Types type, 
-                       const std::string& frame_id, 
-                       const std::string& ns,
-                       const Utils::Pose<double>& pose = Utils::Pose<double>())
-                       -> std::unique_ptr<visualization_msgs::Marker>;
+        auto getMeshMarker(int id,
+                           Mesh::Types type,
+                           const std::string& frame_id,
+                           const std::string& ns,
+                           const Utils::Pose<double>& pose = Utils::Pose<double>())
+                           -> std::unique_ptr<visualization_msgs::Marker>;
+
+        auto getPlaneMarker(int id,
+                            const std::string& frame_id,
+                            const std::string& ns,
+                            const Utils::Vec3<double>& center,
+                            const Utils::Vec3Array<double>& convex_hull,
+                            const Utils::Vec4<double>& color = Utils::Vec4<double>(1.0, 0.0, 0.0, 1.0),
+                            const Utils::Vec3<double>& scale = Utils::Vec3<double>(1.0, 1.0, 1.0))
+                            -> std::unique_ptr<visualization_msgs::Marker>;
 
     protected:
         virtual auto loadModel(Mesh::Types model_type)
                               -> std::unique_ptr<visualization_msgs::Marker>;
+
+        virtual auto generateTraingleVertices(const Utils::Vec3<double>& center,
+                            const Utils::Vec3Array<double>& convex_hull)
+                            -> std::vector<geometry_msgs::Point>;
+
+        geometry_msgs::Point asRVizPoint(const Utils::Vec3<double>& point);
 
         YamlLoader yaml_loader_;
     };
