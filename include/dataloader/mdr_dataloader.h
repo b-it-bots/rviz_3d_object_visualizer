@@ -35,6 +35,34 @@ namespace RVizDataLoader
             friend std::ostream& operator<<(std::ostream &out, mas_perception_msgs::Object const& data); 
             friend std::ostream& operator<<(std::ostream &out, mas_perception_msgs::Plane const& data); 
 
+            MeshData* fillPoseDetails(mas_perception_msgs::Object object)
+            {
+                MeshData* mesh_data = new MeshData();
+                auto position = object.pose.pose.position;
+                auto orientation = object.pose.pose.orientation;
+                Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
+                mesh_data->pose_ = Utils::Pose<double>(position.x, position.y, position.z, rpy_vector.x(), rpy_vector.y(), rpy_vector.z());
+
+                return mesh_data;
+            }
+
+            MeshData* fillPoseDetails(mas_perception_msgs::Person person)
+            {
+                return fillPoseDetails(person);
+            }
+
+            PlaneData* fillPoseDetails(mas_perception_msgs::Plane plane)
+            {
+                PlaneData* plane_data = new PlaneData();
+                plane_data->center_ = Utils::Vec3<double>(plane.plane_point.x, plane.plane_point.y, plane.plane_point.z);
+                for (auto &point: plane.convex_hull)
+                {
+                    plane_data->convex_hull_.push_back(Utils::Vec3<double>(point.x, point.y, point.z));
+                }
+
+                return plane_data;
+            }
+
             // Standard Solution:
             template <typename T>
             void updateObjectData()
@@ -48,22 +76,21 @@ namespace RVizDataLoader
                 {
                     std::string object_name = queried_objects[i]->name;
                     /* object_name = typeid(T).name(); */
-                    ModelData model_data = ModelData();
-                    auto position = queried_objects[i]->pose.pose.position;
-                    auto orientation = queried_objects[i]->pose.pose.orientation;
-                    Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
-                    model_data.pose_ = Utils::Pose<double>(position.x, position.y, position.z, rpy_vector.x(), rpy_vector.y(), rpy_vector.z());
+
+                    ModelData *model_data = dynamic_cast<ModelData*>(fillPoseDetails(*queried_objects[i]));
+                    if (!model_data) std::cerr << "Failed to cast to ModelData!!! \n" << std::endl;
 
                     if (object_data_.find(object_name) == object_data_.end())
                     {
                         // object not found; insert it in map:
-                        model_data.unique_id_ = item_id_++;
-                        object_data_.insert(std::pair<std::string, ModelData>(object_name, model_data));
+                        model_data->unique_id_ = item_id_++;
+                        object_data_.insert(std::pair<std::string, ModelData*>(object_name, model_data));
                         std::cout << *queried_objects[i] << std::endl;
                     }
                     else
                     {
                         // object found in map; update its data:
+                        model_data->unique_id_ = object_data_[object_name]->unique_id_;
                         object_data_[object_name] = model_data;
                         std::cout << "Old object data updated in map" << std::endl;
                     }
@@ -84,7 +111,7 @@ namespace RVizDataLoader
                     if (!object_in_queried_list)
                     {
                         // object not found in queried list; add to delete list, and erase from map
-                        marker_delete_list_.push_back(object_in_map.second.unique_id_);
+                        marker_delete_list_.push_back(object_in_map.second->unique_id_);
                         item_delete_list_.push_back(object_in_map.first);
                         std::cout << "Object in map not found in queried_list. Removing..." << std::endl;
                     }
@@ -95,10 +122,10 @@ namespace RVizDataLoader
 
         private:
             int update_loop_rate_;
-            int item_id_;
+            int item_id_{0};
             std::vector<int> marker_delete_list_;
             std::vector<std::string> item_delete_list_;
-            std::map<std::string, ModelData> object_data_;
+            std::map<std::string, ModelData*> object_data_;
             ModelLoader* model_loader_;
     };
 
