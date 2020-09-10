@@ -17,7 +17,7 @@ using namespace RVizDataLoader;
 MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh) 
 {
     update_loop_rate_ = 10;
-    data_pub_ = nh.advertise<visualization_msgs::MarkerArray>("/3D_markers_visualization/markers", 1);
+    data_pub_ = nh.advertise<visualization_msgs::MarkerArray>("rviz_3d_object_visualizer/markers", 1);
 
     std::string model_config_file = ros::package::getPath("rviz_3d_object_visualizer") + "/config/model_params.yaml";
     nh.param<std::string>("/dataloader/model_config", model_config_file, model_config_file);
@@ -32,9 +32,9 @@ void MDRDataloader::queryDatabase()
 {
     std::cout << "\nDetails of new objects in database:" << std::endl;
 
-    /* updateObjectData<mas_perception_msgs::Person>();              // has no name field */
+    updateObjectData<mas_perception_msgs::Person>();              // has no name field
     updateObjectData<mas_perception_msgs::Object>();
-    updateObjectData<mas_perception_msgs::Plane>();               // has no pose field (only position in plane_point)
+    updateObjectData<mas_perception_msgs::Plane>();
 
     // Remove objects from map if not database
     std::cout << "\nItems to be deleted:" << std::endl;
@@ -94,6 +94,7 @@ void MDRDataloader::publishObjectData()
             {
                 auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, "base_link", "", 
                                                            mesh_data->pose_);
+                marker->action = visualization_msgs::Marker::ADD;
                 marker_array_msg.markers.push_back(*marker);
                 continue;
             }
@@ -103,6 +104,7 @@ void MDRDataloader::publishObjectData()
             {
                 auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, "base_link", "", 
                                                             plane_data->center_, plane_data->convex_hull_);
+                marker->action = visualization_msgs::Marker::ADD;
                 marker_array_msg.markers.push_back(*marker);
                 continue;
             }
@@ -114,6 +116,7 @@ void MDRDataloader::publishObjectData()
         visualization_msgs::Marker delete_marker;
         delete_marker.header.frame_id = "base_link";
         delete_marker.id = marker_id;
+        delete_marker.action = visualization_msgs::Marker::DELETE;
         marker_array_msg.markers.push_back(delete_marker);
     }
 

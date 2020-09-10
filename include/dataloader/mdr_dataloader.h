@@ -42,13 +42,21 @@ namespace RVizDataLoader
                 auto orientation = object.pose.pose.orientation;
                 Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
                 mesh_data->pose_ = Utils::Pose<double>(position.x, position.y, position.z, rpy_vector.x(), rpy_vector.y(), rpy_vector.z());
+                mesh_data->type_ = Mesh::Types::BOTTLE;
 
                 return mesh_data;
             }
 
             MeshData* fillPoseDetails(mas_perception_msgs::Person person)
             {
-                return fillPoseDetails(person);
+                MeshData* mesh_data = new MeshData();
+                auto position = person.pose.pose.position;
+                auto orientation = person.pose.pose.orientation;
+                Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
+                mesh_data->pose_ = Utils::Pose<double>(position.x, position.y, position.z, rpy_vector.x(), rpy_vector.y(), rpy_vector.z());
+                mesh_data->type_ = Mesh::Types::PERSON;
+
+                return mesh_data;
             }
 
             PlaneData* fillPoseDetails(mas_perception_msgs::Plane plane)
@@ -152,8 +160,8 @@ namespace RVizDataLoader
         out << "    - x: " << data.pose.pose.position.x << std::endl;
         out << "    - y: " << data.pose.pose.position.y << std::endl;
         out << "    - z: " << data.pose.pose.position.z << std::endl;
-        out << "Height: " << data.height << std::endl;
-        out << "Width: " << data.width << std::endl;
+        /* out << "Height: " << data.height << std::endl; */
+        /* out << "Width: " << data.width << std::endl; */
         return out;
     }
 
