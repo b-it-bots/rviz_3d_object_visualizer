@@ -49,7 +49,7 @@ ObjectVisualizationManager::ObjectVisualizationManager(QWidget* parent)
 : rviz::Panel(parent)
 {
     ros::NodeHandle nh;
-    marker_array_sub_ = nh.subscribe<visualization_msgs::MarkerArray> ("/ObjectVisualizationManager/MarkerArray", 10, &ObjectVisualizationManager::markerArrayCb, this);
+    marker_array_sub_ = nh.subscribe<visualization_msgs::MarkerArray> ("/rviz_3d_object_visualizer/markers", 10, &ObjectVisualizationManager::markerArrayCb, this);
 }
 
 ObjectVisualizationManager::~ObjectVisualizationManager()
