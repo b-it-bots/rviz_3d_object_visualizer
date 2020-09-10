@@ -36,6 +36,8 @@
 #ifndef OBJECT_VIS_MANAGER
 #define OBJECT_VIS_MANAGER
 
+#include <map>
+
 #include <ros/ros.h>
 #include <rviz/panel.h>
 #include <rviz/default_plugin/marker_display.h>
@@ -68,6 +70,16 @@ protected:
     rviz::MarkerDisplay marker_display_;
 
     Ogre::SceneNode* root_scene_node_;
+
+    typedef std::map<int, Ogre::SceneNode*> SceneMap;
+    typedef std::map<int, rviz::MarkerBase*> MarkerMap;
+    typedef std::pair<int, Ogre::SceneNode*> ScenePair;
+    typedef std::pair<int, rviz::MarkerBase*> MarkerPair;
+    typedef std::map<int, Ogre::SceneNode*>::iterator SceneMapItr;
+    typedef std::map<int, rviz::MarkerBase*>::iterator MarkerMapItr;
+
+    SceneMap scene_nodes_map_;
+    MarkerMap markers_map_;
 };
 
 } // end namespace RVizVisualization

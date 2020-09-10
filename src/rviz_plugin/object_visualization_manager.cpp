@@ -73,8 +73,10 @@ void ObjectVisualizationManager::load(const rviz::Config& config)
 
 void ObjectVisualizationManager::markerArrayCb(const visualization_msgs::MarkerArray::ConstPtr& msg)
 {
+    ROS_INFO("Marker Array received!");
     for(const auto& marker : msg->markers)
     {
+        ROS_INFO("Processing marker id: %d", marker.id);
         addMarker(marker);
     }
 }
@@ -82,6 +84,8 @@ void ObjectVisualizationManager::markerArrayCb(const visualization_msgs::MarkerA
 void ObjectVisualizationManager::addMarker(const visualization_msgs::Marker& msg)
 {
     MarkerBase* marker = nullptr;
+    Ogre::SceneNode* scene_node = root_scene_node_->createChildSceneNode();
+    scene_nodes_map_.insert(ScenePair(msg.id, scene_node));
 
     switch (msg.type)
     {
@@ -99,6 +103,24 @@ void ObjectVisualizationManager::addMarker(const visualization_msgs::Marker& msg
     if (marker)
     {
         marker->setMessage(msg);
+        MarkerMapItr itr  = markers_map_.find(msg.id);
+        if (itr == markers_map_.end())
+        {
+            ROS_INFO("Adding a new marker with id %d", msg.id);
+            markers_map_.insert(MarkerPair(msg.id, marker));
+        }
+        else
+        {
+            ROS_INFO("Deleting and updating marker with id %d", msg.id);
+            delete itr->second;
+            itr->second = marker;
+        }
+    }
+    else
+    {
+        scene_nodes_map_.erase(msg.id);
+        delete scene_node;
+        scene_node = nullptr;
     }
 }
 
