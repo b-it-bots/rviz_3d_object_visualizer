@@ -40,16 +40,27 @@ void MDRDataloader::queryDatabase()
 
     std::cout << "\nDetails of new objects in database:" << std::endl;
 
-    /* updateObjectData<mas_perception_msgs::Person>(); */              // has no name field
+    /* updateObjectData<mas_perception_msgs::Person>();              // has no name field */
     updateObjectData<mas_perception_msgs::Object>();
     updateObjectData<mas_perception_msgs::Plane>();               // has no pose field (only position in plane_point)
 
     // Remove objects from map if not database
     std::cout << "Items to be deleted:" << std::endl;
-    for (auto &item_to_delete_name : item_delete_list_)
+
+    /* for (auto &item_to_delete_name : item_delete_list_) */
+    /* { */
+    /*     std::cout << item_to_delete_name << std::endl; */
+    /*     object_data_.erase(item_to_delete_name); */
+    /* } */
+
+    for (auto &delete_list : item_delete_map_)
     {
-        std::cout << item_to_delete_name << std::endl;
-        object_data_.erase(item_to_delete_name);
+        auto delete_item_type = delete_list.first;
+        for (auto &item_to_delete_name : item_delete_map_[delete_item_type])
+        {
+            std::cout << item_to_delete_name << std::endl;
+            object_data_record_[delete_item_type].erase(item_to_delete_name);
+        }
     }
 
     std::cout << "\nDetails of currently stored objects:" << std::endl;
@@ -85,31 +96,35 @@ void MDRDataloader::publishObjectData()
 {
     visualization_msgs::MarkerArray marker_array_msg;
 
-    for (auto &object : object_data_)
+    /* for (auto &object : object_data_) */
+    for (auto &object_data : object_data_record_)
     {
-        MeshData *mesh_data = dynamic_cast<MeshData*>(object.second);
-        if (mesh_data)
+        for (auto &object : object_data.second)
         {
-            auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, "base_link", "", 
-                                                       mesh_data->pose_);
-            std::cout << "\nAdding MeshData object marker:" << std::endl;
-            std::cout << "Unique ID: " << mesh_data->unique_id_ << std::endl;
-            std::cout << "Type: " << mesh_data->type_ << std::endl;
-            std::cout << "Pose x: " << mesh_data->pose_ << std::endl;
-            marker_array_msg.markers.push_back(*marker);
-            continue;
-        }
+            MeshData *mesh_data = dynamic_cast<MeshData*>(object.second);
+            if (mesh_data)
+            {
+                auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, "base_link", "", 
+                                                           mesh_data->pose_);
+                std::cout << "\nAdding MeshData object marker:" << std::endl;
+                std::cout << "Unique ID: " << mesh_data->unique_id_ << std::endl;
+                std::cout << "Type: " << mesh_data->type_ << std::endl;
+                std::cout << "Pose x: " << mesh_data->pose_ << std::endl;
+                marker_array_msg.markers.push_back(*marker);
+                continue;
+            }
 
-        PlaneData *plane_data = dynamic_cast<PlaneData*>(object.second);
-        if (plane_data)
-        {
-            auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, "base_link", "", 
-                                                       plane_data->center_, plane_data->convex_hull_);
-            std::cout << "\nAdding PlaneData object marker:" << std::endl;
-            std::cout << "Unique ID: " << plane_data->unique_id_ << std::endl;
-            std::cout << "Center x: " << plane_data->center_.x() << std::endl;
-            marker_array_msg.markers.push_back(*marker);
-            continue;
+            PlaneData *plane_data = dynamic_cast<PlaneData*>(object.second);
+            if (plane_data)
+            {
+                auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, "base_link", "", 
+                                                            plane_data->center_, plane_data->convex_hull_);
+                std::cout << "\nAdding PlaneData object marker:" << std::endl;
+                std::cout << "Unique ID: " << plane_data->unique_id_ << std::endl;
+                std::cout << "Center x: " << plane_data->center_.x() << std::endl;
+                marker_array_msg.markers.push_back(*marker);
+                continue;
+            }
         }
     }
 

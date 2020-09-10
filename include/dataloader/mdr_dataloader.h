@@ -63,6 +63,20 @@ namespace RVizDataLoader
                 return plane_data;
             }
 
+            // Causes segmentation fault at run-time:
+            /**
+            void fillPoseDetails(mas_perception_msgs::Object object, ModelData* model_data)
+            {
+                MeshData* mesh_data = new MeshData();
+                auto position = object.pose.pose.position;
+                auto orientation = object.pose.pose.orientation;
+                Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
+                mesh_data->pose_ = Utils::Pose<double>(position.x, position.y, position.z, rpy_vector.x(), rpy_vector.y(), rpy_vector.z());
+
+                model_data = dynamic_cast<ModelData*>(mesh_data);
+            }
+            */
+
             // Standard Solution:
             template <typename T>
             void updateObjectData()
@@ -76,27 +90,31 @@ namespace RVizDataLoader
                 {
                     std::string object_name = queried_objects[i]->name;
                     /* object_name = typeid(T).name(); */
-
                     ModelData *model_data = dynamic_cast<ModelData*>(fillPoseDetails(*queried_objects[i]));
                     if (!model_data) std::cerr << "Failed to cast to ModelData!!! \n" << std::endl;
+
 
                     if (object_data_.find(object_name) == object_data_.end())
                     {
                         // object not found; insert it in map:
                         model_data->unique_id_ = item_id_++;
-                        object_data_.insert(std::pair<std::string, ModelData*>(object_name, model_data));
+                        /* object_data_.insert(std::pair<std::string, ModelData*>(object_name, model_data)); */
+                        /* object_data_record_[typeid(T).name()] = std::pair<std::string, ModelData*>(object_name, model_data); */
+                        object_data_record_[typeid(T).name()][object_name] = model_data;
                         std::cout << *queried_objects[i] << std::endl;
                     }
                     else
                     {
                         // object found in map; update its data:
                         model_data->unique_id_ = object_data_[object_name]->unique_id_;
-                        object_data_[object_name] = model_data;
+                        /* object_data_[object_name] = model_data; */
+                        object_data_record_[typeid(T).name()][object_name] = model_data;
                         std::cout << "Old object data updated in map" << std::endl;
                     }
                 }
 
-                for (auto &object_in_map : object_data_)
+                /* for (auto &object_in_map : object_data_) */
+                for (auto &object_in_map : object_data_record_[typeid(T).name()])
                 {
                     object_in_queried_list = false;
                     for (auto &object_in_query : queried_objects)
@@ -112,7 +130,8 @@ namespace RVizDataLoader
                     {
                         // object not found in queried list; add to delete list, and erase from map
                         marker_delete_list_.push_back(object_in_map.second->unique_id_);
-                        item_delete_list_.push_back(object_in_map.first);
+                        /* item_delete_list_.push_back(object_in_map.first); */
+                        item_delete_map_[typeid(T).name()].push_back(object_in_map.first);
                         std::cout << "Object in map not found in queried_list. Removing..." << std::endl;
                     }
                 }
@@ -124,8 +143,10 @@ namespace RVizDataLoader
             int update_loop_rate_;
             int item_id_{0};
             std::vector<int> marker_delete_list_;
-            std::vector<std::string> item_delete_list_;
+            /* std::vector<std::string> item_delete_list_; */
+            std::map<std::string, std::vector<std::string>> item_delete_map_;
             std::map<std::string, ModelData*> object_data_;
+            std::map<std::string, std::map<std::string, ModelData*>> object_data_record_;
             ModelLoader* model_loader_;
     };
 
