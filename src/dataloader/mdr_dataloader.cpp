@@ -30,14 +30,6 @@ MDRDataloader::~MDRDataloader()
 
 void MDRDataloader::queryDatabase()
 {
-    // Adding new entries:
-    /* mas_perception_msgs::Object object_msg; */
-    /* mas_perception_msgs::Person person_msg; */
-    /* mas_perception_msgs::Plane plane_msg; */
-    /* message_proxy_.insertNamed("Object_msg", object_msg); */
-    /* message_proxy_.insertNamed("Person_msg", person_msg); */
-    /* message_proxy_.insertNamed("Plane_msg", plane_msg); */
-
     std::cout << "\nDetails of new objects in database:" << std::endl;
 
     /* updateObjectData<mas_perception_msgs::Person>();              // has no name field */
@@ -45,13 +37,7 @@ void MDRDataloader::queryDatabase()
     updateObjectData<mas_perception_msgs::Plane>();               // has no pose field (only position in plane_point)
 
     // Remove objects from map if not database
-    std::cout << "Items to be deleted:" << std::endl;
-
-    /* for (auto &item_to_delete_name : item_delete_list_) */
-    /* { */
-    /*     std::cout << item_to_delete_name << std::endl; */
-    /*     object_data_.erase(item_to_delete_name); */
-    /* } */
+    std::cout << "\nItems to be deleted:" << std::endl;
 
     for (auto &delete_list : item_delete_map_)
     {
@@ -85,10 +71,13 @@ void MDRDataloader::runDataUpdateLoop()
 void MDRDataloader::printStoredObjectData()
 {
     int entry_counter{0};
-    for (auto it = object_data_.begin(); it != object_data_.end(); it++)
+    for (auto &object_data : object_data_record_)
     {
-        std::cout << "Entry " << entry_counter++ << ":" << std::endl;
-        std::cout << "ID: " << it->first << std::endl;
+        for (auto it = object_data.second.begin(); it != object_data.second.end(); it++)
+        {
+            std::cout << "Entry " << entry_counter++ << ":" << std::endl;
+            std::cout << "ID: " << it->first << std::endl;
+        }
     }
 }
 
@@ -96,7 +85,6 @@ void MDRDataloader::publishObjectData()
 {
     visualization_msgs::MarkerArray marker_array_msg;
 
-    /* for (auto &object : object_data_) */
     for (auto &object_data : object_data_record_)
     {
         for (auto &object : object_data.second)
@@ -106,10 +94,6 @@ void MDRDataloader::publishObjectData()
             {
                 auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, "base_link", "", 
                                                            mesh_data->pose_);
-                std::cout << "\nAdding MeshData object marker:" << std::endl;
-                std::cout << "Unique ID: " << mesh_data->unique_id_ << std::endl;
-                std::cout << "Type: " << mesh_data->type_ << std::endl;
-                std::cout << "Pose x: " << mesh_data->pose_ << std::endl;
                 marker_array_msg.markers.push_back(*marker);
                 continue;
             }
@@ -119,9 +103,6 @@ void MDRDataloader::publishObjectData()
             {
                 auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, "base_link", "", 
                                                             plane_data->center_, plane_data->convex_hull_);
-                std::cout << "\nAdding PlaneData object marker:" << std::endl;
-                std::cout << "Unique ID: " << plane_data->unique_id_ << std::endl;
-                std::cout << "Center x: " << plane_data->center_.x() << std::endl;
                 marker_array_msg.markers.push_back(*marker);
                 continue;
             }
