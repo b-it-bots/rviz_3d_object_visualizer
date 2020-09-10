@@ -40,6 +40,9 @@
 #include <rviz/panel.h>
 #include <rviz/default_plugin/marker_display.h>
 #include <visualization_msgs/MarkerArray.h>
+#include <rviz/default_plugin/markers/marker_base.h>
+
+#include <OgreSceneNode.h>
 
 namespace RVizVisualization
 {
@@ -63,6 +66,8 @@ protected:
 
     ros::Subscriber marker_array_sub_;
     rviz::MarkerDisplay marker_display_;
+
+    Ogre::SceneNode* root_scene_node_;
 };
 
 } // end namespace RVizVisualization

@@ -34,13 +34,12 @@
 */
 
 #include <OgreSceneManager.h>
-#include <typeinfo>
 
 #include <rviz/visualization_manager.h>
-#include <rviz/ogre_helpers/arrow.h>
-#include <rviz/ogre_helpers/mesh_shape.h>
 #include <rviz/default_plugin/markers/mesh_resource_marker.h>
-#include <geometry_msgs/Pose.h>
+#include <rviz/default_plugin/markers/triangle_list_marker.h>
+#include <visualization_msgs/Marker.h>
+
 #include "rviz_plugin/object_visualization_manager.h"
 
 using namespace rviz;
@@ -59,6 +58,7 @@ ObjectVisualizationManager::~ObjectVisualizationManager()
 
 void ObjectVisualizationManager::onInitialize()
 {
+    root_scene_node_ = vis_manager_->getSceneManager()->getRootSceneNode()->createChildSceneNode();
 }
 
 void ObjectVisualizationManager::save( rviz::Config config ) const
@@ -81,8 +81,25 @@ void ObjectVisualizationManager::markerArrayCb(const visualization_msgs::MarkerA
 
 void ObjectVisualizationManager::addMarker(const visualization_msgs::Marker& msg)
 {
-    MeshResourceMarker* mesh = new MeshResourceMarker(&marker_display_, vis_manager_, vis_manager_->getSceneManager()->getRootSceneNode());
-    mesh->setMessage(msg);
+    MarkerBase* marker = nullptr;
+
+    switch (msg.type)
+    {
+    case visualization_msgs::Marker::MESH_RESOURCE:
+        marker = new MeshResourceMarker(&marker_display_, vis_manager_, root_scene_node_);
+        break;
+    case visualization_msgs::Marker::TRIANGLE_LIST:
+        marker = new TriangleListMarker(&marker_display_, vis_manager_, root_scene_node_);
+        break;
+    default:
+        ROS_ERROR("[ObjectVisualizationManager] Unsupported marker type!");
+        break;
+    }
+
+    if (marker)
+    {
+        marker->setMessage(msg);
+    }
 }
 
 #include <pluginlib/class_list_macros.h>
