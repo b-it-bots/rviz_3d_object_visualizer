@@ -35,7 +35,7 @@ int main(int argc, char** argv)
     plane_vert.push_back(Utils::Vec3<double>(-1, -1, 0.5));
     auto plane_marker = model_loader.getPlaneMarker(5, "base_link", "", Utils::Vec3<double>(0, 0, 0.5), plane_vert);
 
-    ros::Publisher pub = n.advertise<visualization_msgs::MarkerArray>("/3D_markers_visualization/markers", 1);
+    ros::Publisher pub = n.advertise<visualization_msgs::MarkerArray>("/ObjectVisualizationManager/MarkerArray", 1);
     visualization_msgs::MarkerArray msg;
     msg.markers.push_back(*bottle_marker);
     msg.markers.push_back(*table_marker);

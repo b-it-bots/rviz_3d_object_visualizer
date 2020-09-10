@@ -19,7 +19,10 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
 
     MDRDataloader mdr_dataloader = MDRDataloader(nh);
-    mdr_dataloader.queryDatabase();
+    /* mdr_dataloader.queryDatabase(); */
+    /* mdr_dataloader.publishObjectData(); */
+
+    mdr_dataloader.runDataUpdateLoop();
 
     return 0;
 }

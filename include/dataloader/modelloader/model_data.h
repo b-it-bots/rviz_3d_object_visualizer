@@ -20,6 +20,7 @@ namespace RVizDataLoader
 
         Utils::Vec3<double> scale_;
         Utils::Vec3<int> color_;
+        int unique_id_;
     };
 
     struct PlaneData : public ModelData
