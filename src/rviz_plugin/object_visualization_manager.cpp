@@ -76,24 +76,36 @@ void ObjectVisualizationManager::markerArrayCb(const visualization_msgs::MarkerA
     ROS_INFO("Marker Array received!");
     for(const auto& marker : msg->markers)
     {
-        ROS_INFO("Processing marker id: %d", marker.id);
-        addMarker(marker);
+        if (marker.action == visualization_msgs::Marker::ADD)
+        {
+            MarkerMapItr itr  = markers_map_.find(marker.id);
+            if (itr == markers_map_.end())
+            {
+                addNewMarker(marker);
+            }
+            else
+            {
+                updateMarker(marker);
+            }
+        }
+        else if (marker.action == visualization_msgs::Marker::DELETE)
+        {
+            deleteMarker(marker.id);
+        }
+        
     }
 }
 
-void ObjectVisualizationManager::addMarker(const visualization_msgs::Marker& msg)
+rviz::MarkerBase* ObjectVisualizationManager::createMarker(const visualization_msgs::Marker& msg, Ogre::SceneNode* scene_node)
 {
     MarkerBase* marker = nullptr;
-    Ogre::SceneNode* scene_node = root_scene_node_->createChildSceneNode();
-    scene_nodes_map_.insert(ScenePair(msg.id, scene_node));
-
     switch (msg.type)
     {
     case visualization_msgs::Marker::MESH_RESOURCE:
-        marker = new MeshResourceMarker(&marker_display_, vis_manager_, root_scene_node_);
+        marker = new MeshResourceMarker(&marker_display_, vis_manager_, scene_node);
         break;
     case visualization_msgs::Marker::TRIANGLE_LIST:
-        marker = new TriangleListMarker(&marker_display_, vis_manager_, root_scene_node_);
+        marker = new TriangleListMarker(&marker_display_, vis_manager_, scene_node);
         break;
     default:
         ROS_ERROR("[ObjectVisualizationManager] Unsupported marker type!");
@@ -103,24 +115,48 @@ void ObjectVisualizationManager::addMarker(const visualization_msgs::Marker& msg
     if (marker)
     {
         marker->setMessage(msg);
-        MarkerMapItr itr  = markers_map_.find(msg.id);
-        if (itr == markers_map_.end())
-        {
-            ROS_INFO("Adding a new marker with id %d", msg.id);
-            markers_map_.insert(MarkerPair(msg.id, marker));
-        }
-        else
-        {
-            ROS_INFO("Deleting and updating marker with id %d", msg.id);
-            delete itr->second;
-            itr->second = marker;
-        }
     }
-    else
+
+    return marker;
+}
+
+void ObjectVisualizationManager::addNewMarker(const visualization_msgs::Marker& msg)
+{
+    Ogre::SceneNode* scene_node = root_scene_node_->createChildSceneNode();
+    rviz::MarkerBase* marker = createMarker(msg, scene_node);
+    scene_nodes_map_.insert(ScenePair(msg.id, scene_node));
+    markers_map_.insert(MarkerPair(msg.id, marker));
+    ROS_INFO("Added new marker with id: %d", msg.id);
+}
+
+void ObjectVisualizationManager::updateMarker(const visualization_msgs::Marker& msg)
+{
+    Ogre::SceneNode* scene_node = scene_nodes_map_.at(msg.id);
+    rviz::MarkerBase* marker = createMarker(msg, scene_node);
+    MarkerMapItr itr  = markers_map_.find(msg.id);
+    if (itr != markers_map_.end())
     {
-        scene_nodes_map_.erase(msg.id);
-        delete scene_node;
-        scene_node = nullptr;
+        delete itr->second;
+        itr->second = marker;
+    }
+    ROS_INFO("Updated existing marker with id: %d", msg.id);
+}
+
+
+void ObjectVisualizationManager::deleteMarker(const int marker_id)
+{
+    MarkerMapItr markerItr  = markers_map_.find(marker_id);
+    if (markerItr != markers_map_.end())
+    {
+        delete markerItr->second;
+        markers_map_.erase(marker_id);
+    }
+
+    SceneMapItr sceneItr  = scene_nodes_map_.find(marker_id);
+    if (sceneItr != scene_nodes_map_.end())
+    {
+        delete sceneItr->second;
+        scene_nodes_map_.erase(marker_id);
     }
 }
 

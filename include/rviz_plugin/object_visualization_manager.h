@@ -64,7 +64,11 @@ public:
 protected:
     void markerArrayCb(const visualization_msgs::MarkerArray::ConstPtr& msg);
 
-    void addMarker(const visualization_msgs::Marker& msg);
+    void addNewMarker(const visualization_msgs::Marker& msg);
+    void updateMarker(const visualization_msgs::Marker& msg);
+    void deleteMarker(const int marker_id);
+    rviz::MarkerBase* createMarker(const visualization_msgs::Marker& msg, 
+                                                                Ogre::SceneNode* scene_node);
 
     ros::Subscriber marker_array_sub_;
     rviz::MarkerDisplay marker_display_;
