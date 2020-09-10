@@ -16,6 +16,12 @@ namespace RVizDataLoader
     struct ModelData
     {
         ModelData(){}
+
+        ModelData(const ModelData& data):
+        scale_(data.scale_),
+        color_(data.color_),
+        unique_id_(data.unique_id_){}
+
         virtual ~ModelData(){}
 
         Utils::Vec3<double> scale_;
@@ -26,6 +32,12 @@ namespace RVizDataLoader
     struct PlaneData : public ModelData
     {
         PlaneData(){}
+
+        PlaneData(const PlaneData& data):
+        ModelData(data),
+        center_(data.center_),
+        convex_hull_(data.convex_hull_){}
+
         virtual ~PlaneData(){}
 
         Utils::Vec3<double> center_;
@@ -35,6 +47,14 @@ namespace RVizDataLoader
     struct MeshData : public ModelData
     {
         MeshData(){}
+
+        MeshData(const MeshData& data):
+        ModelData(data),
+        pose_(data.pose_),
+        mesh_resource_(data.mesh_resource_),
+        use_color_from_mesh_(data.use_color_from_mesh_),
+        type_(data.type_){}
+
         virtual ~MeshData(){}
 
         Utils::Pose<double> pose_;
