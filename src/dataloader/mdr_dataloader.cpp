@@ -92,20 +92,30 @@ void MDRDataloader::publishObjectData()
             MeshData *mesh_data = dynamic_cast<MeshData*>(object.second);
             if (mesh_data)
             {
-                auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, "base_link", "", 
+                auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, mesh_data->name_, "base_link", "", 
                                                            mesh_data->pose_);
-                marker->action = visualization_msgs::Marker::ADD;
-                marker_array_msg.markers.push_back(*marker);
+                if (marker.first)
+                {
+                    marker.first->action = visualization_msgs::Marker::ADD;
+                    marker_array_msg.markers.push_back(*(marker.first));
+                    marker.second->action = visualization_msgs::Marker::ADD;
+                    marker_array_msg.markers.push_back(*(marker.second));
+                }
                 continue;
             }
 
             PlaneData *plane_data = dynamic_cast<PlaneData*>(object.second);
             if (plane_data)
             {
-                auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, "base_link", "", 
+                auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, plane_data->name_, "base_link", "", 
                                                             plane_data->center_, plane_data->convex_hull_);
-                marker->action = visualization_msgs::Marker::ADD;
-                marker_array_msg.markers.push_back(*marker);
+                if (marker.first)
+                {
+                    marker.first->action = visualization_msgs::Marker::ADD;
+                    marker_array_msg.markers.push_back(*(marker.first));
+                    marker.second->action = visualization_msgs::Marker::ADD;
+                    marker_array_msg.markers.push_back(*(marker.second));
+                }
                 continue;
             }
         }

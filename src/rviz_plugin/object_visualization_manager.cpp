@@ -38,6 +38,7 @@
 #include <rviz/visualization_manager.h>
 #include <rviz/default_plugin/markers/mesh_resource_marker.h>
 #include <rviz/default_plugin/markers/triangle_list_marker.h>
+#include <rviz/default_plugin/markers/text_view_facing_marker.h>
 #include <visualization_msgs/Marker.h>
 
 #include "rviz_plugin/object_visualization_manager.h"
@@ -92,7 +93,6 @@ void ObjectVisualizationManager::markerArrayCb(const visualization_msgs::MarkerA
         {
             deleteMarker(marker.id);
         }
-        
     }
 }
 
@@ -106,6 +106,9 @@ rviz::MarkerBase* ObjectVisualizationManager::createMarker(const visualization_m
         break;
     case visualization_msgs::Marker::TRIANGLE_LIST:
         marker = new TriangleListMarker(&marker_display_, vis_manager_, scene_node);
+        break;
+    case visualization_msgs::Marker::TEXT_VIEW_FACING:
+        marker = new TextViewFacingMarker(&marker_display_, vis_manager_, scene_node);
         break;
     default:
         ROS_ERROR("[ObjectVisualizationManager] Unsupported marker type!");
@@ -141,7 +144,6 @@ void ObjectVisualizationManager::updateMarker(const visualization_msgs::Marker& 
     }
     ROS_INFO("Updated existing marker with id: %d", msg.id);
 }
-
 
 void ObjectVisualizationManager::deleteMarker(const int marker_id)
 {

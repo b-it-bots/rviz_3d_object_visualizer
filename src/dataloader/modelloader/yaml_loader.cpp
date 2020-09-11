@@ -47,6 +47,7 @@ MeshData YamlLoader::extractMeshConfig(YAML::Node node)
                             node["Orientation"].as<std::vector<double>>());
     mesh_data.scale_.update(node["Scale"].as<std::vector<double>>());
     mesh_data.color_.update(node["Color"].as<std::vector<int>>());
+    mesh_data.text_offset_.update(node["TextOffset"].as<std::vector<double>>());
     mesh_data.mesh_resource_ = node["ResourceFile"].as<std::string>();
     mesh_data.use_color_from_mesh_ = node["UseColorFromMesh"].as<bool>();
 

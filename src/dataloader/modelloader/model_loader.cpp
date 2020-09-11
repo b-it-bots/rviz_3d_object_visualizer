@@ -52,12 +52,43 @@ auto ModelLoader::loadModel(Mesh::Types mesh_type)
     return std::move(marker);
 }
 
+auto ModelLoader::getTextLabelMarker(const std::string& name,
+                        const Utils::Vec3<double>& pos) -> std::unique_ptr<visualization_msgs::Marker>
+{
+    std::unique_ptr<visualization_msgs::Marker> marker = std::unique_ptr<visualization_msgs::Marker>(new visualization_msgs::Marker);
+
+    marker->type = visualization_msgs::Marker::TEXT_VIEW_FACING;
+    marker->text = name;
+    marker->pose.position.x = pos.x();
+    marker->pose.position.y = pos.y();
+    marker->pose.position.z = pos.z();
+
+    marker->scale.z = 0.1;
+
+    marker->color.r = 1.0;
+    marker->color.g = 0.0;
+    marker->color.b = 0.0;
+    marker->color.a = 1.0;
+
+    return std::move(marker);
+}
+
 auto ModelLoader::getMeshMarker(int id, Mesh::Types type,
+                                const std::string& name,
                                 const std::string& frame_id,
                                 const std::string& ns,
                                 const Utils::Pose<double>& pose)
-                                -> std::unique_ptr<visualization_msgs::Marker>
+                                -> MarkerResultPair
 {
+    if (id % 2 != 0)
+    {
+        ROS_ERROR("Marker ID must be an even number! Odd numver ID's are \
+                   reserved for the text labels. Request to create a marker \
+                   with ID %d and name %s has been ignored!", id, name.c_str());
+        return MarkerResultPair(nullptr, nullptr);
+    }
+
+    // Create the mesh marker
     std::unique_ptr<visualization_msgs::Marker> marker = loadModel(type);
     marker->header.frame_id = frame_id;
     marker->header.stamp = ros::Time();
@@ -76,18 +107,37 @@ auto ModelLoader::getMeshMarker(int id, Mesh::Types type,
     quat_world_space.normalize();
     marker->pose.orientation = tf2::toMsg(quat_world_space);
 
-    return std::move(marker);
+    //Create the text label marker
+    std::unique_ptr<MeshData> mesh_data = yaml_loader_.getMeshConfig(type);
+    Utils::Vec3<double> pos = mesh_data->text_offset_;
+    pos.update(pos.x() + pose.position.x(), pos.y() + pose.position.y(), pos.z() + pose.position.z());
+    std::unique_ptr<visualization_msgs::Marker> textMarker = getTextLabelMarker(name, pos);
+    textMarker->header.frame_id = frame_id;
+    textMarker->header.stamp = ros::Time();
+    textMarker->ns = ns;
+    textMarker->id = id+1;
+
+    return MarkerResultPair(std::move(marker), std::move(textMarker));
 }
 
 auto ModelLoader::getPlaneMarker(int id,
+                                 const std::string& name,
                                  const std::string& frame_id, 
                                  const std::string& ns,
                                  const Utils::Vec3<double>& center,
                                  const Utils::Vec3Array<double>& convex_hull,
                                  const Utils::Vec4<double>& color,
                                  const Utils::Vec3<double>& scale)
-                                 -> std::unique_ptr<visualization_msgs::Marker>
+                                 -> MarkerResultPair
 {
+    if (id % 2 != 0)
+    {
+        ROS_ERROR("Marker ID must be an even number! Odd numver ID's are \
+                   reserved for the text labels. Request to create a marker \
+                   with ID %d and name %s has been ignored!", id, name.c_str());
+        return MarkerResultPair(nullptr, nullptr);
+    }
+
     std::unique_ptr<visualization_msgs::Marker> marker = std::unique_ptr<visualization_msgs::Marker>(new visualization_msgs::Marker);
 
     marker->type = visualization_msgs::Marker::TRIANGLE_LIST;
@@ -111,7 +161,16 @@ auto ModelLoader::getPlaneMarker(int id,
     marker->scale.y = scale.y();
     marker->scale.z = scale.z();
 
-    return std::move(marker);
+    //Create the text label marker
+    Utils::Vec3<double> pos(0, 0, 0.1);
+    pos.update(pos.x() + center.x(), pos.y() + center.y(), pos.z() + center.z());
+    std::unique_ptr<visualization_msgs::Marker> textMarker = getTextLabelMarker(name, pos);
+    textMarker->header.frame_id = frame_id;
+    textMarker->header.stamp = ros::Time();
+    textMarker->ns = ns;
+    textMarker->id = id+1;
+
+    return MarkerResultPair(std::move(marker), std::move(textMarker));
 }
 
 auto ModelLoader::generateTraingleVertices(const Utils::Vec3<double>& center,

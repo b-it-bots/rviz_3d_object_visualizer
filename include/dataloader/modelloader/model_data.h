@@ -20,13 +20,17 @@ namespace RVizDataLoader
         ModelData(const ModelData& data):
         scale_(data.scale_),
         color_(data.color_),
-        unique_id_(data.unique_id_){}
+        text_offset_(data.text_offset_),
+        unique_id_(data.unique_id_),
+        name_(data.name_){}
 
         virtual ~ModelData(){}
 
         Utils::Vec3<double> scale_;
         Utils::Vec3<int> color_;
+        Utils::Vec3<double> text_offset_;
         int unique_id_;
+        std::string name_;
     };
 
     struct PlaneData : public ModelData
