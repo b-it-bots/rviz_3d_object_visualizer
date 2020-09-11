@@ -1,6 +1,6 @@
 BOTTLE:
     Position: [0.0, 0.0, 0.12]
-    Orientation: [0.0, 0.0, 0.0]
+    Orientation: [-1.570796327, 0.0, 0.0]
     Scale: [0.001, 0.001, 0.001]
     Color: [255, 0, 0]
     ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/cola/cola_bottle.dae"
@@ -25,4 +25,11 @@ PERSON:
     Scale: [0.01, 0.01, 0.01]
     Color: [203, 132, 66]
     ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/person/female.dae"
+    UseColorFromMesh: False
+QUESTION_MARK:
+    Position: [0.0, 0.0, 0.0]
+    Orientation: [-1.570796327, 0.0, 0.0]
+    Scale: [0.1, 0.1, 0.1]
+    Color: [255, 0, 0]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/question_mark/question_mark.dae"
     UseColorFromMesh: False
