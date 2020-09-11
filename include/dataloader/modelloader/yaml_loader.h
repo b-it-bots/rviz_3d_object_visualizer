@@ -16,7 +16,7 @@ namespace RVizDataLoader
         YamlLoader(const std::string& yaml_file);
         virtual ~YamlLoader(){}
 
-        MeshData getMeshConfig(Mesh::Types type);
+        auto getMeshConfig(Mesh::Types type) -> std::unique_ptr<MeshData>;
         void setYamlFilePath(const std::string& filepath);
 
     protected:

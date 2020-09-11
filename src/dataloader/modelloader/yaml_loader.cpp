@@ -53,7 +53,19 @@ MeshData YamlLoader::extractMeshConfig(YAML::Node node)
     return mesh_data;
 }
 
-MeshData YamlLoader::getMeshConfig(Mesh::Types type)
+auto YamlLoader::getMeshConfig(Mesh::Types type) -> std::unique_ptr<MeshData>
 {
-    return mesh_data_map_[type];
+    std::unique_ptr<MeshData> mesh_data;
+    std::map<Mesh::Types, MeshData>::iterator itr = mesh_data_map_.find(type);
+    if (itr != mesh_data_map_.end())
+    {
+        mesh_data = std::unique_ptr<MeshData>(new MeshData(itr->second));
+    }
+    else
+    {
+        mesh_data = std::unique_ptr<MeshData>(new MeshData(mesh_data_map_.at(Mesh::UNKNOWN)));
+    }
+
+
+    return mesh_data;
 }

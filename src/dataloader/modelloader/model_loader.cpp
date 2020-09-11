@@ -18,19 +18,19 @@ auto ModelLoader::loadModel(Mesh::Types mesh_type)
 {
     std::unique_ptr<visualization_msgs::Marker> marker = std::unique_ptr<visualization_msgs::Marker>(new visualization_msgs::Marker);
 
-    MeshData mesh_data = yaml_loader_.getMeshConfig(mesh_type);
+    std::unique_ptr<MeshData> mesh_data = yaml_loader_.getMeshConfig(mesh_type);
 
     marker->type = visualization_msgs::Marker::MESH_RESOURCE;
-    marker->pose.position.x = mesh_data.pose_.position.x();
-    marker->pose.position.y = mesh_data.pose_.position.y();
-    marker->pose.position.z = mesh_data.pose_.position.z();
-    marker->pose.orientation = tf2::toMsg(Utils::toTf2Quaternion(mesh_data.pose_.orientation));
+    marker->pose.position.x = mesh_data->pose_.position.x();
+    marker->pose.position.y = mesh_data->pose_.position.y();
+    marker->pose.position.z = mesh_data->pose_.position.z();
+    marker->pose.orientation = tf2::toMsg(Utils::toTf2Quaternion(mesh_data->pose_.orientation));
 
-    marker->scale.x = mesh_data.scale_.x();
-    marker->scale.y = mesh_data.scale_.y();
-    marker->scale.z = mesh_data.scale_.z();
+    marker->scale.x = mesh_data->scale_.x();
+    marker->scale.y = mesh_data->scale_.y();
+    marker->scale.z = mesh_data->scale_.z();
 
-    if (mesh_data.use_color_from_mesh_)
+    if (mesh_data->use_color_from_mesh_)
     {
         marker->color.r = 0.0;
         marker->color.g = 0.0;
@@ -40,14 +40,14 @@ auto ModelLoader::loadModel(Mesh::Types mesh_type)
     }
     else
     {
-        marker->color.r = mesh_data.color_.r() / 255.0;
-        marker->color.g = mesh_data.color_.g() / 255.0;
-        marker->color.b = mesh_data.color_.b() / 255.0;
+        marker->color.r = mesh_data->color_.r() / 255.0;
+        marker->color.g = mesh_data->color_.g() / 255.0;
+        marker->color.b = mesh_data->color_.b() / 255.0;
         marker->color.a = 1.0;
         marker->mesh_use_embedded_materials = false;
     }
 
-    marker->mesh_resource = mesh_data.mesh_resource_;
+    marker->mesh_resource = mesh_data->mesh_resource_;
 
     return std::move(marker);
 }
