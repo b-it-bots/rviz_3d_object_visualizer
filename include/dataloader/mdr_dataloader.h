@@ -43,6 +43,7 @@ namespace RVizDataLoader
                 Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
                 mesh_data->pose_ = Utils::Pose<double>(position.x, position.y, position.z, rpy_vector.x(), rpy_vector.y(), rpy_vector.z());
                 mesh_data->type_ = Mesh::Types::BOTTLE;
+                mesh_data->name_ = object.name;
 
                 return mesh_data;
             }
@@ -55,6 +56,7 @@ namespace RVizDataLoader
                 Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
                 mesh_data->pose_ = Utils::Pose<double>(position.x, position.y, position.z, rpy_vector.x(), rpy_vector.y(), rpy_vector.z());
                 mesh_data->type_ = Mesh::Types::PERSON;
+                mesh_data->name_ = person.name;
 
                 return mesh_data;
             }
@@ -67,6 +69,7 @@ namespace RVizDataLoader
                 {
                     plane_data->convex_hull_.push_back(Utils::Vec3<double>(point.x, point.y, point.z));
                 }
+                plane_data->name_ = plane.name;
 
                 return plane_data;
             }
@@ -105,7 +108,10 @@ namespace RVizDataLoader
                     if (object_data_record_[typeid(T).name()].find(object_name) == object_data_record_[typeid(T).name()].end())
                     {
                         // object not found; insert it in map:
-                        model_data->unique_id_ = item_id_++;
+                        model_data->unique_id_ = item_id_;
+                        // Each item requires two markers hence the item id's for each new item can have even numbers 
+                        // and the odd numbers are reserved for the corresponding text labels
+                        item_id_ += 2;
                         object_data_record_[typeid(T).name()][object_name] = model_data;
                         std::cout << *queried_objects[i] << std::endl;
                     }
