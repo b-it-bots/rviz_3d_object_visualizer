@@ -21,23 +21,26 @@ int main(int argc, char** argv)
 
     ModelLoader model_loader = ModelLoader(mesh_config_file);
     auto bottle_marker = model_loader.getMeshMarker(1, Mesh::Types::BOTTLE, "base_link", "", 
-                                                Utils::Pose<double>(0, 0, 0.91, 0, 0, 0));
+                                                Utils::Pose<double>(0.0, 0.5, 0.91, 0, 0, 0));
     auto table_marker = model_loader.getMeshMarker(2, Mesh::Types::TABLE, "base_link", "");
     auto chair_marker = model_loader.getMeshMarker(3, Mesh::Types::CHAIR, "base_link", "", 
                                                 Utils::Pose<double>(-0.25, 0, 0, 0, 0, 0));
     auto person_marker = model_loader.getMeshMarker(4, Mesh::Types::PERSON, "base_link", "", 
                                                 Utils::Pose<double>(1.0, 0, 0, 0, 0, 3.14));
+    auto cup_marker = model_loader.getMeshMarker(5, Mesh::Types::CUP, "base_link", "", 
+                                                Utils::Pose<double>(0.0, -0.5, 0.91, 0, 0, 0));
 
     Utils::Vec3Array<double> plane_vert;
     plane_vert.push_back(Utils::Vec3<double>(-1, 1, 0.5));
     plane_vert.push_back(Utils::Vec3<double>(1, 1, 0.5));
     plane_vert.push_back(Utils::Vec3<double>(1, -1, 0.5));
     plane_vert.push_back(Utils::Vec3<double>(-1, -1, 0.5));
-    auto plane_marker = model_loader.getPlaneMarker(5, "base_link", "", Utils::Vec3<double>(0, 0, 0.5), plane_vert);
+    auto plane_marker = model_loader.getPlaneMarker(6, "base_link", "", Utils::Vec3<double>(0, 0, 0.5), plane_vert);
 
-    ros::Publisher pub = n.advertise<visualization_msgs::MarkerArray>("/ObjectVisualizationManager/MarkerArray", 1);
+    ros::Publisher pub = n.advertise<visualization_msgs::MarkerArray>("/rviz_3d_object_visualizer/markers", 1);
     visualization_msgs::MarkerArray msg;
     msg.markers.push_back(*bottle_marker);
+    msg.markers.push_back(*cup_marker);
     msg.markers.push_back(*table_marker);
     msg.markers.push_back(*chair_marker);
     msg.markers.push_back(*person_marker);

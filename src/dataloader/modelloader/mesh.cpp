@@ -8,9 +8,12 @@ std::map<Mesh::Types, std::string> Mesh::initializeMeshTypesMap()
 {
     std::map<Types,std::string> mesh_map;
     mesh_map[Types::BOTTLE] = "BOTTLE";
+    mesh_map[Types::CUP] = "CUP";
+    mesh_map[Types::PLATE] = "PLATE";
     mesh_map[Types::TABLE] = "TABLE";
     mesh_map[Types::CHAIR] = "CHAIR";
     mesh_map[Types::PERSON] = "PERSON";
+    mesh_map[Types::UNKNOWN] = "UNKNOWN";
     return mesh_map;
 }
 

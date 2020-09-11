@@ -13,10 +13,20 @@ public:
     enum Types 
     {
         INVALID = 0,
+        // Kitchen items
         BOTTLE,
+        CUP,
+        PLATE,
+
+        // Furniture
         TABLE,
         CHAIR,
+
+        // People
         PERSON,
+
+        // Others
+        UNKNOWN,
         SIZE
     };
 
