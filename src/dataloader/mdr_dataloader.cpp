@@ -47,6 +47,7 @@ void MDRDataloader::queryDatabase()
             std::cout << item_to_delete_name << std::endl;
             object_data_record_[delete_item_type].erase(item_to_delete_name);
         }
+        item_delete_map_[delete_item_type].clear();
     }
 
     std::cout << "\nDetails of currently stored objects:" << std::endl;
