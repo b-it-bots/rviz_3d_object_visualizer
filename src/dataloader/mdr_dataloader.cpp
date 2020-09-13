@@ -124,10 +124,17 @@ void MDRDataloader::publishObjectData()
     for (auto &marker_id : marker_delete_list_)
     {
         visualization_msgs::Marker delete_marker;
+        visualization_msgs::Marker text_delete_marker;
+
         delete_marker.header.frame_id = "base_link";
         delete_marker.id = marker_id;
         delete_marker.action = visualization_msgs::Marker::DELETE;
         marker_array_msg.markers.push_back(delete_marker);
+
+        text_delete_marker.header.frame_id = "base_link";
+        text_delete_marker.id = marker_id + 1;
+        text_delete_marker.action = visualization_msgs::Marker::DELETE;
+        marker_array_msg.markers.push_back(text_delete_marker);
     }
 
     data_pub_.publish(marker_array_msg);
