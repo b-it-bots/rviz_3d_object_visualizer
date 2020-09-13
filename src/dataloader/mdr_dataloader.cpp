@@ -9,6 +9,7 @@
 
 #include "dataloader/mdr_dataloader.h"
 #include <ros/package.h>
+#include <yaml-cpp/yaml.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 
@@ -20,19 +21,37 @@ MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh)
     data_pub_ = nh.advertise<visualization_msgs::MarkerArray>("rviz_3d_object_visualizer/markers", 1);
 
     std::string model_config_file = ros::package::getPath("rviz_3d_object_visualizer") + "/config/model_params.yaml";
+    obj_category_mesh_filepath_ = ros::package::getPath("rviz_3d_object_visualizer") + "/config/object_mesh_categories.yaml";
     nh.param<std::string>("/dataloader/model_config", model_config_file, model_config_file);
     model_loader_ = new ModelLoader(model_config_file);
+
+    fillObjectCategoryMeshMap();
 }
 
 MDRDataloader::~MDRDataloader()
 {
 }
 
+void MDRDataloader::fillObjectCategoryMeshMap()
+{
+    YAML::Node yaml_node = YAML::LoadFile(obj_category_mesh_filepath_);
+    for (const auto& entry: yaml_node)
+        obj_category_mesh_map_.insert(std::pair<std::string, Mesh::Types>(entry.first.as<std::string>(), Mesh::getMeshType(entry.second.as<std::string>())));
+}
+
+Mesh::Types MDRDataloader::getObjectMeshType(std::string object_category)
+{
+    if(obj_category_mesh_map_.count(object_category) != 0)
+        return obj_category_mesh_map_[object_category];
+    else
+        return Mesh::Types::UNKNOWN;
+}
+
 void MDRDataloader::queryDatabase()
 {
     std::cout << "\nDetails of new objects in database:" << std::endl;
 
-    updateObjectData<mas_perception_msgs::Person>();              // has no name field
+    updateObjectData<mas_perception_msgs::Person>();              // has no name field in old message type
     updateObjectData<mas_perception_msgs::Object>();
     updateObjectData<mas_perception_msgs::Plane>();
 
