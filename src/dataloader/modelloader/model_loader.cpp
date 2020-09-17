@@ -133,7 +133,7 @@ auto ModelLoader::getPlaneMarker(int id,
 {
     if (id % 2 != 0)
     {
-        ROS_ERROR("Marker ID must be an even number! Odd numver ID's are \
+        ROS_ERROR("Marker ID must be an even number! Odd number ID's are \
                    reserved for the text labels. Request to create a marker \
                    with ID %d and name %s has been ignored!", id, name.c_str());
         return MarkerResultPair(nullptr, nullptr);
