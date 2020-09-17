@@ -94,6 +94,7 @@ auto ModelLoader::getMeshMarker(int id, Mesh::Types type,
     marker->header.stamp = ros::Time();
     marker->ns = ns;
     marker->id = id;
+    marker->text = name;
 
     // Translate the model in world space
     marker->pose.position.x += pose.position.x();
@@ -145,6 +146,7 @@ auto ModelLoader::getPlaneMarker(int id,
     marker->header.stamp = ros::Time();
     marker->ns = ns;
     marker->id = id;
+    marker->text = name;
 
     // Set the vertices for the triangles forming the plane
     marker->points = generateTraingleVertices(center, convex_hull);
