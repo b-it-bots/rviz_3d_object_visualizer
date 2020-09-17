@@ -46,6 +46,13 @@
 
 #include <OgreSceneNode.h>
 
+namespace rviz
+{
+    class Property;
+    class BoolProperty;
+    class PropertyTreeWidget;
+}
+
 namespace RVizVisualization
 {
 
@@ -62,6 +69,12 @@ public:
     virtual void save( rviz::Config config ) const;
 
 protected:
+    void setupBaseProperties();
+    void addNewObjectCategory(const std::string& categoryName);
+    void addObject(const std::string& categoryName, const std::string& name, int uniqueId);
+    void addPerson(const std::string& name, int uniqueId);
+    void addPlane(const std::string& name, int uniqueId);
+
     void markerArrayCb(const visualization_msgs::MarkerArray::ConstPtr& msg);
 
     void addNewMarker(const visualization_msgs::Marker& msg);
@@ -77,13 +90,23 @@ protected:
 
     typedef std::map<int, Ogre::SceneNode*> SceneMap;
     typedef std::map<int, rviz::MarkerBase*> MarkerMap;
+    typedef std::map<int, rviz::Property*> PropertyMap;
     typedef std::pair<int, Ogre::SceneNode*> ScenePair;
     typedef std::pair<int, rviz::MarkerBase*> MarkerPair;
+    typedef std::pair<int, rviz::Property*> PropertyPair;
     typedef std::map<int, Ogre::SceneNode*>::iterator SceneMapItr;
     typedef std::map<int, rviz::MarkerBase*>::iterator MarkerMapItr;
 
     SceneMap scene_nodes_map_;
     MarkerMap markers_map_;
+    PropertyMap properties_map_;
+
+    rviz::Property* propertyContainer_;
+    rviz::BoolProperty* objects_property_;
+    rviz::BoolProperty* persons_property_;
+    rviz::BoolProperty* planes_property_;
+    std::map<std::string, rviz::BoolProperty*> object_category_properties;
+    rviz::PropertyTreeWidget* tree_widget_;
 };
 
 } // end namespace RVizVisualization

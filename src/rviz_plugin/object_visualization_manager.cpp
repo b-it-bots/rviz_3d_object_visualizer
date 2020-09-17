@@ -39,6 +39,13 @@
 #include <rviz/default_plugin/markers/mesh_resource_marker.h>
 #include <rviz/default_plugin/markers/triangle_list_marker.h>
 #include <rviz/default_plugin/markers/text_view_facing_marker.h>
+
+#include <rviz/properties/property_tree_widget.h>
+#include <rviz/properties/property_tree_model.h>
+#include <rviz/properties/bool_property.h>
+
+#include <QVBoxLayout>
+
 #include <visualization_msgs/Marker.h>
 
 #include "rviz_plugin/object_visualization_manager.h"
@@ -59,7 +66,65 @@ ObjectVisualizationManager::~ObjectVisualizationManager()
 
 void ObjectVisualizationManager::onInitialize()
 {
+    setupBaseProperties();
     root_scene_node_ = vis_manager_->getSceneManager()->getRootSceneNode()->createChildSceneNode();
+}
+
+void ObjectVisualizationManager::setupBaseProperties()
+{
+    propertyContainer_ = new rviz::Property(QString::fromStdString("ObjectVisualizationRootProperty"));
+
+    // Create the base properties for different types
+    objects_property_ = new rviz::BoolProperty(
+        QString::fromStdString(std::string("Objects")), true,
+        "Object 3D markers", propertyContainer_, NULL, NULL);
+    persons_property_ = new rviz::BoolProperty(
+        QString::fromStdString(std::string("Persons")), true,
+        "Persons 3D markers", propertyContainer_, NULL, NULL);
+    planes_property_ = new rviz::BoolProperty(
+        QString::fromStdString(std::string("Planes")), true,
+        "Planes 3D markers", propertyContainer_, NULL, NULL);
+
+    rviz::PropertyTreeModel* model = new rviz::PropertyTreeModel(propertyContainer_, this);
+    tree_widget_ = new rviz::PropertyTreeWidget();
+    tree_widget_->setModel(model);
+
+    QVBoxLayout* layout = new QVBoxLayout();
+    layout->addWidget(tree_widget_);
+    setLayout(layout);
+}
+
+void ObjectVisualizationManager::addNewObjectCategory(const std::string& categoryName)
+{
+    object_category_properties[categoryName] = new rviz::BoolProperty(
+        QString::fromStdString(categoryName), true,
+        categoryName.c_str(), objects_property_, NULL, NULL);
+}
+
+void ObjectVisualizationManager::addObject(const std::string& categoryName, const std::string& name, int uniqueId)
+{
+    if (!object_category_properties.count(categoryName))
+    {
+        addNewObjectCategory(categoryName);
+    }
+
+    properties_map_[uniqueId] = new rviz::BoolProperty(
+        QString::fromStdString(name), true,
+        name.c_str(), object_category_properties[categoryName], NULL, NULL);
+}
+
+void ObjectVisualizationManager::addPerson(const std::string& name, int uniqueId)
+{
+    properties_map_[uniqueId] = new rviz::BoolProperty(
+        QString::fromStdString(name), true,
+        name.c_str(), persons_property_, NULL, NULL);
+}
+
+void ObjectVisualizationManager::addPlane(const std::string& name, int uniqueId)
+{
+    properties_map_[uniqueId] = new rviz::BoolProperty(
+        QString::fromStdString(name), true,
+        name.c_str(), planes_property_, NULL, NULL);
 }
 
 void ObjectVisualizationManager::save( rviz::Config config ) const
