@@ -30,6 +30,8 @@ namespace RVizDataLoader
             virtual void runDataUpdateLoop();
             virtual void publishObjectData();
             void printStoredObjectData();
+            void fillObjectCategoryMeshMap();
+            Mesh::Types getObjectMeshType(std::string object_category);
 
             friend std::ostream& operator<<(std::ostream &out, mas_perception_msgs::Person const& data); 
             friend std::ostream& operator<<(std::ostream &out, mas_perception_msgs::Object const& data); 
@@ -42,7 +44,8 @@ namespace RVizDataLoader
                 auto orientation = object.pose.pose.orientation;
                 Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
                 mesh_data->pose_ = Utils::Pose<double>(position.x, position.y, position.z, rpy_vector.x(), rpy_vector.y(), rpy_vector.z());
-                mesh_data->type_ = Mesh::Types::BOTTLE;
+                mesh_data->type_ = getObjectMeshType(object.category);
+
                 mesh_data->name_ = object.name;
 
                 return mesh_data;
@@ -151,9 +154,11 @@ namespace RVizDataLoader
         private:
             int update_loop_rate_;
             int item_id_{0};
+            std::string obj_category_mesh_filepath_;
             std::vector<int> marker_delete_list_;
             std::map<std::string, std::vector<std::string>> item_delete_map_;
             std::map<std::string, std::map<std::string, ModelData*>> object_data_record_;
+            std::map<std::string, Mesh::Types> obj_category_mesh_map_; 
             ModelLoader* model_loader_;
     };
 
