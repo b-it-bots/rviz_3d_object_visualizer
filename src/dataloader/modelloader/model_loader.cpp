@@ -58,7 +58,7 @@ auto ModelLoader::getTextLabelMarker(const std::string& name,
     std::unique_ptr<visualization_msgs::Marker> marker = std::unique_ptr<visualization_msgs::Marker>(new visualization_msgs::Marker);
 
     marker->type = visualization_msgs::Marker::TEXT_VIEW_FACING;
-    marker->text = name;
+    marker->text = name.substr(name.rfind("/") + 1, name.size());
     marker->pose.position.x = pos.x();
     marker->pose.position.y = pos.y();
     marker->pose.position.z = pos.z();
@@ -94,6 +94,7 @@ auto ModelLoader::getMeshMarker(int id, Mesh::Types type,
     marker->header.stamp = ros::Time();
     marker->ns = ns;
     marker->id = id;
+    marker->text = name;
 
     // Translate the model in world space
     marker->pose.position.x += pose.position.x();
@@ -145,6 +146,7 @@ auto ModelLoader::getPlaneMarker(int id,
     marker->header.stamp = ros::Time();
     marker->ns = ns;
     marker->id = id;
+    marker->text = name;
 
     // Set the vertices for the triangles forming the plane
     marker->points = generateTraingleVertices(center, convex_hull);
