@@ -41,7 +41,7 @@ void MDRDataloader::fillObjectCategoryMeshMap()
 
 Mesh::Types MDRDataloader::getObjectMeshType(std::string object_category)
 {
-    if(obj_category_mesh_map_.count(object_category) != 0)
+    if(obj_category_mesh_map_.count(object_category))
         return obj_category_mesh_map_[object_category];
     else
         return Mesh::Types::UNKNOWN;
@@ -112,7 +112,13 @@ void MDRDataloader::publishObjectData()
             MeshData *mesh_data = dynamic_cast<MeshData*>(object.second);
             if (mesh_data)
             {
-                auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, mesh_data->name_, "base_link", "", 
+                std::string mesh_name;
+                if (mesh_data->type_ == Mesh::Types::PERSON)
+                    mesh_name = Mesh::MeshTypesMap.at(mesh_data->type_) + "/" + mesh_data->name_;
+                else
+                    mesh_name = "OBJECT/" + Mesh::MeshTypesMap.at(mesh_data->type_) + "/" + mesh_data->name_;
+
+                auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, mesh_name, "base_link", "", 
                                                            mesh_data->pose_);
                 if (marker.first)
                 {
@@ -127,7 +133,8 @@ void MDRDataloader::publishObjectData()
             PlaneData *plane_data = dynamic_cast<PlaneData*>(object.second);
             if (plane_data)
             {
-                auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, plane_data->name_, "base_link", "", 
+                std::string plane_name = "PLANE/" + plane_data->name_;
+                auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, plane_name, "base_link", "", 
                                                             plane_data->center_, plane_data->convex_hull_);
                 if (marker.first)
                 {
