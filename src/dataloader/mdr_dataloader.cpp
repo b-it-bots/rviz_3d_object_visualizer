@@ -41,7 +41,7 @@ void MDRDataloader::fillObjectCategoryMeshMap()
 
 Mesh::Types MDRDataloader::getObjectMeshType(std::string object_category)
 {
-    if(obj_category_mesh_map_.count(object_category) != 0)
+    if(obj_category_mesh_map_.count(object_category))
         return obj_category_mesh_map_[object_category];
     else
         return Mesh::Types::UNKNOWN;
