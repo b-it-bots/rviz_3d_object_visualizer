@@ -56,6 +56,8 @@ namespace rviz
 namespace RVizVisualization
 {
 
+class MarkerInfo;
+
 class ObjectVisualizationManager : public rviz::Panel
 {
 Q_OBJECT
@@ -68,45 +70,80 @@ public:
     virtual void load( const rviz::Config& config );
     virtual void save( rviz::Config config ) const;
 
+    typedef std::map<int, MarkerInfo*> MarkerInfoMap;
+    typedef std::map<int, MarkerInfo*>::iterator MarkerInfoMapItr;
+    typedef std::map<int, MarkerInfo*>::const_iterator MarkerInfoMapConstItr;
+    typedef std::pair<int, MarkerInfo*> MarkerInfoPair;
+
+private Q_SLOTS:
+  void updateMarkerVisibilities();
+
 protected:
+    enum BaseTypes
+    {
+        ROOT = 0,
+        OBJECTS,
+        PERSONS,
+        PLANES,
+        COUNT
+    };
+
     void setupBaseProperties();
     void addNewObjectCategory(const std::string& categoryName);
-    void addObject(const std::string& categoryName, const std::string& name, int uniqueId);
-    void addPerson(const std::string& name, int uniqueId);
-    void addPlane(const std::string& name, int uniqueId);
+    rviz::BoolProperty* addObject(const std::string& categoryName, const std::string& name, int uniqueId);
+    rviz::BoolProperty* addPerson(const std::string& name, int uniqueId);
+    rviz::BoolProperty* addPlane(const std::string& name, int uniqueId);
 
     void markerArrayCb(const visualization_msgs::MarkerArray::ConstPtr& msg);
+
+    BaseTypes getBaseType(const visualization_msgs::Marker& msg);
+    std::string getObjectCategory(const visualization_msgs::Marker& msg);
+    std::string getDisplayName(const visualization_msgs::Marker& msg);
 
     void addNewMarker(const visualization_msgs::Marker& msg);
     void updateMarker(const visualization_msgs::Marker& msg);
     void deleteMarker(const int marker_id);
-    rviz::MarkerBase* createMarker(const visualization_msgs::Marker& msg, 
-                                                                Ogre::SceneNode* scene_node);
+
+    Ogre::SceneNode* createSceneNode(const visualization_msgs::Marker& msg);
+    rviz::MarkerBase* createMarker(const visualization_msgs::Marker& msg,
+                                   Ogre::SceneNode* scene_node);
+    rviz::BoolProperty* createProperty(const visualization_msgs::Marker& msg);
 
     ros::Subscriber marker_array_sub_;
     rviz::MarkerDisplay marker_display_;
 
-    Ogre::SceneNode* root_scene_node_;
+    std::vector<Ogre::SceneNode*> base_scene_nodes;
+    std::map<std::string, Ogre::SceneNode*> obj_category_scene_nodes;
 
-    typedef std::map<int, Ogre::SceneNode*> SceneMap;
-    typedef std::map<int, rviz::MarkerBase*> MarkerMap;
-    typedef std::map<int, rviz::Property*> PropertyMap;
-    typedef std::pair<int, Ogre::SceneNode*> ScenePair;
-    typedef std::pair<int, rviz::MarkerBase*> MarkerPair;
-    typedef std::pair<int, rviz::Property*> PropertyPair;
-    typedef std::map<int, Ogre::SceneNode*>::iterator SceneMapItr;
-    typedef std::map<int, rviz::MarkerBase*>::iterator MarkerMapItr;
-
-    SceneMap scene_nodes_map_;
-    MarkerMap markers_map_;
-    PropertyMap properties_map_;
-
-    rviz::Property* propertyContainer_;
-    rviz::BoolProperty* objects_property_;
-    rviz::BoolProperty* persons_property_;
-    rviz::BoolProperty* planes_property_;
-    std::map<std::string, rviz::BoolProperty*> object_category_properties;
+    std::vector<rviz::Property*> base_properties;
+    std::map<std::string, rviz::BoolProperty*> obj_category_properties;
     rviz::PropertyTreeWidget* tree_widget_;
+
+    MarkerInfoMap marker_store_;
+};
+
+class MarkerInfo
+{
+public:
+    MarkerInfo();
+    MarkerInfo(int unique_id, Ogre::SceneNode* scene_node, 
+               rviz::MarkerBase* marker, rviz::BoolProperty* property,
+               bool visibility = true);
+    virtual ~MarkerInfo();
+
+    void setVisible(bool visibility);
+    bool getVisibility() const { return visibility_; }
+    void updateVisibility(const ObjectVisualizationManager::MarkerInfoMap& marker_store);
+
+    void updateMarker(rviz::MarkerBase* marker);
+
+    int unique_id_;
+    Ogre::SceneNode* scene_node_;
+    rviz::MarkerBase* marker_;
+    rviz::BoolProperty* property_;
+
+protected:
+    bool visibility_;
 };
 
 } // end namespace RVizVisualization

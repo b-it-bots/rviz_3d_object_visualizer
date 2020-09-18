@@ -58,7 +58,7 @@ auto ModelLoader::getTextLabelMarker(const std::string& name,
     std::unique_ptr<visualization_msgs::Marker> marker = std::unique_ptr<visualization_msgs::Marker>(new visualization_msgs::Marker);
 
     marker->type = visualization_msgs::Marker::TEXT_VIEW_FACING;
-    marker->text = name.substr(name.rfind("/") + 1, name.size());
+    marker->text = name; //name.substr(name.rfind("/") + 1, name.size());
     marker->pose.position.x = pos.x();
     marker->pose.position.y = pos.y();
     marker->pose.position.z = pos.z();
