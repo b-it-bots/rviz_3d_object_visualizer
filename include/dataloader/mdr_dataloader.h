@@ -153,8 +153,11 @@ namespace RVizDataLoader
 
         private:
             int update_loop_rate_;
+            bool debug_;
             int item_id_{0};
-            std::string obj_category_mesh_filepath_;
+            std::string marker_pub_topic_;
+            std::string obj_category_mesh_filename_;
+            std::string model_config_filename_;
             std::vector<int> marker_delete_list_;
             std::map<std::string, std::vector<std::string>> item_delete_map_;
             std::map<std::string, std::map<std::string, ModelData*>> object_data_record_;

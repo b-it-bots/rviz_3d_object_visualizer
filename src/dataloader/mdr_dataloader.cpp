@@ -17,13 +17,14 @@ using namespace RVizDataLoader;
 
 MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh) 
 {
-    update_loop_rate_ = 10;
-    data_pub_ = nh.advertise<visualization_msgs::MarkerArray>("rviz_3d_object_visualizer/markers", 1);
+    nh.param<int>("update_loop_rate", update_loop_rate_, 3);
+    nh.param<std::string>("marker_pub_topic", marker_pub_topic_, "/rviz_3d_object_visualizer/markers");
+    nh.param<std::string>("obj_category_mesh_filename", obj_category_mesh_filename_, "object_mesh_categories.yaml");
+    nh.param<std::string>("model_config_file_name", model_config_filename_, "model_params.yaml");
+    nh.param<bool>("debug", debug_, false);
 
-    std::string model_config_file = ros::package::getPath("rviz_3d_object_visualizer") + "/config/model_params.yaml";
-    obj_category_mesh_filepath_ = ros::package::getPath("rviz_3d_object_visualizer") + "/config/object_mesh_categories.yaml";
-    nh.param<std::string>("/dataloader/model_config", model_config_file, model_config_file);
-    model_loader_ = new ModelLoader(model_config_file);
+    data_pub_ = nh.advertise<visualization_msgs::MarkerArray>(marker_pub_topic_, 1);
+    model_loader_ = new ModelLoader(ros::package::getPath("rviz_3d_object_visualizer") + "/config/" + model_config_filename_);
 
     fillObjectCategoryMeshMap();
 }
@@ -35,7 +36,7 @@ MDRDataloader::~MDRDataloader()
 
 void MDRDataloader::fillObjectCategoryMeshMap()
 {
-    YAML::Node yaml_node = YAML::LoadFile(obj_category_mesh_filepath_);
+    YAML::Node yaml_node = YAML::LoadFile(ros::package::getPath("rviz_3d_object_visualizer") + "/config/" + obj_category_mesh_filename_);
     for (const auto& entry: yaml_node)
         obj_category_mesh_map_.insert(std::pair<std::string, Mesh::Types>(entry.first.as<std::string>(), Mesh::getMeshType(entry.second.as<std::string>())));
 }
