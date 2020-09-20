@@ -116,14 +116,16 @@ namespace RVizDataLoader
                         // and the odd numbers are reserved for the corresponding text labels
                         item_id_ += 2;
                         object_data_record_[typeid(T).name()][object_name] = model_data;
-                        std::cout << *queried_objects[i] << std::endl;
+                        if (debug_)
+                            std::cout << *queried_objects[i] << std::endl;
                     }
                     else
                     {
                         // object found in map; update its data:
                         model_data->unique_id_ = object_data_record_[typeid(T).name()][object_name]->unique_id_;
                         object_data_record_[typeid(T).name()][object_name] = model_data;
-                        std::cout << "Old object data updated in map" << std::endl;
+                        if (debug_)
+                            std::cout << "Old object data updated in map" << std::endl;
                     }
                 }
 
@@ -144,7 +146,8 @@ namespace RVizDataLoader
                         // object not found in queried list; add to delete list, and erase from map
                         marker_delete_list_.push_back(object_in_map.second->unique_id_);
                         item_delete_map_[typeid(T).name()].push_back(object_in_map.first);
-                        std::cout << "Object in map not found in queried_list. Removing..." << std::endl;
+                        if (debug_)
+                            std::cout << "Object in map not found in queried_list. Removing..." << std::endl;
                     }
                 }
             }

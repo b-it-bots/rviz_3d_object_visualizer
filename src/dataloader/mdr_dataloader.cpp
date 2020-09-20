@@ -27,6 +27,7 @@ MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh)
     model_loader_ = new ModelLoader(ros::package::getPath("rviz_3d_object_visualizer") + "/config/" + model_config_filename_);
 
     fillObjectCategoryMeshMap();
+    ROS_INFO("[mdr_dataloader] Initialized.");
 }
 
 MDRDataloader::~MDRDataloader()
@@ -51,28 +52,27 @@ Mesh::Types MDRDataloader::getObjectMeshType(std::string object_category)
 
 void MDRDataloader::queryDatabase()
 {
-    std::cout << "\nDetails of new objects in database:" << std::endl;
+    if (debug_)
+    {
+        ROS_INFO("[mdr_dataloader] Querying MongoDB database...");
+        ROS_INFO("[mdr_dataloader] Displaying details of objects found in database:");
+    }
 
     updateObjectData<mas_perception_msgs::Person>();              // has no name field in old message type
     updateObjectData<mas_perception_msgs::Object>();
     updateObjectData<mas_perception_msgs::Plane>();
 
     // Remove objects from map if not database
-    std::cout << "\nItems to be deleted:" << std::endl;
-
     for (auto &delete_list : item_delete_map_)
     {
         auto delete_item_type = delete_list.first;
         for (auto &item_to_delete_name : item_delete_map_[delete_item_type])
-        {
-            std::cout << item_to_delete_name << std::endl;
             object_data_record_[delete_item_type].erase(item_to_delete_name);
-        }
         item_delete_map_[delete_item_type].clear();
     }
 
-    std::cout << "\nDetails of currently stored objects:" << std::endl;
-    printStoredObjectData();
+    if (debug_)
+        printStoredObjectData();
 }
 
 void MDRDataloader::runDataUpdateLoop()
@@ -92,6 +92,7 @@ void MDRDataloader::runDataUpdateLoop()
 
 void MDRDataloader::printStoredObjectData()
 {
+    ROS_INFO("[mdr_dataloader] Displaying details of objects currently stored in the database:");
     int entry_counter{0};
     for (auto &object_data : object_data_record_)
     {
