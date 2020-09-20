@@ -30,6 +30,7 @@ MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh)
 
 MDRDataloader::~MDRDataloader()
 {
+    delete model_loader_;
 }
 
 void MDRDataloader::fillObjectCategoryMeshMap()
@@ -163,6 +164,7 @@ void MDRDataloader::publishObjectData()
         text_delete_marker.action = visualization_msgs::Marker::DELETE;
         marker_array_msg.markers.push_back(text_delete_marker);
     }
+    marker_delete_list_.clear();
 
     data_pub_.publish(marker_array_msg);
 }
