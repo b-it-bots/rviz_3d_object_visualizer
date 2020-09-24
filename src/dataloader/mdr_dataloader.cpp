@@ -17,24 +17,27 @@ using namespace RVizDataLoader;
 
 MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh) 
 {
-    update_loop_rate_ = 10;
-    data_pub_ = nh.advertise<visualization_msgs::MarkerArray>("rviz_3d_object_visualizer/markers", 1);
+    ros::param::get("~update_loop_rate", update_loop_rate_);
+    ros::param::get("~marker_pub_topic", marker_pub_topic_);
+    ros::param::get("~obj_category_mesh_filename", obj_category_mesh_filename_);
+    ros::param::get("~model_config_filename", model_config_filename_);
+    ros::param::get("~debug", debug_);
 
-    std::string model_config_file = ros::package::getPath("rviz_3d_object_visualizer") + "/config/model_params.yaml";
-    obj_category_mesh_filepath_ = ros::package::getPath("rviz_3d_object_visualizer") + "/config/object_mesh_categories.yaml";
-    nh.param<std::string>("/dataloader/model_config", model_config_file, model_config_file);
-    model_loader_ = new ModelLoader(model_config_file);
+    data_pub_ = nh.advertise<visualization_msgs::MarkerArray>(marker_pub_topic_, 1);
+    model_loader_ = new ModelLoader(ros::package::getPath("rviz_3d_object_visualizer") + "/config/" + model_config_filename_);
 
     fillObjectCategoryMeshMap();
+    ROS_INFO("[mdr_dataloader] Initialized.");
 }
 
 MDRDataloader::~MDRDataloader()
 {
+    delete model_loader_;
 }
 
 void MDRDataloader::fillObjectCategoryMeshMap()
 {
-    YAML::Node yaml_node = YAML::LoadFile(obj_category_mesh_filepath_);
+    YAML::Node yaml_node = YAML::LoadFile(ros::package::getPath("rviz_3d_object_visualizer") + "/config/" + obj_category_mesh_filename_);
     for (const auto& entry: yaml_node)
         obj_category_mesh_map_.insert(std::pair<std::string, Mesh::Types>(entry.first.as<std::string>(), Mesh::getMeshType(entry.second.as<std::string>())));
 }
@@ -49,28 +52,27 @@ Mesh::Types MDRDataloader::getObjectMeshType(std::string object_category)
 
 void MDRDataloader::queryDatabase()
 {
-    std::cout << "\nDetails of new objects in database:" << std::endl;
+    if (debug_)
+    {
+        ROS_INFO("[mdr_dataloader] Querying MongoDB database...");
+        ROS_INFO("[mdr_dataloader] Displaying details of objects found in database:");
+    }
 
     updateObjectData<mas_perception_msgs::Person>();              // has no name field in old message type
     updateObjectData<mas_perception_msgs::Object>();
     updateObjectData<mas_perception_msgs::Plane>();
 
     // Remove objects from map if not database
-    std::cout << "\nItems to be deleted:" << std::endl;
-
     for (auto &delete_list : item_delete_map_)
     {
         auto delete_item_type = delete_list.first;
         for (auto &item_to_delete_name : item_delete_map_[delete_item_type])
-        {
-            std::cout << item_to_delete_name << std::endl;
             object_data_record_[delete_item_type].erase(item_to_delete_name);
-        }
         item_delete_map_[delete_item_type].clear();
     }
 
-    std::cout << "\nDetails of currently stored objects:" << std::endl;
-    printStoredObjectData();
+    if (debug_)
+        printStoredObjectData();
 }
 
 void MDRDataloader::runDataUpdateLoop()
@@ -90,6 +92,7 @@ void MDRDataloader::runDataUpdateLoop()
 
 void MDRDataloader::printStoredObjectData()
 {
+    ROS_INFO("[mdr_dataloader] Displaying details of objects currently stored in the database:");
     int entry_counter{0};
     for (auto &object_data : object_data_record_)
     {
@@ -163,6 +166,7 @@ void MDRDataloader::publishObjectData()
         text_delete_marker.action = visualization_msgs::Marker::DELETE;
         marker_array_msg.markers.push_back(text_delete_marker);
     }
+    marker_delete_list_.clear();
 
     data_pub_.publish(marker_array_msg);
 }

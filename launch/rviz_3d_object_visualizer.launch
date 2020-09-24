@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="update_loop_rate" default="3" />
+    <arg name="marker_pub_topic" default="/rviz_3d_object_visualizer/markers" />
+    <arg name="model_config_filename" default="model_params.yaml" />
+    <arg name="obj_category_mesh_filename" default="object_mesh_categories.yaml" />
+    <arg name="debug" default="false" />
+
+    <node pkg="rviz_3d_object_visualizer" type="dataloader_node" name="dataloader_node" output="screen">
+        <param name="~update_loop_rate" type="int" value="$(arg update_loop_rate)" />
+        <param name="~marker_pub_topic" type="str" value="$(arg marker_pub_topic)" />
+        <param name="~model_config_filename" type="str" value="$(arg model_config_filename)" />
+        <param name="~obj_category_mesh_filename" type="str" value="$(arg obj_category_mesh_filename)" />
+        <param name="~debug" type="bool" value="$(arg debug)" />
+    </node>
+</launch>
