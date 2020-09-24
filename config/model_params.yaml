@@ -7,7 +7,7 @@ BOTTLE:
     UseColorFromMesh: False
     TextOffset: [0.0, 0.0, 0.275]
 TABLE:
-    Position: [0.0, 0.0, 0.52]
+    Position: [0.0, 0.0, 0.38]
     Orientation: [1.570796327, 0.0, 0.0]
     Scale: [0.0075, 0.0075, 0.0075]
     Color: [0, 255, 0]
