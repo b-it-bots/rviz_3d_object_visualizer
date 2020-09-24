@@ -17,11 +17,11 @@ using namespace RVizDataLoader;
 
 MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh) 
 {
-    nh.param<int>("update_loop_rate", update_loop_rate_, 3);
-    nh.param<std::string>("marker_pub_topic", marker_pub_topic_, "/rviz_3d_object_visualizer/markers");
-    nh.param<std::string>("obj_category_mesh_filename", obj_category_mesh_filename_, "object_mesh_categories.yaml");
-    nh.param<std::string>("model_config_file_name", model_config_filename_, "model_params.yaml");
-    nh.param<bool>("debug", debug_, false);
+    ros::param::get("~update_loop_rate", update_loop_rate_);
+    ros::param::get("~marker_pub_topic", marker_pub_topic_);
+    ros::param::get("~obj_category_mesh_filename", obj_category_mesh_filename_);
+    ros::param::get("~model_config_filename", model_config_filename_);
+    ros::param::get("~debug", debug_);
 
     data_pub_ = nh.advertise<visualization_msgs::MarkerArray>(marker_pub_topic_, 1);
     model_loader_ = new ModelLoader(ros::package::getPath("rviz_3d_object_visualizer") + "/config/" + model_config_filename_);
