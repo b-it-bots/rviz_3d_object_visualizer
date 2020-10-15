@@ -94,12 +94,13 @@ target_link_libraries(${DATALOADER_LIB_NAME} ${YAML_CPP_LIBRARIES})
 
 
 ###########################
-# Create a dummy executable
+# Create a demo executable
 ###########################
-add_executable(dataloader_test src/main.cpp)
-#add_executable(mongodb_client_test src/mongodb_client_node.cpp)
-add_executable(dataloader_node src/dataloader_node.cpp)
+add_executable(demo src/demo.cpp)
+target_link_libraries(demo ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
 
-target_link_libraries(dataloader_test ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
-#target_link_libraries(mongodb_client_test ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
+###########################
+# Create a dataloader executable
+###########################
+add_executable(dataloader_node src/dataloader_node.cpp)
 target_link_libraries(dataloader_node ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
