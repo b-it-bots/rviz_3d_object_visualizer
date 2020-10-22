@@ -22,18 +22,11 @@
  * SOFTWARE.
 */
 
-/**
-  File: mesh.cpp
-  Purpose: Class to facilitate easy usage of various mesh types
-  @author Sushant Vijay Chavan
-  @version 1.0 16/10/20
-*/
-
 #include "dataloader/modelloader/mesh.h"
 
 using namespace RVizDataLoader;
 
-const std::map<Mesh::Types, std::string> Mesh::MeshTypesMap =  Mesh::initializeMeshTypesMap();
+const std::map<Mesh::Types, std::string> Mesh::mesh_types_map_ =  Mesh::initializeMeshTypesMap();
 
 std::map<Mesh::Types, std::string> Mesh::initializeMeshTypesMap()
 {
@@ -51,7 +44,7 @@ std::map<Mesh::Types, std::string> Mesh::initializeMeshTypesMap()
 Mesh::Types Mesh::getMeshType(const std::string& mesh_name)
 {
     Types type = Types::INVALID;
-    for (const auto& m: MeshTypesMap)
+    for (const auto& m: mesh_types_map_)
     {
         if (m.second == mesh_name)
         {

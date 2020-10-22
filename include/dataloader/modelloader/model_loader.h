@@ -22,13 +22,6 @@
  * SOFTWARE.
 */
 
-/**
-  File: model_loader.h
-  Purpose: Generates 3D RViz markers for the mesh and its text label from a mesh type and pose
-  @author Sushant Vijay Chavan
-  @version 1.0 16/10/20
-*/
-
 #ifndef DATALOADER_MODEL_LOADER
 #define DATALOADER_MODEL_LOADER
 

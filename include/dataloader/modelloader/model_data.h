@@ -22,14 +22,6 @@
  * SOFTWARE.
 */
 
-/**
-  File: model_data.h
-  Purpose: Storage classes for various types of 3d models loaded from a database
-  @author Ahmed Faisal Abdelrahman
-  @author Sushant Vijay Chavan
-  @version 1.0 16/10/20
-*/
-
 #ifndef DATALOADER_MODEL_DATA
 #define DATALOADER_MODEL_DATA
 

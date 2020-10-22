@@ -22,18 +22,11 @@
  * SOFTWARE.
 */
 
-/**
-  File: object_visualization_manager.h
-  Purpose: RViz plugin for viewing and filtering the 3D meshes
-  @author Ahmed Faisal Abdelrahman
-  @author Sushant Vijay Chavan
-  @version 1.0 16/10/20
-*/
-
 #ifndef OBJECT_VIS_MANAGER
 #define OBJECT_VIS_MANAGER
 
 #include <map>
+#include <memory>
 
 #include <ros/ros.h>
 #include <rviz/panel.h>
@@ -64,13 +57,13 @@ public:
 
     virtual void onInitialize();
 
-    virtual void load( const rviz::Config& config );
-    virtual void save( rviz::Config config ) const;
+    virtual void load(const rviz::Config& config);
+    virtual void save(rviz::Config config) const;
 
-    typedef std::map<int, MarkerInfo*> MarkerInfoMap;
-    typedef std::map<int, MarkerInfo*>::iterator MarkerInfoMapItr;
-    typedef std::map<int, MarkerInfo*>::const_iterator MarkerInfoMapConstItr;
-    typedef std::pair<int, MarkerInfo*> MarkerInfoPair;
+    typedef std::map<int, std::shared_ptr<MarkerInfo>> MarkerInfoMap;
+    typedef std::map<int, std::shared_ptr<MarkerInfo>>::iterator MarkerInfoMapItr;
+    typedef std::map<int, std::shared_ptr<MarkerInfo>>::const_iterator MarkerInfoMapConstItr;
+    typedef std::pair<int, std::shared_ptr<MarkerInfo>> MarkerInfoPair;
 
 private Q_SLOTS:
   void updateMarkerVisibilities();
@@ -87,9 +80,10 @@ protected:
 
     void setupBaseProperties();
     void addNewObjectCategory(const std::string& categoryName);
-    rviz::BoolProperty* addObject(const std::string& categoryName, const std::string& name, int uniqueId);
-    rviz::BoolProperty* addPerson(const std::string& name, int uniqueId);
-    rviz::BoolProperty* addPlane(const std::string& name, int uniqueId);
+    std::unique_ptr<rviz::BoolProperty> addObject(const std::string& categoryName, 
+        const std::string& name, int uniqueId);
+    std::unique_ptr<rviz::BoolProperty> addPerson(const std::string& name, int uniqueId);
+    std::unique_ptr<rviz::BoolProperty> addPlane(const std::string& name, int uniqueId);
 
     void markerArrayCb(const visualization_msgs::MarkerArray::ConstPtr& msg);
 
@@ -101,20 +95,19 @@ protected:
     void updateMarker(const visualization_msgs::Marker& msg);
     void deleteMarker(const int marker_id);
 
-    Ogre::SceneNode* createSceneNode(const visualization_msgs::Marker& msg);
-    rviz::MarkerBase* createMarker(const visualization_msgs::Marker& msg,
+    std::unique_ptr<Ogre::SceneNode> createSceneNode(const visualization_msgs::Marker& msg);
+    std::unique_ptr<rviz::MarkerBase> createMarker(const visualization_msgs::Marker& msg,
                                    Ogre::SceneNode* scene_node);
-    rviz::BoolProperty* createProperty(const visualization_msgs::Marker& msg);
+    std::unique_ptr<rviz::BoolProperty> createProperty(const visualization_msgs::Marker& msg);
 
     ros::Subscriber marker_array_sub_;
     rviz::MarkerDisplay marker_display_;
 
-    std::vector<Ogre::SceneNode*> base_scene_nodes_;
-    std::map<std::string, Ogre::SceneNode*> obj_category_scene_nodes_;
+    std::vector<std::shared_ptr<Ogre::SceneNode>> base_scene_nodes_;
+    std::map<std::string, std::shared_ptr<Ogre::SceneNode>> obj_category_scene_nodes_;
 
-    std::vector<rviz::Property*> base_properties_;
-    std::map<std::string, rviz::BoolProperty*> obj_category_properties_;
-    rviz::PropertyTreeWidget* tree_widget_;
+    std::vector<std::shared_ptr<rviz::Property>> base_properties_;
+    std::map<std::string, std::shared_ptr<rviz::BoolProperty>> obj_category_properties_;
 
     MarkerInfoMap marker_store_;
 };
@@ -123,21 +116,22 @@ class MarkerInfo
 {
 public:
     MarkerInfo();
-    MarkerInfo(int unique_id, Ogre::SceneNode* scene_node, 
-               rviz::MarkerBase* marker, rviz::BoolProperty* property,
+    MarkerInfo(int unique_id, std::shared_ptr<Ogre::SceneNode> scene_node, 
+               std::shared_ptr<rviz::MarkerBase> marker, 
+               std::shared_ptr<rviz::BoolProperty> property,
                bool visibility = true);
-    virtual ~MarkerInfo();
+    virtual ~MarkerInfo(){}
 
     void setVisible(bool visibility);
     bool getVisibility() const { return visibility_; }
     void updateVisibility(const ObjectVisualizationManager::MarkerInfoMap& marker_store);
 
-    void updateMarker(rviz::MarkerBase* marker);
+    void updateMarker(std::shared_ptr<rviz::MarkerBase> marker);
 
     int unique_id_;
-    Ogre::SceneNode* scene_node_;
-    rviz::MarkerBase* marker_;
-    rviz::BoolProperty* property_;
+    std::shared_ptr<Ogre::SceneNode> scene_node_;
+    std::shared_ptr<rviz::MarkerBase> marker_;
+    std::shared_ptr<rviz::BoolProperty> property_;
 
 protected:
     bool visibility_;
