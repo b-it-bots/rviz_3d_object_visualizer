@@ -38,34 +38,34 @@
 namespace RVizDataLoader 
 {
 
-class Mesh
-{
-public:
-    enum Types 
+    class Mesh
     {
-        INVALID = 0,
-        // Kitchen items
-        BOTTLE,
-        CUP,
-        PLATE,
+    public:
+        enum Types
+        {
+            INVALID = 0,
+            // Kitchen items
+            BOTTLE,
+            CUP,
+            PLATE,
 
-        // Furniture
-        TABLE,
-        CHAIR,
+            // Furniture
+            TABLE,
+            CHAIR,
 
-        // People
-        PERSON,
+            // People
+            PERSON,
 
-        // Others
-        UNKNOWN,
-        SIZE
+            // Others
+            UNKNOWN,
+            SIZE
+        };
+
+        static std::map<Types, std::string> initializeMeshTypesMap();
+        static const std::map<Types, std::string> MeshTypesMap;
+
+        static Types getMeshType(const std::string& mesh_name);
     };
-
-    static std::map<Types, std::string> initializeMeshTypesMap();
-    static const std::map<Types, std::string> MeshTypesMap;
-
-    static Types getMeshType(const std::string& mesh_name);
-};
 
 }
 

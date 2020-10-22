@@ -109,11 +109,11 @@ protected:
     ros::Subscriber marker_array_sub_;
     rviz::MarkerDisplay marker_display_;
 
-    std::vector<Ogre::SceneNode*> base_scene_nodes;
-    std::map<std::string, Ogre::SceneNode*> obj_category_scene_nodes;
+    std::vector<Ogre::SceneNode*> base_scene_nodes_;
+    std::map<std::string, Ogre::SceneNode*> obj_category_scene_nodes_;
 
-    std::vector<rviz::Property*> base_properties;
-    std::map<std::string, rviz::BoolProperty*> obj_category_properties;
+    std::vector<rviz::Property*> base_properties_;
+    std::map<std::string, rviz::BoolProperty*> obj_category_properties_;
     rviz::PropertyTreeWidget* tree_widget_;
 
     MarkerInfoMap marker_store_;

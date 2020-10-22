@@ -46,33 +46,33 @@ namespace Utils
     class Vec3
     {
     public:
-        Vec3(): x_val(T{}), y_val(T{}), z_val(T{}) {}
-        Vec3(T x, T y, T z): x_val(x), y_val(y), z_val(z) {}
+        Vec3(): x_val_(T{}), y_val_(T{}), z_val_(T{}) {}
+        Vec3(T x, T y, T z): x_val_(x), y_val_(y), z_val_(z) {}
         Vec3(std::vector<T> vec3)
         {
             assert(vec3.size() == 3);
-            Vec3<T>::x_val = vec3[0];
-            Vec3<T>::y_val = vec3[1];
-            Vec3<T>::z_val = vec3[2];
+            Vec3<T>::x_val_ = vec3[0];
+            Vec3<T>::y_val_ = vec3[1];
+            Vec3<T>::z_val_ = vec3[2];
         }
 
         virtual void update(T x, T y, T z)
         {
-            x_val = x;
-            y_val = y;
-            z_val = z;
+            x_val_ = x;
+            y_val_ = y;
+            z_val_ = z;
         }
 
         virtual void update(std::vector<T> vec)
         {
-            x_val = vec[0];
-            y_val = vec[1];
-            z_val = vec[2];
+            x_val_ = vec[0];
+            y_val_ = vec[1];
+            z_val_ = vec[2];
         }
 
         virtual std::vector<T> asVector()
         {
-            std::vector<T> vec{ x_val, y_val, z_val };
+            std::vector<T> vec{ x_val_, y_val_, z_val_ };
             return vec;
         }
 
@@ -82,9 +82,9 @@ namespace Utils
             return os;
         }
 
-        T x() const { return x_val; };
-        T y() const { return y_val; };
-        T z() const { return z_val; };
+        T x() const { return x_val_; };
+        T y() const { return y_val_; };
+        T z() const { return z_val_; };
 
         T roll() const { return x(); };
         T pitch() const { return y(); };
@@ -95,45 +95,45 @@ namespace Utils
         T b() const { return z(); }
 
     protected:
-        T x_val;
-        T y_val;
-        T z_val;
+        T x_val_;
+        T y_val_;
+        T z_val_;
     };
 
     template<typename T>
     class Vec4 : public Vec3<T>
     {
     public:
-        Vec4(): Vec3<T>(), w_val(T{}) {}
-        Vec4(T x, T y, T z, T w): Vec3<T>(x, y, z), w_val(w) {}
+        Vec4(): Vec3<T>(), w_val_(T{}) {}
+        Vec4(T x, T y, T z, T w): Vec3<T>(x, y, z), w_val_(w) {}
         Vec4(std::vector<T> vec4)
         {
             assert(vec4.size() == 4);
-            Vec3<T>::x_val = vec4[0];
-            Vec3<T>::y_val = vec4[1];
-            Vec3<T>::z_val = vec4[2];
-            w_val = vec4[3];
+            Vec3<T>::x_val_ = vec4[0];
+            Vec3<T>::y_val_ = vec4[1];
+            Vec3<T>::z_val_ = vec4[2];
+            w_val_ = vec4[3];
         }
 
         void update(T x, T y, T z, T w)
         {
-            Vec3<T>::x_val = x;
-            Vec3<T>::y_val = y;
-            Vec3<T>::z_val = z;
-            w_val = w;
+            Vec3<T>::x_val_ = x;
+            Vec3<T>::y_val_ = y;
+            Vec3<T>::z_val_ = z;
+            w_val_ = w;
         }
 
         virtual void update(std::vector<T> vec)
         {
-            Vec3<T>::x_val = vec[0];
-            Vec3<T>::y_val = vec[1];
-            Vec3<T>::z_val = vec[2];
-            w_val = vec[3];
+            Vec3<T>::x_val_ = vec[0];
+            Vec3<T>::y_val_ = vec[1];
+            Vec3<T>::z_val_ = vec[2];
+            w_val_ = vec[3];
         }
 
         virtual std::vector<T> asVector()
         {
-            std::vector<T> vec{ Vec3<T>::x_val, Vec3<T>::y_val, Vec3<T>::z_val, w_val };
+            std::vector<T> vec{ Vec3<T>::x_val_, Vec3<T>::y_val_, Vec3<T>::z_val_, w_val_ };
             return vec;
         }
 
@@ -143,11 +143,11 @@ namespace Utils
             return os;
         }
 
-        T w() const { return w_val; };
+        T w() const { return w_val_; };
         T a() const { return w(); }
 
     protected:
-        T w_val;
+        T w_val_;
     };
 
     template<typename T>
@@ -163,32 +163,32 @@ namespace Utils
 
         void updatePosition(T x, T y, T z)
         {
-            position.update(x, y, z);
+            position_.update(x, y, z);
         }
 
         void updatePosition(Vec3<T> pos)
         {
-            position.update(pos.x(), pos.y(), pos.z());
+            position_.update(pos.x(), pos.y(), pos.z());
         }
 
         void updatePosition(std::vector<T> pos)
         {
-            position.update(pos[0], pos[1], pos[2]);
+            position_.update(pos[0], pos[1], pos[2]);
         } 
 
         void updateOrientation(T roll, T pitch, T yaw)
         {
-            orientation.update(roll, pitch, yaw);
+            orientation_.update(roll, pitch, yaw);
         }
 
         void updateOrientation(Vec3<T> ori)
         {
-            orientation.update(ori.roll(), ori.pitch(), ori.yaw());
+            orientation_.update(ori.roll(), ori.pitch(), ori.yaw());
         }
 
         void updateOrientation(std::vector<T> ori)
         {
-            orientation.update(ori[0], ori[1], ori[2]);
+            orientation_.update(ori[0], ori[1], ori[2]);
         } 
 
         void update(T x, T y, T z, T roll, T pitch, T yaw) 
@@ -211,12 +211,12 @@ namespace Utils
 
         friend std::ostream& operator<<(std::ostream& os, const Pose<T>& pose)
         {
-            os << "Position" << pose.position << "; Orientation" << pose.orientation;
+            os << "Position" << pose.position_ << "; Orientation" << pose.orientation_;
             return os;
         }
 
-        Vec3<T> position;
-        Vec3<T> orientation;
+        Vec3<T> position_;
+        Vec3<T> orientation_;
     };
 
     template<typename T>
@@ -228,25 +228,25 @@ namespace Utils
     template<typename T>
     using PoseArray = std::vector<Pose<T>>;
 
-    static tf2::Quaternion toTf2Quaternion(Vec3<double> orientationRPY)
+    static tf2::Quaternion toTf2Quaternion(Vec3<double> orientation_RPY)
     {
         tf2::Quaternion quat;
-        quat.setRPY(orientationRPY.roll(), orientationRPY.pitch(), orientationRPY.yaw());
+        quat.setRPY(orientation_RPY.roll(), orientation_RPY.pitch(), orientation_RPY.yaw());
         quat.normalize();
 
         return quat;
     }
 
-    static Vec4<double> toQuaternion(Vec3<double> orientationRPY)
+    static Vec4<double> toQuaternion(Vec3<double> orientation_RPY)
     {
-        tf2::Quaternion quat = toTf2Quaternion(orientationRPY);
+        tf2::Quaternion quat = toTf2Quaternion(orientation_RPY);
         return Vec4<double>(quat.getX(), quat.getY(), quat.getZ(), quat.getW());
     }
 
-    static Vec3<double> toRPY(Vec4<double> orientationQuat)
+    static Vec3<double> toRPY(Vec4<double> orientation_Quat)
     {
-        tf2::Quaternion quat(orientationQuat.x(), orientationQuat.y(), 
-                             orientationQuat.z(), orientationQuat.w());
+        tf2::Quaternion quat(orientation_Quat.x(), orientation_Quat.y(), 
+                             orientation_Quat.z(), orientation_Quat.w());
         tf2::Matrix3x3 mat(quat);
         double roll, pitch, yaw;
         mat.getRPY(roll, pitch, yaw);
