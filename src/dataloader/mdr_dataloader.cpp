@@ -75,7 +75,7 @@ void MDRDataloader::queryDatabase()
         ROS_INFO("[mdr_dataloader] Displaying details of objects found in database:");
     }
 
-    updateObjectData<mas_perception_msgs::Person>();              // has no name field in old message type
+    updateObjectData<mas_perception_msgs::Person>();
     updateObjectData<mas_perception_msgs::Object>();
     updateObjectData<mas_perception_msgs::Plane>();
 

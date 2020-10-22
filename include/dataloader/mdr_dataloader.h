@@ -94,21 +94,6 @@ namespace RVizDataLoader
                 return plane_data;
             }
 
-            // Causes segmentation fault at run-time:
-            /**
-            void fillPoseDetails(mas_perception_msgs::Object object, ModelData* model_data)
-            {
-                MeshData* mesh_data = new MeshData();
-                auto position = object.pose.pose.position;
-                auto orientation = object.pose.pose.orientation;
-                Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
-                mesh_data->pose_ = Utils::Pose<double>(position.x, position.y, position.z, rpy_vector.x(), rpy_vector.y(), rpy_vector.z());
-
-                model_data = dynamic_cast<ModelData*>(mesh_data);
-            }
-            */
-
-            // Standard Solution:
             template <typename T>
             void updateObjectData()
             {
@@ -120,7 +105,6 @@ namespace RVizDataLoader
                 for (int i = 0; i < queried_objects.size(); i++)
                 {
                     std::string object_name = queried_objects[i]->name;
-                    /* object_name = typeid(T).name(); */               // for dummy names
                     ModelData *model_data = dynamic_cast<ModelData*>(fillPoseDetails(*queried_objects[i]));
                     if (!model_data) std::cerr << "Failed to cast to ModelData!!! \n" << std::endl;
 
@@ -169,8 +153,6 @@ namespace RVizDataLoader
                 }
             }
 
-            //TODO: Implement set solution, and compare:
-
         private:
             int update_loop_rate_;
             bool debug_;
@@ -194,8 +176,6 @@ namespace RVizDataLoader
         out << "    - x: " << data.pose.pose.position.x << std::endl;
         out << "    - y: " << data.pose.pose.position.y << std::endl;
         out << "    - z: " << data.pose.pose.position.z << std::endl;
-        /* out << "Height: " << data.height << std::endl; */
-        /* out << "Width: " << data.width << std::endl; */
         return out;
     }
 

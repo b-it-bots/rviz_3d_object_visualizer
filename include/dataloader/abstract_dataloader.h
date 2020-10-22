@@ -33,7 +33,6 @@ namespace RVizDataLoader
     class AbstractDataloader
     {
         public:
-            // Constructor with nh arg required to avoid std::length_error:
             AbstractDataloader(ros::NodeHandle nh) : message_proxy_(nh) {};
             virtual ~AbstractDataloader(){};
 
