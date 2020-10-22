@@ -6,7 +6,7 @@
     <arg name="obj_category_mesh_filename" default="object_mesh_categories.yaml" />
     <arg name="debug" default="false" />
 
-    <node pkg="rviz_3d_object_visualizer" type="dataloader_node" name="dataloader_node" output="screen">
+    <node pkg="rviz_3d_object_visualizer" type="rviz_dataloader" name="rviz_dataloader" output="screen">
         <param name="~update_loop_rate" type="int" value="$(arg update_loop_rate)" />
         <param name="~marker_pub_topic" type="str" value="$(arg marker_pub_topic)" />
         <param name="~model_config_filename" type="str" value="$(arg model_config_filename)" />
