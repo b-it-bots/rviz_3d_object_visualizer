@@ -138,7 +138,7 @@ void MDRDataloader::publishObjectData()
                 else
                     mesh_name = "OBJECT/" + Mesh::mesh_types_map_.at(mesh_data->type_) + "/" + mesh_data->name_;
 
-                auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, mesh_name, "base_link", "", 
+                auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, mesh_name, "map", "", 
                                                            mesh_data->pose_);
                 if (marker.first)
                 {
@@ -154,7 +154,7 @@ void MDRDataloader::publishObjectData()
             if (plane_data)
             {
                 std::string plane_name = "PLANE/" + plane_data->name_;
-                auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, plane_name, "base_link", "", 
+                auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, plane_name, "map", "", 
                                                             plane_data->center_, plane_data->convex_hull_);
                 if (marker.first)
                 {
@@ -173,12 +173,12 @@ void MDRDataloader::publishObjectData()
         visualization_msgs::Marker delete_marker;
         visualization_msgs::Marker text_delete_marker;
 
-        delete_marker.header.frame_id = "base_link";
+        delete_marker.header.frame_id = "map";
         delete_marker.id = marker_id;
         delete_marker.action = visualization_msgs::Marker::DELETE;
         marker_array_msg.markers.push_back(delete_marker);
 
-        text_delete_marker.header.frame_id = "base_link";
+        text_delete_marker.header.frame_id = "map";
         text_delete_marker.id = marker_id + 1;
         text_delete_marker.action = visualization_msgs::Marker::DELETE;
         marker_array_msg.markers.push_back(text_delete_marker);
