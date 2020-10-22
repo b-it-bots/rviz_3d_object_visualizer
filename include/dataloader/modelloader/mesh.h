@@ -22,13 +22,6 @@
  * SOFTWARE.
 */
 
-/**
-  File: mesh.h
-  Purpose: Class to facilitate easy usage of various mesh types
-  @author Sushant Vijay Chavan
-  @version 1.0 16/10/20
-*/
-
 #ifndef DATALOADER_MESH
 #define DATALOADER_MESH
 
@@ -62,7 +55,7 @@ namespace RVizDataLoader
         };
 
         static std::map<Types, std::string> initializeMeshTypesMap();
-        static const std::map<Types, std::string> MeshTypesMap;
+        static const std::map<Types, std::string> mesh_types_map_;
 
         static Types getMeshType(const std::string& mesh_name);
     };

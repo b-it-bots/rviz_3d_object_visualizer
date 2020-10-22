@@ -22,13 +22,6 @@
  * SOFTWARE.
 */
 
-/**
-  File: utils.h
-  Purpose: Custom storage classes and utility functions for vector and pose data
-  @author Sushant Vijay Chavan
-  @version 1.0 16/10/20
-*/
-
 #ifndef DATALOADER_UTILS
 #define DATALOADER_UTILS
 

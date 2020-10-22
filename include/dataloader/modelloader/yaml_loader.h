@@ -22,13 +22,6 @@
  * SOFTWARE.
 */
 
-/**
-  File: yaml_loader.h
-  Purpose: Utility class to load mesh configurations from a YAML file.
-  @author Sushant Vijay Chavan
-  @version 1.0 16/10/20
-*/
-
 #ifndef DATALOADER_YAML_LOADER
 #define DATALOADER_YAML_LOADER
 

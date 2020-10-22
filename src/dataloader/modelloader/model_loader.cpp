@@ -22,13 +22,6 @@
  * SOFTWARE.
 */
 
-/**
-  File: model_loader.cpp
-  Purpose: Generates 3D RViz markers for the mesh and its text label from a mesh type and pose
-  @author Sushant Vijay Chavan
-  @version 1.0 16/10/20
-*/
-
 #include <iostream>
 
 #include <ros/ros.h>
@@ -89,7 +82,7 @@ auto ModelLoader::getTextLabelMarker(const std::string& name,
     std::unique_ptr<visualization_msgs::Marker> marker = std::unique_ptr<visualization_msgs::Marker>(new visualization_msgs::Marker);
 
     marker->type = visualization_msgs::Marker::TEXT_VIEW_FACING;
-    marker->text = name; //name.substr(name.rfind("/") + 1, name.size());
+    marker->text = name;
     marker->pose.position.x = pos.x();
     marker->pose.position.y = pos.y();
     marker->pose.position.z = pos.z();

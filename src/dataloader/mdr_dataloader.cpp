@@ -117,9 +117,9 @@ void MDRDataloader::publishObjectData()
             {
                 std::string mesh_name;
                 if (mesh_data->type_ == Mesh::Types::PERSON)
-                    mesh_name = Mesh::MeshTypesMap.at(mesh_data->type_) + "/" + mesh_data->name_;
+                    mesh_name = Mesh::mesh_types_map_.at(mesh_data->type_) + "/" + mesh_data->name_;
                 else
-                    mesh_name = "OBJECT/" + Mesh::MeshTypesMap.at(mesh_data->type_) + "/" + mesh_data->name_;
+                    mesh_name = "OBJECT/" + Mesh::mesh_types_map_.at(mesh_data->type_) + "/" + mesh_data->name_;
 
                 auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, mesh_name, "base_link", "", 
                                                            mesh_data->pose_);
