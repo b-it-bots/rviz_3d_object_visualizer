@@ -28,7 +28,7 @@ PERSON:
     Scale: [0.01, 0.01, 0.01]
     Color: [203, 132, 66]
     ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/person/female.dae"
-    UseColorFromMesh: False
+    UseColorFromMesh: True
     TextOffset: [0.0, 0.0, 1.7]
 UNKNOWN:
     Position: [0.0, 0.0, 0.0]
