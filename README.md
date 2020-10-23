@@ -33,7 +33,48 @@ On RViz, the panel can be added from the "Panels" tab: ```Panels -> Add New Pane
 
 ### Adding New 3D Models
 <!-- TODO: describe instructions for adding object models -->
-
+To add new 3d model categories and corresponding meshes, the below procedure needs to be followed. Lets assume we want to add an object of type `TOY`.
+1. Download/convert/create a 3D mesh model as a collada mesh (.dae format) and move it to the directory `resources/meshes/toy/some_toy_name.dae`
+2. Extend the mesh-types enum to include the new object type (i.e. `TOY`) in the file `include/dataloader/modelloader/mesh.h`. Ex:<br> 
+   ```
+    // Others
+    BOOK,
+    SPRAY_BOTTLE,
+    TOY, // This is the newly added line
+    UNKNOWN
+   ```
+3. Similarly, define the string name for the enum in the file `src/dataloader/modelloader/mesh.cpp`. Ex:<br>
+    ```
+    mesh_map[Types::BOOK] = "BOOK";
+    mesh_map[Types::SPRAY_BOTTLE] = "SPRAY_BOTTLE";
+    mesh_map[Types::TOY] = "TOY"; // This is the newly added line
+    mesh_map[Types::UNKNOWN] = "UNKNOWN";
+   ```
+4. Add an entry in the config file `config/object_mesh_categories.yaml` as shown below. Here, the key represents the string defined in the database for the Object category and the value defines the corresponding enum name previously defined for this object category.<br>
+    ```
+    book: BOOK
+    spray_bottle: SPRAY_BOTTLE
+    toy: TOY // This is the newly added line
+   ```
+5. Finally define the mesh parameters in the config file `config/model_params.yaml` as shown below.
+   ```
+   TOY:
+    Position: [0.0, 0.0, 0.015]
+    Orientation: [0.0, 0.0, 0.0]
+    Scale: [0.25, 0.25, 0.25]
+    Color: [0, 0, 255]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/toy/some_toy_name.dae"
+    UseColorFromMesh: False
+    TextOffset: [0, 0.0, 0.1]
+   ```
+   Here, each parameter has the following meaning:
+   * `Position`: The offset correction in the position of the mesh origin such that the object is correctly positioned on the ground plane.
+   * `Orientation`: The offset correction in the orientation of the mesh origin such that the object is correctly oriented on the ground plane.
+   * `Scale`: The scaling to be applied to the mesh such that it is of the correct metric dimensions. 
+   * `Color`: A default color value for the mesh rendering of objects of this category
+   * `ResourceFile`: The path to the mesh file
+   * `UseColorFromMesh`: If the mesh is textured, this flag must be set to `True` so that the default mesh color is overridden by the texture.
+   * `TextOffset`: The offset of the text label (i.e. the name of the object) to be displayed above the 3d mesh.
 
 ## Documentation
 
