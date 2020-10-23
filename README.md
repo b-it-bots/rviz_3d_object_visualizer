@@ -47,6 +47,8 @@ On RViz, the panel can be added from the "Panels" tab: ```Panels -> Add New Pane
 
 ![scene](docs/images/SceneGraph.svg)
 
+RViz uses [OGRE](https://www.ogre3d.org/) for rendering 3D elements such as lines, polygons and meshes as a scene graph. The above figure demonstrates an example of the scene graph used by our `ObjectVisualizationManager` RViz plugin for displaying the 3D meshes. In the figure, the leaf nodes (green colored) consist of the 3D meshes that need to be displayed. All other nodes are used to group similar meshes together. When the plugin is loaded, the basic scene graph (orange colored nodes) is automatically setup. When a request to display a mesh for the PERSON or PLANE category is received, that mesh is directly added as a child of the `PERSONS`/`PLANES` group node respectively. In the case of a request to draw an OBJECT, the objects `category` is first inferred, and if a group node for that category does not exist, a new group node (blue colored node) is added as a child of the `OBJECTS` group node. This new object category node is then used as a parent for the requested 3D mesh object.
+
 
 ## Maintainers
 
