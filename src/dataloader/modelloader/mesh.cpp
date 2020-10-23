@@ -34,9 +34,17 @@ std::map<Mesh::Types, std::string> Mesh::initializeMeshTypesMap()
     mesh_map[Types::BOTTLE] = "BOTTLE";
     mesh_map[Types::CUP] = "CUP";
     mesh_map[Types::PLATE] = "PLATE";
+    mesh_map[Types::BOWL] = "BOWL";
+    mesh_map[Types::SPOON] = "SPOON";
+    mesh_map[Types::FORK] = "FORK";
+    mesh_map[Types::KNIFE] = "KNIFE";
+    mesh_map[Types::POT] = "POT";
     mesh_map[Types::TABLE] = "TABLE";
     mesh_map[Types::CHAIR] = "CHAIR";
     mesh_map[Types::PERSON] = "PERSON";
+    mesh_map[Types::BOOK] = "BOOK";
+    mesh_map[Types::TEDDY_BEAR] = "TEDDY_BEAR";
+    mesh_map[Types::SPRAY_BOTTLE] = "SPRAY_BOTTLE";
     mesh_map[Types::UNKNOWN] = "UNKNOWN";
     return mesh_map;
 }

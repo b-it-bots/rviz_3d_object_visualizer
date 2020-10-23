@@ -41,6 +41,11 @@ namespace RVizDataLoader
             BOTTLE,
             CUP,
             PLATE,
+            BOWL,
+            SPOON,
+            FORK,
+            KNIFE,
+            POT,
 
             // Furniture
             TABLE,
@@ -50,6 +55,9 @@ namespace RVizDataLoader
             PERSON,
 
             // Others
+            BOOK,
+            SPRAY_BOTTLE,
+            TEDDY_BEAR,
             UNKNOWN,
             SIZE
         };
