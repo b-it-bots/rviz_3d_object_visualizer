@@ -1,6 +1,6 @@
 # rviz_3d_object_visualizer
 
-A package containing functionalities for for visualizing 3D object models on RViz. 
+A package containing functionalities for visualizing 3D object models on RViz. 
 
 It consists of i) an RViz panel plugin that loads 3D object meshes and lists them on the panel, and ii) a node that handles reading a MongoDB database to obtain and update the necessary object information. The panel enables selectively visualizing individual objects (e.g. bottle_1, person_2, etc.) or groups of objects (for e.g. bottles, chairs, etc.).
 
@@ -23,7 +23,7 @@ catkin build rviz_3d_object_visualizer
 
 ## Usage
 
-The `rviz_3d_object_visualizer` can be started ny running the launch file:
+The `rviz_3d_object_visualizer` can be started by running the launch file:
 ```
 roslaunch rviz_3d_object_visualizer rviz_3d_object_visualizer.launch
 ```
