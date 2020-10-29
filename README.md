@@ -7,7 +7,7 @@ It consists of i) an RViz panel plugin that loads 3D object meshes and lists the
 The `rviz_3d_object_visualizer` has been tested on ROS Kinetic and Ubuntu 16.04.
 
 
-<!-- TODO: add demo video -->
+[![Demo](docs/images/RvizDemo.gif)](docs/videos/RvizDemo.mp4)
 
 
 ## Installation
