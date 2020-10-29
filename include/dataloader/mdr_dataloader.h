@@ -108,7 +108,6 @@ namespace RVizDataLoader
                     std::unique_ptr<ModelData> model_data = std::dynamic_pointer_cast<ModelData>(fillPoseDetails(*queried_objects[i]));
                     if (!model_data) std::cerr << "Failed to cast to ModelData!!! \n" << std::endl;
 
-
                     if (object_data_record_[typeid(T).name()].find(object_name) == object_data_record_[typeid(T).name()].end())
                     {
                         // object not found; insert it in map:
