@@ -41,7 +41,7 @@ MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh)
     ros::param::get("~debug", debug_);
 
     data_pub_ = nh.advertise<visualization_msgs::MarkerArray>(marker_pub_topic_, 1);
-    model_loader_ = new ModelLoader(ros::package::getPath("rviz_3d_object_visualizer") + "/config/" + model_config_filename_);
+    model_loader_ = std::shared_ptr<ModelLoader>(new ModelLoader(ros::package::getPath("rviz_3d_object_visualizer") + "/config/" + model_config_filename_));
 
     fillObjectCategoryMeshMap();
     ROS_INFO("[mdr_dataloader] Initialized.");
@@ -49,7 +49,6 @@ MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh)
 
 MDRDataloader::~MDRDataloader()
 {
-    delete model_loader_;
 }
 
 void MDRDataloader::fillObjectCategoryMeshMap()
@@ -129,7 +128,7 @@ void MDRDataloader::publishObjectData()
     {
         for (auto &object : object_data.second)
         {
-            MeshData *mesh_data = dynamic_cast<MeshData*>(object.second);
+            std::unique_ptr<MeshData> mesh_data = std::dynamic_pointer_cast<MeshData>(object.second);
             if (mesh_data)
             {
                 std::string mesh_name;
@@ -150,7 +149,7 @@ void MDRDataloader::publishObjectData()
                 continue;
             }
 
-            PlaneData *plane_data = dynamic_cast<PlaneData*>(object.second);
+            std::unique_ptr<PlaneData> plane_data = std::dynamic_pointer_cast<PlaneData>(object.second);
             if (plane_data)
             {
                 std::string plane_name = "PLANE/" + plane_data->name_;
