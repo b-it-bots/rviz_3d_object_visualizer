@@ -1,0 +1,104 @@
+BOTTLE:
+    Position: [0.0, 0.0, 0.12]
+    Orientation: [-1.570796327, 0.0, 0.0]
+    Scale: [0.001, 0.001, 0.001]
+    Color: [255, 0, 0]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/cola/cola_bottle.dae"
+    UseColorFromMesh: False
+    TextOffset: [0.0, 0.0, 0.275]
+TABLE:
+    Position: [0.0, 0.0, 0.38]
+    Orientation: [1.570796327, 0.0, 0.0]
+    Scale: [0.0075, 0.0075, 0.0075]
+    Color: [0, 255, 0]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/table/table.dae"
+    UseColorFromMesh: True
+    TextOffset: [0.0, 0.0, 0.95]
+CHAIR:
+    Position: [0.0, 0.0, 0.0]
+    Orientation: [0.0, 0.0, 3.141592654]
+    Scale: [0.375, 0.375, 0.375]
+    Color: [0, 0, 255]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/chair/chair.dae"
+    UseColorFromMesh: False
+    TextOffset: [-0.5, 0.0, 1.1]
+PLATE:
+    Position: [0.0, 0.0, 0.015]
+    Orientation: [0.0, 0.0, 0.0]
+    Scale: [0.25, 0.25, 0.25]
+    Color: [0, 0, 255]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/plate/plate.dae"
+    UseColorFromMesh: False
+    TextOffset: [0, 0.0, 0.1]
+BOWL:
+    Position: [0.0, 0.0, 0.08]
+    Orientation: [0.0, 0.0, 0.0]
+    Scale: [0.12, 0.12, 0.12]
+    Color: [0, 0, 255]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/bowl/bowl.dae"
+    UseColorFromMesh: False
+    TextOffset: [0, 0.0, 0.11]
+SPOON:
+    Position: [0.0, 0.024, 0.0025]
+    Orientation: [0.0, 0.0, 0.0]
+    Scale: [0.05, 0.05, 0.05]
+    Color: [0, 0, 255]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/spoon/spoon.dae"
+    UseColorFromMesh: False
+    TextOffset: [0, 0.0, 0.1]
+FORK:
+    Position: [0.0, -0.03, 0.0]
+    Orientation: [0.0, 0.0, 0.0]
+    Scale: [0.05, 0.05, 0.05]
+    Color: [0, 0, 255]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/fork/fork.dae"
+    UseColorFromMesh: False
+    TextOffset: [0, 0.0, 0.1]
+KNIFE:
+    Position: [0.0, -0.16, 0.055]
+    Orientation: [1.57, 0.0, 0.0]
+    Scale: [0.05, 0.05, 0.05]
+    Color: [0, 0, 255]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/knife/knife.dae"
+    UseColorFromMesh: False
+    TextOffset: [0, 0.0, 0.1]
+SPRAY_BOTTLE:
+    Position: [0.0, 0.0, 0.175]
+    Orientation: [0.0, 0.0, 0.0]
+    Scale: [1.0, 1.0, 1.0]
+    Color: [0, 0, 255]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/spray_bottle/spray_bottle.dae"
+    UseColorFromMesh: False
+    TextOffset: [0, 0.0, 0.35]
+POT:
+    Position: [0.0, 0.0, 0.0]
+    Orientation: [0.0, 0.0, 0.0]
+    Scale: [0.2, 0.2, 0.2]
+    Color: [0, 0, 255]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/pot/pot.dae"
+    UseColorFromMesh: False
+    TextOffset: [0, 0.0, 0.4]
+BOOK:
+    Position: [0.0, 0.0, 0.0]
+    Orientation: [0.0, 0.0, 1.570796327]
+    Scale: [0.075, 0.075, 0.075]
+    Color: [0, 0, 255]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/book/book.dae"
+    UseColorFromMesh: False
+    TextOffset: [0, 0.0, 0.1]
+PERSON:
+    Position: [0.0, 0.0, 0.0]
+    Orientation: [1.570796327, 0.0, 1.919862177]
+    Scale: [0.01, 0.01, 0.01]
+    Color: [203, 132, 66]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/person/female.dae"
+    UseColorFromMesh: True
+    TextOffset: [0.0, 0.0, 1.75]
+UNKNOWN:
+    Position: [0.0, 0.0, 0.0]
+    Orientation: [-1.570796327, 0.0, 0.0]
+    Scale: [0.1, 0.1, 0.1]
+    Color: [255, 0, 0]
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/question_mark/question_mark.dae"
+    UseColorFromMesh: False
+    TextOffset: [0.0, 0.0, 0.55]

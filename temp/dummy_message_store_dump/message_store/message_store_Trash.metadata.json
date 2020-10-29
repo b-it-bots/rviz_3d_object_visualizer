@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"message_store.message_store_Trash"}],"uuid":"9acaddd837da4a4e81388af01de0cb87"}

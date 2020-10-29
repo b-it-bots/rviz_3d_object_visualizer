@@ -2,9 +2,15 @@
 <package format="2">
   <name>rviz_3d_object_visualizer</name>
   <version>0.0.0</version>
-  <description>The rviz_3d_object_visualizer package</description>
+  <description>
+    A component for visualizing 3D object models on RViz. 
+    It consists of i) an RViz panel plugin that loads 3D object meshes and 
+    displays them on a list, allowing individual and group object 
+    visualization, and ii) a node that handles reading a MongoDB database 
+    to obtain and update the necessary object information.
+  </description>
 
-  <license>BSD3</license>
+  <license>MIT</license>
 
   <author email="sushant.chavan@inf.h-brs.de">Sushant Vijay Chavan</author>
   <author email="ahmed.abdelrahman@inf.h-brs.de">Ahmed Faisal Abdelrahman</author>
@@ -15,12 +21,13 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>rviz</build_depend>
-
-  <build_export_depend>roscpp</build_export_depend>
-  <build_export_depend>rviz</build_export_depend>
+  <build_depend>mongodb_store</build_depend>
+  <build_depend>mas_perception_msgs</build_depend>
 
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rviz</exec_depend>
+  <exec_depend>mongodb_store</exec_depend>
+  <exec_depend>mas_perception_msgs</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

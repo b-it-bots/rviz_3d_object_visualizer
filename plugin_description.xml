@@ -1,9 +1,11 @@
 <library path="librviz_3d_object_visualizer">
-  <class name="Object_Visualization_Manager::ObjectVisualizationManager"
-         type="Object_Visualization_Manager::ObjectVisualizationManager"
+  <class name="ObjectVisualizationManager"
+         type="RVizVisualization::ObjectVisualizationManager"
          base_class_type="rviz::Panel">
     <description>
-      RViz plugin for visualizing 3D object models. 
+        A panel plugin for visualizing 3D object models on RViz.
+        It loads 3D object meshes and displays them on a list, and enables 
+        individual and group object visualization
     </description>
   </class>
 </library>
