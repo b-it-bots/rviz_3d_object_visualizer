@@ -14,7 +14,7 @@ The `rviz_3d_object_visualizer` has been tested on ROS Kinetic and Ubuntu 16.04.
 
 The package can be installed by cloning this repository and building:
 ```
-git clone https://github.com/AhmedFaisal95/rviz_3d_object_visualizer.git
+git clone https://github.com/b-it-bots/rviz_3d_object_visualizer.git
 ```
 ```
 catkin build rviz_3d_object_visualizer
