@@ -32,7 +32,6 @@ On RViz, the panel can be added from the "Panels" tab: ```Panels -> Add New Pane
 
 
 ### Adding New 3D Models
-<!-- TODO: describe instructions for adding object models -->
 To add new 3d model categories and corresponding meshes, the below procedure needs to be followed. Lets assume we want to add an object of type `TOY`.
 1. Download/convert/create a 3D mesh model as a collada mesh (.dae format) and move it to the directory `resources/meshes/toy/some_toy_name.dae`
 2. Extend the mesh-types enum to include the new object type (i.e. `TOY`) in the file `include/dataloader/modelloader/mesh.h`. Ex:<br> 
@@ -80,8 +79,7 @@ To add new 3d model categories and corresponding meshes, the below procedure nee
 
 ### Architecture
 
-<!-- TODO: UML diagram -->
-
+![scene](docs/images/rviz_3d_visualizer_uml.svg)
 
 
 ### RViz Mesh Scene Graph
