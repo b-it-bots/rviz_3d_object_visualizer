@@ -180,6 +180,27 @@ void ObjectVisualizationManager::addNewObjectCategory(const std::string& categor
     }
 }
 
+void ObjectVisualizationManager::removeEmptyObjectCategories()
+{
+    std::vector<std::string> delete_list;
+    // Find the empty categories
+    for (const auto& node: obj_category_scene_nodes_)
+    {
+        if (node.second->numChildren() <= 0)
+        {
+            delete_list.push_back(node.first);
+        }
+    }
+
+    // Delete the empty categories
+    for (const auto& category: delete_list)
+    {
+        obj_category_scene_nodes_.erase(category);
+        obj_category_properties_.erase(category);
+    }
+
+}
+
 std::unique_ptr<rviz::BoolProperty> ObjectVisualizationManager::addObject(const std::string& categoryName, const std::string& name, int uniqueId)
 {
     if (!obj_category_properties_.count(categoryName) || !obj_category_scene_nodes_.count(categoryName))
@@ -242,6 +263,8 @@ void ObjectVisualizationManager::markerArrayCb(const visualization_msgs::MarkerA
             deleteMarker(marker.id);
         }
     }
+
+    removeEmptyObjectCategories();
 }
 
 ObjectVisualizationManager::BaseTypes ObjectVisualizationManager::getBaseType(const visualization_msgs::Marker& msg)

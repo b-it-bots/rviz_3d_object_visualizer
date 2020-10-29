@@ -93,7 +93,7 @@ PERSON:
     Color: [203, 132, 66]
     ResourceFile: "package://rviz_3d_object_visualizer/resources/meshes/person/female.dae"
     UseColorFromMesh: True
-    TextOffset: [0.0, 0.0, 1.7]
+    TextOffset: [0.0, 0.0, 1.75]
 UNKNOWN:
     Position: [0.0, 0.0, 0.0]
     Orientation: [-1.570796327, 0.0, 0.0]

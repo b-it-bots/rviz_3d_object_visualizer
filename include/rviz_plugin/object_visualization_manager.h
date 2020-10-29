@@ -80,6 +80,7 @@ protected:
 
     void setupBaseProperties();
     void addNewObjectCategory(const std::string& categoryName);
+    void removeEmptyObjectCategories();
     std::unique_ptr<rviz::BoolProperty> addObject(const std::string& categoryName, 
         const std::string& name, int uniqueId);
     std::unique_ptr<rviz::BoolProperty> addPerson(const std::string& name, int uniqueId);
