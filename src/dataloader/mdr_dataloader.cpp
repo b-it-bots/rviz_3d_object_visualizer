@@ -128,7 +128,7 @@ void MDRDataloader::publishObjectData()
     {
         for (auto &object : object_data.second)
         {
-            std::unique_ptr<MeshData> mesh_data = std::dynamic_pointer_cast<MeshData>(object.second);
+            std::shared_ptr<MeshData> mesh_data = std::dynamic_pointer_cast<MeshData>(object.second);
             if (mesh_data)
             {
                 std::string mesh_name;
@@ -149,7 +149,7 @@ void MDRDataloader::publishObjectData()
                 continue;
             }
 
-            std::unique_ptr<PlaneData> plane_data = std::dynamic_pointer_cast<PlaneData>(object.second);
+            std::shared_ptr<PlaneData> plane_data = std::dynamic_pointer_cast<PlaneData>(object.second);
             if (plane_data)
             {
                 std::string plane_name = "PLANE/" + plane_data->name_;

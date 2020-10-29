@@ -54,9 +54,9 @@ namespace RVizDataLoader
             friend std::ostream& operator<<(std::ostream &out, mas_perception_msgs::Object const& data); 
             friend std::ostream& operator<<(std::ostream &out, mas_perception_msgs::Plane const& data); 
 
-            std::unique_ptr<MeshData> fillPoseDetails(mas_perception_msgs::Object object)
+            std::shared_ptr<MeshData> fillPoseDetails(mas_perception_msgs::Object object)
             {
-                std::unique_ptr<MeshData> mesh_data(new MeshData());
+                std::shared_ptr<MeshData> mesh_data(new MeshData());
                 auto position = object.pose.pose.position;
                 auto orientation = object.pose.pose.orientation;
                 Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
@@ -68,9 +68,9 @@ namespace RVizDataLoader
                 return mesh_data;
             }
 
-            std::unique_ptr<MeshData> fillPoseDetails(mas_perception_msgs::Person person)
+            std::shared_ptr<MeshData> fillPoseDetails(mas_perception_msgs::Person person)
             {
-                std::unique_ptr<MeshData> mesh_data(new MeshData());
+                std::shared_ptr<MeshData> mesh_data(new MeshData());
                 auto position = person.pose.pose.position;
                 auto orientation = person.pose.pose.orientation;
                 Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
@@ -81,9 +81,9 @@ namespace RVizDataLoader
                 return mesh_data;
             }
 
-            std::unique_ptr<PlaneData> fillPoseDetails(mas_perception_msgs::Plane plane)
+            std::shared_ptr<PlaneData> fillPoseDetails(mas_perception_msgs::Plane plane)
             {
-                std::unique_ptr<PlaneData> plane_data(new PlaneData());
+                std::shared_ptr<PlaneData> plane_data(new PlaneData());
                 plane_data->center_ = Utils::Vec3<double>(plane.plane_point.x, plane.plane_point.y, plane.plane_point.z);
                 for (auto &point: plane.convex_hull)
                 {
@@ -98,14 +98,14 @@ namespace RVizDataLoader
             void updateObjectData()
             {
                 bool object_in_queried_list;
-                std::vector<boost::unique_ptr<T>> queried_objects;
+                std::vector<boost::shared_ptr<T>> queried_objects;
 
                 message_proxy_.query<T>(queried_objects);
 
                 for (int i = 0; i < queried_objects.size(); i++)
                 {
                     std::string object_name = queried_objects[i]->name;
-                    std::unique_ptr<ModelData> model_data = std::dynamic_pointer_cast<ModelData>(fillPoseDetails(*queried_objects[i]));
+                    std::shared_ptr<ModelData> model_data = std::dynamic_pointer_cast<ModelData>(fillPoseDetails(*queried_objects[i]));
                     if (!model_data) std::cerr << "Failed to cast to ModelData!!! \n" << std::endl;
 
                     if (object_data_record_[typeid(T).name()].find(object_name) == object_data_record_[typeid(T).name()].end())
@@ -161,7 +161,7 @@ namespace RVizDataLoader
             std::string model_config_filename_;
             std::vector<int> marker_delete_list_;
             std::map<std::string, std::vector<std::string>> item_delete_map_;
-            std::map<std::string, std::map<std::string, std::unique_ptr<ModelData>>> object_data_record_;
+            std::map<std::string, std::map<std::string, std::shared_ptr<ModelData>>> object_data_record_;
             std::map<std::string, Mesh::Types> obj_category_mesh_map_; 
             std::shared_ptr<ModelLoader> model_loader_;
     };
