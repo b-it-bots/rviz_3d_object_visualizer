@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"message_store.message_store"},{"v":{"$numberInt":"2"},"key":{"loc":"2d"},"name":"loc_2d","ns":"message_store.message_store"}],"uuid":"09704b17cee44eb4bca5abb4b57a1da6"}

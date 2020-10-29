@@ -2,9 +2,15 @@
 <package format="2">
   <name>rviz_3d_object_visualizer</name>
   <version>0.0.0</version>
-  <description>The rviz_3d_object_visualizer package</description>
+  <description>
+    A component for visualizing 3D object models on RViz. 
+    It consists of i) an RViz panel plugin that loads 3D object meshes and 
+    displays them on a list, allowing individual and group object 
+    visualization, and ii) a node that handles reading a MongoDB database 
+    to obtain and update the necessary object information.
+  </description>
 
-  <license>BSD3</license>
+  <license>MIT</license>
 
   <author email="sushant.chavan@inf.h-brs.de">Sushant Vijay Chavan</author>
   <author email="ahmed.abdelrahman@inf.h-brs.de">Ahmed Faisal Abdelrahman</author>

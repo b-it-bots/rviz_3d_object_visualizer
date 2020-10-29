@@ -102,5 +102,5 @@ target_link_libraries(demo ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
 ###########################
 # Create a dataloader executable
 ###########################
-add_executable(dataloader_node src/dataloader_node.cpp)
-target_link_libraries(dataloader_node ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
+add_executable(rviz_dataloader src/rviz_dataloader.cpp)
+target_link_libraries(rviz_dataloader ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})

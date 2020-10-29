@@ -1,22 +1,39 @@
-/**
-    File: mdr_dataloader.h
-    Purpose: Loader for b-it-bots MAS MongoDB data
-    @author Ahmed Faisal Abdelrahman
-    @author Sushant Vijay Chavan
-    @version 1.0
+/*
+ * MIT License
+ * 
+ * Copyright (c) 2020 Ahmed Faisal Abdelrahman, Sushant Vijay Chavan
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
 */
 
 #ifndef MDR_DATALOADER_H
 #define MDR_DATALOADER_H
 
 #include <ros/ros.h>
-#include "dataloader/abstract_dataloader.h"
-#include "dataloader/modelloader/model_loader.h"
-#include "dataloader/modelloader/model_data.h"
 
 #include <mas_perception_msgs/Object.h>
 #include <mas_perception_msgs/Person.h>
 #include <mas_perception_msgs/Plane.h>
+
+#include "dataloader/abstract_dataloader.h"
+#include "dataloader/modelloader/model_loader.h"
+#include "dataloader/modelloader/model_data.h"
 
 namespace RVizDataLoader 
 {
@@ -37,9 +54,9 @@ namespace RVizDataLoader
             friend std::ostream& operator<<(std::ostream &out, mas_perception_msgs::Object const& data); 
             friend std::ostream& operator<<(std::ostream &out, mas_perception_msgs::Plane const& data); 
 
-            MeshData* fillPoseDetails(mas_perception_msgs::Object object)
+            std::unique_ptr<MeshData> fillPoseDetails(mas_perception_msgs::Object object)
             {
-                MeshData* mesh_data = new MeshData();
+                std::unique_ptr<MeshData> mesh_data(new MeshData());
                 auto position = object.pose.pose.position;
                 auto orientation = object.pose.pose.orientation;
                 Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
@@ -51,9 +68,9 @@ namespace RVizDataLoader
                 return mesh_data;
             }
 
-            MeshData* fillPoseDetails(mas_perception_msgs::Person person)
+            std::unique_ptr<MeshData> fillPoseDetails(mas_perception_msgs::Person person)
             {
-                MeshData* mesh_data = new MeshData();
+                std::unique_ptr<MeshData> mesh_data(new MeshData());
                 auto position = person.pose.pose.position;
                 auto orientation = person.pose.pose.orientation;
                 Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
@@ -64,9 +81,9 @@ namespace RVizDataLoader
                 return mesh_data;
             }
 
-            PlaneData* fillPoseDetails(mas_perception_msgs::Plane plane)
+            std::unique_ptr<PlaneData> fillPoseDetails(mas_perception_msgs::Plane plane)
             {
-                PlaneData* plane_data = new PlaneData();
+                std::unique_ptr<PlaneData> plane_data(new PlaneData());
                 plane_data->center_ = Utils::Vec3<double>(plane.plane_point.x, plane.plane_point.y, plane.plane_point.z);
                 for (auto &point: plane.convex_hull)
                 {
@@ -77,36 +94,19 @@ namespace RVizDataLoader
                 return plane_data;
             }
 
-            // Causes segmentation fault at run-time:
-            /**
-            void fillPoseDetails(mas_perception_msgs::Object object, ModelData* model_data)
-            {
-                MeshData* mesh_data = new MeshData();
-                auto position = object.pose.pose.position;
-                auto orientation = object.pose.pose.orientation;
-                Utils::Vec3<double> rpy_vector = Utils::toRPY(Utils::Vec4<double>(orientation.x, orientation.y, orientation.z, orientation.w));
-                mesh_data->pose_ = Utils::Pose<double>(position.x, position.y, position.z, rpy_vector.x(), rpy_vector.y(), rpy_vector.z());
-
-                model_data = dynamic_cast<ModelData*>(mesh_data);
-            }
-            */
-
-            // Standard Solution:
             template <typename T>
             void updateObjectData()
             {
                 bool object_in_queried_list;
-                std::vector<boost::shared_ptr<T>> queried_objects;
+                std::vector<boost::unique_ptr<T>> queried_objects;
 
                 message_proxy_.query<T>(queried_objects);
 
                 for (int i = 0; i < queried_objects.size(); i++)
                 {
                     std::string object_name = queried_objects[i]->name;
-                    /* object_name = typeid(T).name(); */               // for dummy names
-                    ModelData *model_data = dynamic_cast<ModelData*>(fillPoseDetails(*queried_objects[i]));
+                    std::unique_ptr<ModelData> model_data = std::dynamic_pointer_cast<ModelData>(fillPoseDetails(*queried_objects[i]));
                     if (!model_data) std::cerr << "Failed to cast to ModelData!!! \n" << std::endl;
-
 
                     if (object_data_record_[typeid(T).name()].find(object_name) == object_data_record_[typeid(T).name()].end())
                     {
@@ -152,8 +152,6 @@ namespace RVizDataLoader
                 }
             }
 
-            //TODO: Implement set solution, and compare:
-
         private:
             int update_loop_rate_;
             bool debug_;
@@ -163,9 +161,9 @@ namespace RVizDataLoader
             std::string model_config_filename_;
             std::vector<int> marker_delete_list_;
             std::map<std::string, std::vector<std::string>> item_delete_map_;
-            std::map<std::string, std::map<std::string, ModelData*>> object_data_record_;
+            std::map<std::string, std::map<std::string, std::unique_ptr<ModelData>>> object_data_record_;
             std::map<std::string, Mesh::Types> obj_category_mesh_map_; 
-            ModelLoader* model_loader_;
+            std::shared_ptr<ModelLoader> model_loader_;
     };
 
     std::ostream& operator<< (std::ostream &out, mas_perception_msgs::Person const& data) 
@@ -177,8 +175,6 @@ namespace RVizDataLoader
         out << "    - x: " << data.pose.pose.position.x << std::endl;
         out << "    - y: " << data.pose.pose.position.y << std::endl;
         out << "    - z: " << data.pose.pose.position.z << std::endl;
-        /* out << "Height: " << data.height << std::endl; */
-        /* out << "Width: " << data.width << std::endl; */
         return out;
     }
 

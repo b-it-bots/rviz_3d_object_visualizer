@@ -1,51 +1,37 @@
 /*
- * Copyright © 2020 Ahmed Faisal Abdelrahman, Sushant Vijay Chavan All rights reserved.
-
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *     * Redistributions of source code must retain the above copyright notice, this
- *       list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright notice, this
- *       list of conditions and the following disclaimer in the documentation and/or
- *       other materials provided with the distribution.
- *     * Neither the name of “Hochschule Bonn-Rhein-Sieg” nor the names of its contributors
- *       may be used to endorse or promote products derived from this software without specific
- *       prior written permission.
-
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-
-/**
-  File: object_visualization_manager.cpp
-  Purpose: RViz plugin for viewing and filtering 3D object meshes
-
-  @author Ahmed Faisal Abdelrahman
-  @author Sushant Vijay Chavan
-  @version 1.0 15/08/20
+ * MIT License
+ * 
+ * Copyright (c) 2020 Ahmed Faisal Abdelrahman, Sushant Vijay Chavan
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
 */
 
 #include <OgreSceneManager.h>
+#include <QVBoxLayout>
 
 #include <rviz/visualization_manager.h>
 #include <rviz/default_plugin/markers/mesh_resource_marker.h>
 #include <rviz/default_plugin/markers/triangle_list_marker.h>
 #include <rviz/default_plugin/markers/text_view_facing_marker.h>
-
 #include <rviz/properties/property_tree_widget.h>
 #include <rviz/properties/property_tree_model.h>
 #include <rviz/properties/bool_property.h>
-
-#include <QVBoxLayout>
-
 #include <visualization_msgs/Marker.h>
 
 #include "rviz_plugin/object_visualization_manager.h"
@@ -62,8 +48,10 @@ MarkerInfo::MarkerInfo()
 {
 }
 
-MarkerInfo::MarkerInfo(int unique_id, Ogre::SceneNode* scene_node,
-                       MarkerBase* marker, BoolProperty* property,
+MarkerInfo::MarkerInfo(int unique_id,
+                       std::shared_ptr<Ogre::SceneNode> scene_node,
+                       std::shared_ptr<MarkerBase> marker, 
+                       std::shared_ptr<BoolProperty> property,
                        bool visibility)
 : unique_id_(unique_id)
 , scene_node_(scene_node)
@@ -71,27 +59,6 @@ MarkerInfo::MarkerInfo(int unique_id, Ogre::SceneNode* scene_node,
 , property_(property)
 , visibility_(visibility)
 {
-}
-
-MarkerInfo::~MarkerInfo()
-{
-    if (scene_node_)
-    {
-        delete scene_node_;
-        scene_node_ = nullptr;
-    }
-
-    if (marker_)
-    {
-        delete marker_;
-        marker_ = nullptr;
-    }
-
-    if (property_)
-    {
-        delete property_;
-        property_ = nullptr;
-    }
 }
 
 void MarkerInfo::setVisible(bool visibility)
@@ -117,14 +84,8 @@ void MarkerInfo::updateVisibility(const ObjectVisualizationManager::MarkerInfoMa
     
 }
 
-void MarkerInfo::updateMarker(MarkerBase* marker)
+void MarkerInfo::updateMarker(std::shared_ptr<rviz::MarkerBase> marker)
 {
-    // Delete the existing marker object if it exists
-    if (marker_)
-    {
-        delete marker_;
-        marker_ = nullptr;
-    }
     marker_ = marker;
     scene_node_->setVisible(visibility_);
 }
@@ -143,100 +104,131 @@ ObjectVisualizationManager::~ObjectVisualizationManager()
 void ObjectVisualizationManager::onInitialize()
 {
     setupBaseProperties();
-    base_scene_nodes.resize(BaseTypes::COUNT);
-    base_scene_nodes[BaseTypes::ROOT] = vis_manager_->getSceneManager()->getRootSceneNode()->createChildSceneNode("ObjectVisualizationRootSceneNode");
-    base_scene_nodes[BaseTypes::OBJECTS] = base_scene_nodes[BaseTypes::ROOT]->createChildSceneNode("ObjectsSceneNode");
-    base_scene_nodes[BaseTypes::PERSONS] = base_scene_nodes[BaseTypes::ROOT]->createChildSceneNode("PersonsSceneNode");
-    base_scene_nodes[BaseTypes::PLANES] = base_scene_nodes[BaseTypes::ROOT]->createChildSceneNode("PlanesSceneNode");
+    base_scene_nodes_.resize(BaseTypes::COUNT);
+
+    base_scene_nodes_[BaseTypes::ROOT].reset(
+        vis_manager_->getSceneManager()->getRootSceneNode()->createChildSceneNode("ObjectVisualizationRootSceneNode"));
+
+    base_scene_nodes_[BaseTypes::OBJECTS].reset(
+        base_scene_nodes_[BaseTypes::ROOT]->createChildSceneNode("ObjectsSceneNode"));
+
+    base_scene_nodes_[BaseTypes::PERSONS].reset(
+        base_scene_nodes_[BaseTypes::ROOT]->createChildSceneNode("PersonsSceneNode"));
+
+    base_scene_nodes_[BaseTypes::PLANES].reset(
+        base_scene_nodes_[BaseTypes::ROOT]->createChildSceneNode("PlanesSceneNode"));
 }
 
 void ObjectVisualizationManager::setupBaseProperties()
 {
-    base_properties.resize(BaseTypes::COUNT);
-    base_properties[BaseTypes::ROOT] = new rviz::Property(QString::fromStdString("ObjectVisualizationRootProperty"));
+    base_properties_.resize(BaseTypes::COUNT);
+    base_properties_[BaseTypes::ROOT].reset(new rviz::Property(QString::fromStdString("ObjectVisualizationRootProperty")));
 
     // Create the base properties for different types
-    base_properties[BaseTypes::OBJECTS] = new rviz::BoolProperty(
+    base_properties_[BaseTypes::OBJECTS].reset(new rviz::BoolProperty(
         QString::fromStdString(std::string("Objects")), true,
-        "Object 3D markers", base_properties[BaseTypes::ROOT], SLOT(updateMarkerVisibilities()), this);
-    base_properties[BaseTypes::PERSONS] = new rviz::BoolProperty(
+        "Object 3D markers", base_properties_[BaseTypes::ROOT].get(), SLOT(updateMarkerVisibilities()), this));
+    base_properties_[BaseTypes::PERSONS].reset(new rviz::BoolProperty(
         QString::fromStdString(std::string("Persons")), true,
-        "Persons 3D markers", base_properties[BaseTypes::ROOT], SLOT(updateMarkerVisibilities()), this);
-    base_properties[BaseTypes::PLANES] = new rviz::BoolProperty(
+        "Persons 3D markers", base_properties_[BaseTypes::ROOT].get(), SLOT(updateMarkerVisibilities()), this));
+    base_properties_[BaseTypes::PLANES].reset(new rviz::BoolProperty(
         QString::fromStdString(std::string("Planes")), true,
-        "Planes 3D markers", base_properties[BaseTypes::ROOT], SLOT(updateMarkerVisibilities()), this);
+        "Planes 3D markers", base_properties_[BaseTypes::ROOT].get(), SLOT(updateMarkerVisibilities()), this));
 
-    rviz::PropertyTreeModel* model = new rviz::PropertyTreeModel(base_properties[BaseTypes::ROOT], this);
-    tree_widget_ = new rviz::PropertyTreeWidget();
-    tree_widget_->setModel(model);
+    rviz::PropertyTreeModel* model = new rviz::PropertyTreeModel(base_properties_[BaseTypes::ROOT].get(), this);
+    rviz::PropertyTreeWidget* tree_widget = new rviz::PropertyTreeWidget();
+    tree_widget->setModel(model);
 
     QVBoxLayout* layout = new QVBoxLayout();
-    layout->addWidget(tree_widget_);
+    layout->addWidget(tree_widget);
     setLayout(layout);
 }
 
 void ObjectVisualizationManager::updateMarkerVisibilities()
 {
-    for (auto& markerInfo: marker_store_)
+    for (auto& marker_info: marker_store_)
     {
-        markerInfo.second->updateVisibility(marker_store_);
+        marker_info.second->updateVisibility(marker_store_);
     }
 
-    for (auto& item: obj_category_properties)
+    for (auto& item: obj_category_properties_)
     {
         std::string category = item.first;
-        obj_category_scene_nodes[category]->setVisible(item.second->getBool(), !item.second->getBool());
+        obj_category_scene_nodes_[category]->setVisible(item.second->getBool(), !item.second->getBool());
     }
 
     for (int i = BaseTypes::OBJECTS; i < BaseTypes::COUNT; i++)
     {
-        base_scene_nodes[i]->setVisible(static_cast<BoolProperty*>(base_properties[i])->getBool(),
-                                        !static_cast<BoolProperty*>(base_properties[i])->getBool());
+        base_scene_nodes_[i]->setVisible(std::static_pointer_cast<BoolProperty>(base_properties_[i])->getBool(),
+                                        !std::static_pointer_cast<BoolProperty>(base_properties_[i])->getBool());
     }
 }
 
 void ObjectVisualizationManager::addNewObjectCategory(const std::string& categoryName)
 {
-    if (!obj_category_scene_nodes[categoryName])
+    if (!obj_category_scene_nodes_[categoryName])
     {
         std::cout << "Creating Obj Category scene node" << std::endl;
-        obj_category_scene_nodes[categoryName] = base_scene_nodes[BaseTypes::OBJECTS]->createChildSceneNode();
+        obj_category_scene_nodes_[categoryName].reset(base_scene_nodes_[BaseTypes::OBJECTS]->createChildSceneNode());
     }
 
-    if (!obj_category_properties[categoryName])
+    if (!obj_category_properties_[categoryName])
     {
-        obj_category_properties[categoryName] = new rviz::BoolProperty(
+        obj_category_properties_[categoryName].reset(new rviz::BoolProperty(
             QString::fromStdString(categoryName), true,
-            categoryName.c_str(), base_properties[BaseTypes::OBJECTS], SLOT(updateMarkerVisibilities()), this);
+            categoryName.c_str(), base_properties_[BaseTypes::OBJECTS].get(), SLOT(updateMarkerVisibilities()), this));
     }
 }
 
-rviz::BoolProperty* ObjectVisualizationManager::addObject(const std::string& categoryName, const std::string& name, int uniqueId)
+void ObjectVisualizationManager::removeEmptyObjectCategories()
 {
-    if (!obj_category_properties.count(categoryName) || !obj_category_scene_nodes.count(categoryName))
+    std::vector<std::string> delete_list;
+    // Find the empty categories
+    for (const auto& node: obj_category_scene_nodes_)
+    {
+        if (node.second->numChildren() <= 0)
+        {
+            delete_list.push_back(node.first);
+        }
+    }
+
+    // Delete the empty categories
+    for (const auto& category: delete_list)
+    {
+        obj_category_scene_nodes_.erase(category);
+        obj_category_properties_.erase(category);
+    }
+
+}
+
+std::unique_ptr<rviz::BoolProperty> ObjectVisualizationManager::addObject(const std::string& categoryName, const std::string& name, int uniqueId)
+{
+    if (!obj_category_properties_.count(categoryName) || !obj_category_scene_nodes_.count(categoryName))
     {
         addNewObjectCategory(categoryName);
     }
 
-    rviz::BoolProperty* prop = new rviz::BoolProperty(
-        QString::fromStdString(name), true,
-        name.c_str(), obj_category_properties[categoryName], SLOT(updateMarkerVisibilities()), this);
+    std::unique_ptr<rviz::BoolProperty> prop(new rviz::BoolProperty(
+        QString::fromStdString(name), true, name.c_str(), 
+        obj_category_properties_[categoryName].get(), 
+        SLOT(updateMarkerVisibilities()), this));
     return prop;
 }
 
-rviz::BoolProperty* ObjectVisualizationManager::addPerson(const std::string& name, int uniqueId)
+std::unique_ptr<rviz::BoolProperty> ObjectVisualizationManager::addPerson(const std::string& name, int uniqueId)
 {
-    rviz::BoolProperty* prop = new rviz::BoolProperty(
-        QString::fromStdString(name), true,
-        name.c_str(), base_properties[BaseTypes::PERSONS], SLOT(updateMarkerVisibilities()), this);
+    std::unique_ptr<rviz::BoolProperty> prop(new rviz::BoolProperty(
+        QString::fromStdString(name), true, name.c_str(), 
+        base_properties_[BaseTypes::PERSONS].get(), 
+        SLOT(updateMarkerVisibilities()), this));
     return prop;
 }
 
-rviz::BoolProperty* ObjectVisualizationManager::addPlane(const std::string& name, int uniqueId)
+std::unique_ptr<rviz::BoolProperty> ObjectVisualizationManager::addPlane(const std::string& name, int uniqueId)
 {
-    rviz::BoolProperty* prop = new rviz::BoolProperty(
+    std::unique_ptr<rviz::BoolProperty> prop(new rviz::BoolProperty(
         QString::fromStdString(name), true,
-        name.c_str(), base_properties[BaseTypes::PLANES], SLOT(updateMarkerVisibilities()), this);
+        name.c_str(), base_properties_[BaseTypes::PLANES].get(), SLOT(updateMarkerVisibilities()), this));
     return prop;
 }
 
@@ -252,7 +244,6 @@ void ObjectVisualizationManager::load(const rviz::Config& config)
 
 void ObjectVisualizationManager::markerArrayCb(const visualization_msgs::MarkerArray::ConstPtr& msg)
 {
-    //ROS_INFO("Marker Array received!");
     for(const auto& marker : msg->markers)
     {
         if (marker.action == visualization_msgs::Marker::ADD)
@@ -272,6 +263,8 @@ void ObjectVisualizationManager::markerArrayCb(const visualization_msgs::MarkerA
             deleteMarker(marker.id);
         }
     }
+
+    removeEmptyObjectCategories();
 }
 
 ObjectVisualizationManager::BaseTypes ObjectVisualizationManager::getBaseType(const visualization_msgs::Marker& msg)
@@ -303,9 +296,9 @@ std::string ObjectVisualizationManager::getDisplayName(const visualization_msgs:
     return name;
 }
 
-BoolProperty* ObjectVisualizationManager::createProperty(const visualization_msgs::Marker& msg)
+std::unique_ptr<rviz::BoolProperty> ObjectVisualizationManager::createProperty(const visualization_msgs::Marker& msg)
 {
-    BoolProperty* prop = nullptr;
+    std::unique_ptr<rviz::BoolProperty> prop(nullptr);
     if (msg.type != visualization_msgs::Marker::TEXT_VIEW_FACING)
     {
         switch (getBaseType(msg))
@@ -327,19 +320,19 @@ BoolProperty* ObjectVisualizationManager::createProperty(const visualization_msg
     return prop;
 }
 
-Ogre::SceneNode* ObjectVisualizationManager::createSceneNode(const visualization_msgs::Marker& msg)
+std::unique_ptr<Ogre::SceneNode> ObjectVisualizationManager::createSceneNode(const visualization_msgs::Marker& msg)
 {
-    Ogre::SceneNode* scene_node = nullptr;
+    std::unique_ptr<Ogre::SceneNode> scene_node = nullptr;
     switch (getBaseType(msg))
     {
     case BaseTypes::OBJECTS:
-        scene_node = obj_category_scene_nodes[getObjectCategory(msg)]->createChildSceneNode();
+        scene_node.reset(obj_category_scene_nodes_[getObjectCategory(msg)]->createChildSceneNode());
         break;
     case BaseTypes::PERSONS:
-        scene_node = base_scene_nodes[BaseTypes::PERSONS]->createChildSceneNode();
+        scene_node.reset(base_scene_nodes_[BaseTypes::PERSONS]->createChildSceneNode());
         break;
     case BaseTypes::PLANES:
-        scene_node = base_scene_nodes[BaseTypes::PLANES]->createChildSceneNode();
+        scene_node.reset(base_scene_nodes_[BaseTypes::PLANES]->createChildSceneNode());
         break;
     default:
         ROS_ERROR("The marker tag does not have the right type! Cannot create Ogre scene node!");
@@ -348,21 +341,21 @@ Ogre::SceneNode* ObjectVisualizationManager::createSceneNode(const visualization
     return scene_node;
 }
 
-rviz::MarkerBase* ObjectVisualizationManager::createMarker(const visualization_msgs::Marker& msg, Ogre::SceneNode* scene_node)
+std::unique_ptr<rviz::MarkerBase> ObjectVisualizationManager::createMarker(const visualization_msgs::Marker& msg, Ogre::SceneNode* scene_node)
 {
-    MarkerBase* marker = nullptr;
-    visualization_msgs::Marker markerMsg = msg;
-    switch (markerMsg.type)
+    std::unique_ptr<rviz::MarkerBase> marker = nullptr;
+    visualization_msgs::Marker marker_msg = msg;
+    switch (marker_msg.type)
     {
     case visualization_msgs::Marker::MESH_RESOURCE:
-        marker = new MeshResourceMarker(&marker_display_, vis_manager_, scene_node);
+        marker.reset(new MeshResourceMarker(&marker_display_, vis_manager_, scene_node));
         break;
     case visualization_msgs::Marker::TRIANGLE_LIST:
-        marker = new TriangleListMarker(&marker_display_, vis_manager_, scene_node);
+        marker.reset(new TriangleListMarker(&marker_display_, vis_manager_, scene_node));
         break;
     case visualization_msgs::Marker::TEXT_VIEW_FACING:
-        marker = new TextViewFacingMarker(&marker_display_, vis_manager_, scene_node);
-        markerMsg.text = getDisplayName(markerMsg);
+        marker.reset(new TextViewFacingMarker(&marker_display_, vis_manager_, scene_node));
+        marker_msg.text = getDisplayName(marker_msg);
         break;
     default:
         ROS_ERROR("[ObjectVisualizationManager] Unsupported marker type!");
@@ -371,7 +364,7 @@ rviz::MarkerBase* ObjectVisualizationManager::createMarker(const visualization_m
 
     if (marker)
     {
-        marker->setMessage(markerMsg);
+        marker->setMessage(marker_msg);
     }
 
     return marker;
@@ -379,29 +372,30 @@ rviz::MarkerBase* ObjectVisualizationManager::createMarker(const visualization_m
 
 void ObjectVisualizationManager::addNewMarker(const visualization_msgs::Marker& msg)
 {
-    BoolProperty* property = createProperty(msg);
-    Ogre::SceneNode* scene_node = createSceneNode(msg);
-    rviz::MarkerBase* marker = createMarker(msg, scene_node);
+    
+    std::unique_ptr<BoolProperty> property = createProperty(msg);
+    std::unique_ptr<Ogre::SceneNode> scene_node = createSceneNode(msg);
+    std::unique_ptr<rviz::MarkerBase> marker = createMarker(msg, scene_node.get());
 
-    marker_store_.insert(MarkerInfoPair(msg.id, new MarkerInfo(msg.id, scene_node, marker, property)));
+    marker_store_.insert(MarkerInfoPair(msg.id, std::shared_ptr<MarkerInfo>(
+        new MarkerInfo(msg.id, std::move(scene_node), std::move(marker), std::move(property)))));
     ROS_INFO("Added new marker with id: %d", msg.id);
 }
 
 void ObjectVisualizationManager::updateMarker(const visualization_msgs::Marker& msg)
 {
-    MarkerInfo* markerInfo = marker_store_.at(msg.id);
-    markerInfo->updateMarker(createMarker(msg, markerInfo->scene_node_));
+    std::shared_ptr<MarkerInfo> marker_info = marker_store_.at(msg.id);
+    marker_info->updateMarker(createMarker(msg, marker_info->scene_node_.get()));
     updateMarkerVisibilities();
 }
 
 void ObjectVisualizationManager::deleteMarker(const int marker_id)
 {
-    MarkerInfoMapItr markerItr = marker_store_.find(marker_id);
-    if (markerItr != marker_store_.end())
+    MarkerInfoMapItr marker_itr = marker_store_.find(marker_id);
+    if (marker_itr != marker_store_.end())
     {
         ROS_INFO("Deleting marker with id %d!", marker_id);
-        delete markerItr->second;
-        markerItr->second = nullptr;
+        marker_itr->second = nullptr;
         marker_store_.erase(marker_id);
     }
 }

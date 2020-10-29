@@ -1,15 +1,32 @@
-/**
-     File: mdr_dataloader.cpp
-     Purpose: ...
-     @author Ahmed Faisal Abdelrahman
-     @author Sushant Vijay Chavan
-     @version 1.0
- */
-
+/*
+ * MIT License
+ * 
+ * Copyright (c) 2020 Ahmed Faisal Abdelrahman, Sushant Vijay Chavan
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*/
 
 #include "dataloader/mdr_dataloader.h"
+
 #include <ros/package.h>
 #include <yaml-cpp/yaml.h>
+
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 
@@ -24,7 +41,7 @@ MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh)
     ros::param::get("~debug", debug_);
 
     data_pub_ = nh.advertise<visualization_msgs::MarkerArray>(marker_pub_topic_, 1);
-    model_loader_ = new ModelLoader(ros::package::getPath("rviz_3d_object_visualizer") + "/config/" + model_config_filename_);
+    model_loader_ = std::shared_ptr<ModelLoader>(new ModelLoader(ros::package::getPath("rviz_3d_object_visualizer") + "/config/" + model_config_filename_));
 
     fillObjectCategoryMeshMap();
     ROS_INFO("[mdr_dataloader] Initialized.");
@@ -32,7 +49,6 @@ MDRDataloader::MDRDataloader(ros::NodeHandle nh) : AbstractDataloader(nh)
 
 MDRDataloader::~MDRDataloader()
 {
-    delete model_loader_;
 }
 
 void MDRDataloader::fillObjectCategoryMeshMap()
@@ -58,7 +74,7 @@ void MDRDataloader::queryDatabase()
         ROS_INFO("[mdr_dataloader] Displaying details of objects found in database:");
     }
 
-    updateObjectData<mas_perception_msgs::Person>();              // has no name field in old message type
+    updateObjectData<mas_perception_msgs::Person>();
     updateObjectData<mas_perception_msgs::Object>();
     updateObjectData<mas_perception_msgs::Plane>();
 
@@ -112,16 +128,16 @@ void MDRDataloader::publishObjectData()
     {
         for (auto &object : object_data.second)
         {
-            MeshData *mesh_data = dynamic_cast<MeshData*>(object.second);
+            std::unique_ptr<MeshData> mesh_data = std::dynamic_pointer_cast<MeshData>(object.second);
             if (mesh_data)
             {
                 std::string mesh_name;
                 if (mesh_data->type_ == Mesh::Types::PERSON)
-                    mesh_name = Mesh::MeshTypesMap.at(mesh_data->type_) + "/" + mesh_data->name_;
+                    mesh_name = Mesh::mesh_types_map_.at(mesh_data->type_) + "/" + mesh_data->name_;
                 else
-                    mesh_name = "OBJECT/" + Mesh::MeshTypesMap.at(mesh_data->type_) + "/" + mesh_data->name_;
+                    mesh_name = "OBJECT/" + Mesh::mesh_types_map_.at(mesh_data->type_) + "/" + mesh_data->name_;
 
-                auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, mesh_name, "base_link", "", 
+                auto marker = model_loader_->getMeshMarker(mesh_data->unique_id_, mesh_data->type_, mesh_name, "map", "", 
                                                            mesh_data->pose_);
                 if (marker.first)
                 {
@@ -133,11 +149,11 @@ void MDRDataloader::publishObjectData()
                 continue;
             }
 
-            PlaneData *plane_data = dynamic_cast<PlaneData*>(object.second);
+            std::unique_ptr<PlaneData> plane_data = std::dynamic_pointer_cast<PlaneData>(object.second);
             if (plane_data)
             {
                 std::string plane_name = "PLANE/" + plane_data->name_;
-                auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, plane_name, "base_link", "", 
+                auto marker = model_loader_->getPlaneMarker(plane_data->unique_id_, plane_name, "map", "", 
                                                             plane_data->center_, plane_data->convex_hull_);
                 if (marker.first)
                 {
@@ -156,12 +172,12 @@ void MDRDataloader::publishObjectData()
         visualization_msgs::Marker delete_marker;
         visualization_msgs::Marker text_delete_marker;
 
-        delete_marker.header.frame_id = "base_link";
+        delete_marker.header.frame_id = "map";
         delete_marker.id = marker_id;
         delete_marker.action = visualization_msgs::Marker::DELETE;
         marker_array_msg.markers.push_back(delete_marker);
 
-        text_delete_marker.header.frame_id = "base_link";
+        text_delete_marker.header.frame_id = "map";
         text_delete_marker.id = marker_id + 1;
         text_delete_marker.action = visualization_msgs::Marker::DELETE;
         marker_array_msg.markers.push_back(text_delete_marker);
