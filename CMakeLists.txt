@@ -100,6 +100,12 @@ add_executable(demo src/demo.cpp)
 target_link_libraries(demo ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
 
 ###########################
+# Create a demo executable for YCB classes
+###########################
+add_executable(demo_ycb src/demo_ycb.cpp)
+target_link_libraries(demo_ycb ${DATALOADER_LIB_NAME} ${catkin_LIBRARIES})
+
+###########################
 # Create a dataloader executable
 ###########################
 add_executable(rviz_dataloader src/rviz_dataloader.cpp)

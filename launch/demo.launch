@@ -4,8 +4,14 @@
     <arg name="model_config_filename" default="model_params.yaml" />
     <arg name="rviz_config" default="$(find rviz_3d_object_visualizer)/config/demo.rviz"/>
     <arg name="start_rviz" default="true"/>
+    <arg name="ycb" default="true"/>
 
-    <node pkg="rviz_3d_object_visualizer" type="demo" name="demo_node" output="screen">
+    <node pkg="rviz_3d_object_visualizer" type="demo_ycb" name="demo_node" output="screen" if="$(arg ycb)">
+        <param name="marker_pub_topic" type="str" value="$(arg marker_pub_topic)" />
+        <param name="model_config_filename" type="str" value="$(arg model_config_filename)" />
+    </node>
+
+    <node pkg="rviz_3d_object_visualizer" type="demo" name="demo_node" output="screen" unless="$(arg ycb)">
         <param name="marker_pub_topic" type="str" value="$(arg marker_pub_topic)" />
         <param name="model_config_filename" type="str" value="$(arg model_config_filename)" />
     </node>
@@ -13,6 +19,8 @@
     <!-- Start RViz -->
     <group if="$(arg start_rviz)">
         <node pkg="rviz" type="rviz" name="rviz_3d_object_visualizer_demo"
-              args="-d $(arg rviz_config)" />
+              args="-d $(find rviz_3d_object_visualizer)/config/demo_ycb.rviz" if="$(arg ycb)"/>
+        <node pkg="rviz" type="rviz" name="rviz_3d_object_visualizer_demo"
+              args="-d $(arg rviz_config)" unless="$(arg ycb)"/>
     </group>
 </launch>

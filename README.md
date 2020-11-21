@@ -75,6 +75,14 @@ To add new 3D model categories and corresponding meshes, the below procedure nee
    * `UseColorFromMesh`: If the mesh is textured, this flag must be set to `True` so that the default mesh color is overridden by the texture.
    * `TextOffset`: The offset of the text label (i.e. the name of the object) to be displayed above the 3D mesh.
 
+## YCB models
+The package contains numerous 3D meshes from the YCB dataset. These meshes were obtained from Toyota's [tmc_wrs_gazebo](https://github.com/hsr-project/tmc_wrs_gazebo) repository and are Licensed under a [Creative Commons Attribution 4.0 International license](https://creativecommons.org/licenses/by/4.0/). More details about the license can be found [here](https://github.com/hsr-project/tmc_wrs_gazebo/tree/master/tmc_wrs_gazebo_worlds#begins-with-the-name-ycb_).
+
+All the YCB models can be visualized by running the `demo.launch` file.
+```
+roslaunch rviz_3d_object_visualizer demo.launch
+```
+
 ## Documentation
 
 ### Architecture
