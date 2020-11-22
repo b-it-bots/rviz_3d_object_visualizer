@@ -83,7 +83,7 @@ YCB_002_MASTER_CHEF_CAN:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_002_master_chef_can/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/master_chef_can/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.25]
 YCB_003_CRACKER_BOX:
@@ -91,7 +91,7 @@ YCB_003_CRACKER_BOX:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_003_cracker_box/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/cracker_box/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.25]
 YCB_004_SUGAR_BOX:
@@ -99,7 +99,7 @@ YCB_004_SUGAR_BOX:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_004_sugar_box/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/sugar_box/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.25]
 YCB_005_TOMATO_SOUP_CAN:
@@ -107,7 +107,7 @@ YCB_005_TOMATO_SOUP_CAN:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_005_tomato_soup_can/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/tomato_soup_can/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.25]
 YCB_006_MUSTARD_BOTTLE:
@@ -115,7 +115,7 @@ YCB_006_MUSTARD_BOTTLE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_006_mustard_bottle/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/mustard_bottle/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.25]
 YCB_007_TUNA_FISH_CAN:
@@ -123,7 +123,7 @@ YCB_007_TUNA_FISH_CAN:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_007_tuna_fish_can/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/tuna_fish_can/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_008_PUDDING_BOX:
@@ -131,7 +131,7 @@ YCB_008_PUDDING_BOX:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_008_pudding_box/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/pudding_box/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_009_GELATIN_BOX:
@@ -139,7 +139,7 @@ YCB_009_GELATIN_BOX:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_009_gelatin_box/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/gelatin_box/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_010_POTTED_MEAT_CAN:
@@ -147,7 +147,7 @@ YCB_010_POTTED_MEAT_CAN:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_010_potted_meat_can/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/potted_meat_can/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_011_BANANA:
@@ -155,7 +155,7 @@ YCB_011_BANANA:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_011_banana/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/banana/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_012_STRAWBERRY:
@@ -163,7 +163,7 @@ YCB_012_STRAWBERRY:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_012_strawberry/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/strawberry/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_013_APPLE:
@@ -171,7 +171,7 @@ YCB_013_APPLE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_013_apple/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/apple/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_014_LEMON:
@@ -179,7 +179,7 @@ YCB_014_LEMON:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_014_lemon/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/lemon/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_015_PEACH:
@@ -187,7 +187,7 @@ YCB_015_PEACH:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_015_peach/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/peach/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_016_PEAR:
@@ -195,7 +195,7 @@ YCB_016_PEAR:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_016_pear/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/pear/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_017_ORANGE:
@@ -203,7 +203,7 @@ YCB_017_ORANGE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_017_orange/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/orange/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_018_PLUM:
@@ -211,7 +211,7 @@ YCB_018_PLUM:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_018_plum/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/plum/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_019_PITCHER_BASE:
@@ -219,7 +219,7 @@ YCB_019_PITCHER_BASE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_019_pitcher_base/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/pitcher_base/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.3]
 YCB_021_BLEACH_CLEANSER:
@@ -227,7 +227,7 @@ YCB_021_BLEACH_CLEANSER:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_021_bleach_cleanser/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/bleach_cleanser/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.3]
 YCB_022_WINDEX_BOTTLE:
@@ -235,7 +235,7 @@ YCB_022_WINDEX_BOTTLE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_022_windex_bottle/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/windex_bottle/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.3]
 YCB_024_BOWL:
@@ -243,7 +243,7 @@ YCB_024_BOWL:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_024_bowl/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/bowl/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_025_MUG:
@@ -251,7 +251,7 @@ YCB_025_MUG:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_025_mug/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/mug/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.15]
 YCB_026_SPONGE:
@@ -259,7 +259,7 @@ YCB_026_SPONGE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_026_sponge/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/sponge/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_027_SKILLET:
@@ -267,7 +267,7 @@ YCB_027_SKILLET:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_027_skillet/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/skillet/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.2]
 YCB_028_SKILLET_LID:
@@ -275,7 +275,7 @@ YCB_028_SKILLET_LID:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_028_skillet_lid/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/skillet_lid/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_029_PLATE:
@@ -283,7 +283,7 @@ YCB_029_PLATE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_029_plate/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/plate/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_030_FORK:
@@ -291,7 +291,7 @@ YCB_030_FORK:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_030_fork/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/fork/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_031_SPOON:
@@ -299,7 +299,7 @@ YCB_031_SPOON:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_031_spoon/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/spoon/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_032_KNIFE:
@@ -307,7 +307,7 @@ YCB_032_KNIFE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_032_knife/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/knife/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_033_SPATULA:
@@ -315,7 +315,7 @@ YCB_033_SPATULA:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_033_spatula/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/spatula/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_035_POWER_DRILL:
@@ -323,7 +323,7 @@ YCB_035_POWER_DRILL:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_035_power_drill/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/power_drill/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_036_WOOD_BLOCK:
@@ -331,7 +331,7 @@ YCB_036_WOOD_BLOCK:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_036_wood_block/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/wood_block/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.3]
 YCB_037_SCISSORS:
@@ -339,7 +339,7 @@ YCB_037_SCISSORS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_037_scissors/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/scissors/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_038_PADLOCK:
@@ -347,7 +347,7 @@ YCB_038_PADLOCK:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_038_padlock/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/padlock/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_040_LARGE_MARKER:
@@ -355,7 +355,7 @@ YCB_040_LARGE_MARKER:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_040_large_marker/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/large_marker/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_042_ADJUSTABLE_WRENCH:
@@ -363,7 +363,7 @@ YCB_042_ADJUSTABLE_WRENCH:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_042_adjustable_wrench/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/adjustable_wrench/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_043_PHILLIPS_SCREWDRIVER:
@@ -371,7 +371,7 @@ YCB_043_PHILLIPS_SCREWDRIVER:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_043_phillips_screwdriver/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/phillips_screwdriver/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_044_FLAT_SCREWDRIVER:
@@ -379,7 +379,7 @@ YCB_044_FLAT_SCREWDRIVER:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_044_flat_screwdriver/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/flat_screwdriver/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_048_HAMMER:
@@ -387,7 +387,7 @@ YCB_048_HAMMER:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_048_hammer/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/hammer/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_050_MEDIUM_CLAMP:
@@ -395,7 +395,7 @@ YCB_050_MEDIUM_CLAMP:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_050_medium_clamp/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/medium_clamp/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_051_LARGE_CLAMP:
@@ -403,7 +403,7 @@ YCB_051_LARGE_CLAMP:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_051_large_clamp/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/large_clamp/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_052_EXTRA_LARGE_CLAMP:
@@ -411,7 +411,7 @@ YCB_052_EXTRA_LARGE_CLAMP:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_052_extra_large_clamp/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/extra_large_clamp/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_053_MINI_SOCCER_BALL:
@@ -419,7 +419,7 @@ YCB_053_MINI_SOCCER_BALL:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_053_mini_soccer_ball/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/mini_soccer_ball/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.15]
 YCB_054_SOFTBALL:
@@ -427,7 +427,7 @@ YCB_054_SOFTBALL:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_054_softball/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/softball/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.15]
 YCB_055_BASEBALL:
@@ -435,7 +435,7 @@ YCB_055_BASEBALL:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_055_baseball/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/baseball/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_056_TENNIS_BALL:
@@ -443,7 +443,7 @@ YCB_056_TENNIS_BALL:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_056_tennis_ball/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/tennis_ball/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_057_RACQUETBALL:
@@ -451,7 +451,7 @@ YCB_057_RACQUETBALL:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_057_racquetball/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/racquetball/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_058_GOLF_BALL:
@@ -459,7 +459,7 @@ YCB_058_GOLF_BALL:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_058_golf_ball/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/golf_ball/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_059_CHAIN:
@@ -467,7 +467,7 @@ YCB_059_CHAIN:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_059_chain/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/chain/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_061_FOAM_BRICK:
@@ -475,7 +475,7 @@ YCB_061_FOAM_BRICK:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_061_foam_brick/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/foam_brick/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_062_DICE:
@@ -483,7 +483,7 @@ YCB_062_DICE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_062_dice/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/dice/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_063_A_MARBLES:
@@ -491,7 +491,7 @@ YCB_063_A_MARBLES:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_063-a_marbles/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/a_marbles/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_063_B_MARBLES:
@@ -499,7 +499,7 @@ YCB_063_B_MARBLES:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_063-b_marbles/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/b_marbles/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_065_A_CUPS:
@@ -507,7 +507,7 @@ YCB_065_A_CUPS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_065-a_cups/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/a_cups/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_065_B_CUPS:
@@ -515,7 +515,7 @@ YCB_065_B_CUPS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_065-b_cups/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/b_cups/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_065_C_CUPS:
@@ -523,7 +523,7 @@ YCB_065_C_CUPS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_065-c_cups/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/c_cups/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_065_D_CUPS:
@@ -531,7 +531,7 @@ YCB_065_D_CUPS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_065-d_cups/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/d_cups/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_065_E_CUPS:
@@ -539,7 +539,7 @@ YCB_065_E_CUPS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_065-e_cups/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/e_cups/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_065_F_CUPS:
@@ -547,7 +547,7 @@ YCB_065_F_CUPS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_065-f_cups/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/f_cups/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_065_G_CUPS:
@@ -555,7 +555,7 @@ YCB_065_G_CUPS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_065-g_cups/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/g_cups/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_065_H_CUPS:
@@ -563,7 +563,7 @@ YCB_065_H_CUPS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_065-h_cups/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/h_cups/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_065_I_CUPS:
@@ -571,7 +571,7 @@ YCB_065_I_CUPS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_065-i_cups/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/i_cups/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_065_J_CUPS:
@@ -579,7 +579,7 @@ YCB_065_J_CUPS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_065-j_cups/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/j_cups/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_070_A_COLORED_WOOD_BLOCKS:
@@ -587,7 +587,7 @@ YCB_070_A_COLORED_WOOD_BLOCKS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_070-a_colored_wood_blocks/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/a_colored_wood_blocks/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.2]
 YCB_070_B_COLORED_WOOD_BLOCKS:
@@ -595,7 +595,7 @@ YCB_070_B_COLORED_WOOD_BLOCKS:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_070-b_colored_wood_blocks/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/b_colored_wood_blocks/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_071_NINE_HOLE_PEG_TEST:
@@ -603,7 +603,7 @@ YCB_071_NINE_HOLE_PEG_TEST:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_071_nine_hole_peg_test/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/nine_hole_peg_test/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_072_A_TOY_AIRPLANE:
@@ -611,7 +611,7 @@ YCB_072_A_TOY_AIRPLANE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_072-a_toy_airplane/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/a_toy_airplane/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.2]
 YCB_072_B_TOY_AIRPLANE:
@@ -619,7 +619,7 @@ YCB_072_B_TOY_AIRPLANE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_072-b_toy_airplane/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/b_toy_airplane/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_072_C_TOY_AIRPLANE:
@@ -627,7 +627,7 @@ YCB_072_C_TOY_AIRPLANE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_072-c_toy_airplane/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/c_toy_airplane/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_072_D_TOY_AIRPLANE:
@@ -635,7 +635,7 @@ YCB_072_D_TOY_AIRPLANE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_072-d_toy_airplane/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/d_toy_airplane/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_072_E_TOY_AIRPLANE:
@@ -643,7 +643,7 @@ YCB_072_E_TOY_AIRPLANE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_072-e_toy_airplane/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/e_toy_airplane/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_073_A_LEGO_DUPLO:
@@ -651,7 +651,7 @@ YCB_073_A_LEGO_DUPLO:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_073-a_lego_duplo/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/a_lego_duplo/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_073_B_LEGO_DUPLO:
@@ -659,7 +659,7 @@ YCB_073_B_LEGO_DUPLO:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_073-b_lego_duplo/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/b_lego_duplo/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_073_C_LEGO_DUPLO:
@@ -667,7 +667,7 @@ YCB_073_C_LEGO_DUPLO:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_073-c_lego_duplo/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/c_lego_duplo/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_073_D_LEGO_DUPLO:
@@ -675,7 +675,7 @@ YCB_073_D_LEGO_DUPLO:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_073-d_lego_duplo/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/d_lego_duplo/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_073_E_LEGO_DUPLO:
@@ -683,7 +683,7 @@ YCB_073_E_LEGO_DUPLO:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_073-e_lego_duplo/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/e_lego_duplo/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_073_F_LEGO_DUPLO:
@@ -691,7 +691,7 @@ YCB_073_F_LEGO_DUPLO:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_073-f_lego_duplo/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/f_lego_duplo/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_073_G_LEGO_DUPLO:
@@ -699,7 +699,7 @@ YCB_073_G_LEGO_DUPLO:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_073-g_lego_duplo/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/g_lego_duplo/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 YCB_077_RUBIKS_CUBE:
@@ -707,7 +707,7 @@ YCB_077_RUBIKS_CUBE:
     Orientation: [0.0, 0.0, 0.0]
     Scale: [1.0, 1.0, 1.0]
     Color: [0, 0, 255]
-    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/ycb_077_rubiks_cube/meshes/textured.dae" 
+    ResourceFile: "package://rviz_3d_object_visualizer/resources/ycb_dataset/rubiks_cube/meshes/textured.dae" 
     UseColorFromMesh: True
     TextOffset: [0, 0.0, 0.1]
 BOOK:
